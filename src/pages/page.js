@@ -1,43 +1,21 @@
-import React ,{useState} from 'react'
+import React,{useState} from 'react'
 import { styled } from '@mui/material/styles';
 import { Paper, Stack, Typography, Button, TextField, Box, Divider, Link, FormControlLabel, Checkbox } from '@mui/material'
 import Logo from '../assets/Dversity2.png'
 import GoogleIcon from '../assets/icon google.png'
 
+const Page = () => {
 
-const StyledContent = styled('div')(({ theme }) => ({
-    width: '100%',
-    height: '100vh',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f0f7fc',
-}));
-
-
-const SignIn = () => {
-    const [userState, setUserState] = useState({
+    const [userState,setUserState] = useState({
         username: '',
         password: '',
     })
 
-    const [rememberMe, setRememberMe] = useState(false)
 
-
-    
-    const handleChangeCheckbox = (e) => {
-        setRememberMe(e.target.checked)
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(userState)
-        console.log("user")
-    }
 
 
     return (
-        <StyledContent>
+        <div>
             <Paper sx={{
                 width: {
                     xs: '100%',
@@ -89,7 +67,7 @@ const SignIn = () => {
                             }}>
                             OR
                         </Typography>
-                        <form onSubmit={handleSubmit}>
+                        {/* <form onSubmit={handleSubmit}> */}
                             <Stack direction={'column'}>
                                 <TextField
                                     id='username'
@@ -104,11 +82,11 @@ const SignIn = () => {
                                     label="Username"
                                     size='small' />
                                 <TextField
-                                    value={userState.password}
-                                    onChange={(e) => setUserState({
-                                        ...userState,
-                                        password: e.target.value
-                                    })}
+                                    // value={userState.password}
+                                    // onChange={(e) => setUserState({
+                                    //     ...userState,
+                                    //     password: e.target.value
+                                    // })}
                                     variant='outlined'
                                     label="Password"
                                     type='password'
@@ -123,14 +101,14 @@ const SignIn = () => {
                                     alignItems: 'center',
                                     fontSize: '0.75rem',
                                 }}>
-                                    <FormControlLabel
+                                    {/* <FormControlLabel
                                         label='Remember Me'
                                         control={
                                             <Checkbox
                                                 checked={rememberMe}
                                                 onChange={handleChangeCheckbox}
                                             />}
-                                    />
+                                    /> */}
                                     <Link href=''>Forgot Password?</Link>
                                 </Stack>
                                 <Stack direction={'column'} spacing={2}>
@@ -160,12 +138,11 @@ const SignIn = () => {
                                     }}>Don’t have an account?</Link>
                                 </Stack>
                             </Stack>
-                        </form>
+                        {/* </form> */}
                     </Stack>
                 </Stack>
             </Paper>
-        </StyledContent>
+        </div>
     )
 }
-
-export default SignIn
+export default Page

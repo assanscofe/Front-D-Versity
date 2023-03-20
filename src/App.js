@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import SignIn from './pages/signin'
 import SignUp from './pages/signup'
-import './App.scss'
+import './App.css'
 import { ThemeProvider } from '@mui/material';
 import theme from './theme/theme'
 import NavHome from './pages/navHome';

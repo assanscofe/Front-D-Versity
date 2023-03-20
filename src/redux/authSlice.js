@@ -49,7 +49,7 @@ export const login = (email, password) => async (dispatch) => {
             password,
         });
         console.log("success")
-        localStorage.setItem("access_token", response.data.access);
+        localStorage.setItem("access_token", response.data.tokens.access);
         dispatch(authSuccess(response.data))
     } catch (error) {
         dispatch(authError(error.response.data));

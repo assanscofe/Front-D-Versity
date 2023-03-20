@@ -3,17 +3,15 @@ import { createTheme, responsiveFontSizes } from '@mui/material';
 let theme = createTheme({
     palette: {
         primary: {
-            main: '#325d79'
+            main: '#2469d8',
+            light: '#2096f3',
         },
         secondary: {
-            main: '#f26627'
+            main: '#d7415e'
         },
         warning: {
-            main: '#96d7d1'
+            main: '#ffda5f'
         },
-        info: {
-            main: '#f9a26c'
-        }
     },
     typography: {
         fontFamily: 'Roboto,sans-serif',
@@ -58,8 +56,16 @@ let theme = createTheme({
                 }
 
             }
+        },
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    textTransform: 'none',
+                    borderRadius: 3
+                }
+            }
         }
-    }
+    },
 })
 
 theme = responsiveFontSizes(theme)

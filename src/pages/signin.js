@@ -1,7 +1,13 @@
-import React ,{useState} from 'react'
+import React, { useState } from 'react'
 import { styled } from '@mui/material/styles';
 import { Paper, Stack, Typography, Button, TextField, Box, Divider, Link, FormControlLabel, Checkbox } from '@mui/material'
-import Logo from '../assets/Dversity2.png'
+
+//--------import Redux-------
+import { login } from '../redux/authSlice'
+import { useDispatch } from 'react-redux';
+
+//------import IMG--------------
+import Logo from '../assets/dversity.3.png'
 import GoogleIcon from '../assets/icon google.png'
 
 
@@ -14,26 +20,26 @@ const StyledContent = styled('div')(({ theme }) => ({
     backgroundColor: '#f0f7fc',
 }));
 
-
 const SignIn = () => {
-    const [userState, setUserState] = useState({
-        username: '',
+    const dispatch = useDispatch()
+
+    const [user, setUser] = useState({
+        email: '',
         password: '',
     })
 
     const [rememberMe, setRememberMe] = useState(false)
 
 
-    
     const handleChangeCheckbox = (e) => {
         setRememberMe(e.target.checked)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(userState)
-        console.log("user")
-    }
+        dispatch(login(user.email, user.password))
+    };
+
 
 
     return (
@@ -52,14 +58,16 @@ const SignIn = () => {
                 display: 'flex',
                 justifyContent: 'center'
             }}>
-                <Stack direction={'column'} spacing={4}>
+                <Stack direction={'column'} spacing={3}>
                     <Box sx={{
                         width: {
-                            xs: 100,
-                            sm: 100,
-                            xl: 120,
+                            xs: 150,
+                            sm: 150,
+                            xl: 160,
                         },
-                        margin: 'auto'
+                        margin: 'auto',
+                        display: 'flex',
+                        alignItems: 'center',
                     }}>
                         <img src={Logo} alt="Logo" width={"100%"} />
                     </Box>
@@ -92,29 +100,26 @@ const SignIn = () => {
                         <form onSubmit={handleSubmit}>
                             <Stack direction={'column'}>
                                 <TextField
-                                    id='username'
-                                    defaultValue={userState.username}
+                                    value={user.email}
                                     onChange={(e) =>
-                                        setUserState({
-                                            ...userState,
-                                            username: e.target.value
+                                        setUser({
+                                            ...user,
+                                            email: e.target.value
                                         })
                                     }
                                     variant='outlined'
-                                    label="Username"
+                                    label="Email"
                                     size='small' />
                                 <TextField
-                                    value={userState.password}
-                                    onChange={(e) => setUserState({
-                                        ...userState,
+                                    value={user.password}
+                                    onChange={(e) => setUser({
+                                        ...user,
                                         password: e.target.value
                                     })}
                                     variant='outlined'
                                     label="Password"
                                     type='password'
                                     size='small'
-
-                                    // autoFocus= 'true'
                                     sx={{ mt: 2 }}
                                 />
                                 <Stack direction='row' sx={{

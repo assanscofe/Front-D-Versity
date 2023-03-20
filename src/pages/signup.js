@@ -1,20 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled } from '@mui/material/styles';
 import { Paper, Stack, Typography, Button, TextField, Box, Divider, Link, FormControlLabel, Checkbox } from '@mui/material'
-import { useState } from 'react'
 import Logo from '../assets/Dversity2.png'
 import GoogleIcon from '../assets/icon google.png'
 
+const StyledContent = styled('div')(({ theme }) => ({
+    width: '100%',
+    height: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f7fc',
+}))
+
+
 const SignUp = () => {
 
-    const StyledContent = styled('div')(({ theme }) => ({
-        width: '100%',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#f0f7fc',
-    }))
+
 
     const handleSubmit = () => {
         console.log('submit')

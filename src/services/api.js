@@ -10,7 +10,7 @@ const api = axios.create({
 export default api;
 
 export const addPassion = (passionName, passionDescription, passionImage) => {
-    return api.post('/addPassion/', {
+    return api.post('/passions/', {
         passionName,
         passionDescription,
         passionImage,

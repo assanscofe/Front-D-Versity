@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Stack, AppBar, Toolbar, IconButton, Grid, Box, Paper, List, ListItemButton, ListItemIcon, ListItemText, Divider, Avatar, Typography, Button, Badge } from '@mui/material'
+import { Stack, AppBar, Toolbar, IconButton, Grid, Box, Paper, List, ListItemButton, ListItemIcon, ListItemText, Divider, Avatar, Typography, Button, Badge, Modal} from '@mui/material'
 import { styled, makeStyles } from '@mui/material/styles'
-import { getAllPassions } from '../services/api'
 import { useNavigate } from 'react-router-dom'
+import TransitionsModal from './passions'
 
 //------------import Images-----------
 import Logo from '../assets/dversity.3.png'
@@ -44,13 +44,30 @@ const MyBadge = styled(Badge)(({ theme }) => ({
         color: '#fff'
     }
 }))
+
 const MyAvatar = styled(Avatar)({
     background: '#96d7d1',
     borderRadius: '0.8rem',
     padding: '0.1rem'
 })
 
+const styleModal = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 800,
+  height:500,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+
 const NavHome = () => {
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const navigate = useNavigate();
 
@@ -80,11 +97,10 @@ const NavHome = () => {
                     </IconButton>
                     <Box sx={{ flexGrow: 1 }}></Box>
                     <Stack direction={'row'} spacing={2} alignContent="center">
-                        <Button startIcon={<CreateIcon />} size={'small'} variant='contained'
-                            sx={{
-                                height: '2rem',
-
-                            }}>Create A New Passion</Button>
+                    <Button onClick={() => setIsModalOpen(true)} startIcon={<CreateIcon />} size={'small'} variant='contained'>
+                    Créer Une Nouvelle Passion
+                    </Button>
+                    {isModalOpen && <TransitionsModal setIsModalOpen={setIsModalOpen} />}
                         <IconButton>
                             <MyAvatar src={PhotoProfile} alt='Photo profile' />
                         </IconButton>

@@ -10,14 +10,24 @@ const api = axios.create({
 export default api;
 
 export const addPassion = (passionName, passionDescription, passionImage) => {
-    return api.post('/passions/', {
-        passionName,
-        passionDescription,
-        passionImage,
-    }).then(response => {
-        return response.data
+  const formData = new FormData();
+  formData.append('passionName', passionName);
+  formData.append('passionDescription', passionDescription);
+  formData.append('passionImage', passionImage);
+
+  return api.post('/passions/', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  })
+    .then(response => {
+      return response.data;
     })
-}
+    .catch(error => {
+      throw error;
+    });
+};
+
 export const getAllPassions = () => {
     return api.get('/passions/').then(response => {
         return response.data

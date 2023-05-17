@@ -9,7 +9,8 @@ import { addPassion } from '../services/api'
 import { useState, useEffect } from 'react'
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const styleModal = {
   position: 'absolute',
@@ -71,18 +72,26 @@ export default function TransitionsModal({ setIsModalOpen }) {
     formData.append('passionName', title);
     formData.append('passionDescription', description);
     formData.append('passionImage', image);
-    // addPassion(title, description, image)
-    //   .then((data) => {
-    //     console.log(data);
-    //     setIsModalOpen(false);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    console.log("formData",formData.get('passionImage'))
+    addPassion(title, description, image, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+       .then((data) => {
+          console.log(data);
+          toast.success('La passion a été ajoutée avec succès');
+          setIsModalOpen(false);
+       })
+       .catch((error) => {
+          toast.error('Une erreur s\'est produite lors de l\'ajout de la passion');
+          console.error(error);
+       });
   }; 
 
   return (
-    <div>
+   <div>
+      <ToastContainer /> 
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

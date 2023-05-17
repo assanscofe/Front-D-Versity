@@ -1,17 +1,14 @@
 import { createTheme, responsiveFontSizes } from '@mui/material';
 
-let theme = createTheme({
+let darkTheme = createTheme({
     palette: {
+        mode: 'dark',
         primary: {
-            main: '#2469d8',
-            light: '#2096f3',
+            main: '#90caf9',
         },
         secondary: {
-            main: '#d7415e'
-        },
-        warning: {
-            main: '#ffda5f'
-        },
+            main: '#f48fb1'
+        }
     },
     typography: {
         fontFamily: 'Roboto,sans-serif',
@@ -52,7 +49,7 @@ let theme = createTheme({
         MuiTextField: {
             styleOverrides: {
                 root: {
-                    background: '#f0f7fc',
+                    background: '#121212',
                 }
 
             }
@@ -64,10 +61,25 @@ let theme = createTheme({
                     borderRadius: 3
                 }
             }
+        },
+        MuiAppBar: {
+            styleOverrides: {
+                root: {
+                    height: '8vh'
+                }
+            }
+        },
+        MuiToolbar: {
+            styleOverrides: {
+                root: {
+                    height: '8vh'
+                }
+            }
         }
+
     },
 })
 
-theme = responsiveFontSizes(theme)
+darkTheme = responsiveFontSizes(darkTheme)
 
-export default theme
+export default darkTheme

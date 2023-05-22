@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Stack, AppBar, Toolbar, IconButton, Grid, Box, Paper, List, ListItemButton, ListItemIcon, ListItemText, Divider, Avatar, Typography, Button, Badge, Modal} from '@mui/material'
 import { styled, makeStyles } from '@mui/material/styles'
 import { useNavigate } from 'react-router-dom'
-import TransitionsModal from './passions'
+import TransitionsModal from './passions/passions'
 
 //------------import Images-----------
 import Logo from '../assets/dversity.3.png'

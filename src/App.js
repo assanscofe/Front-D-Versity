@@ -12,6 +12,7 @@ import Profile from './pages/profile';
 import Settings from './pages/settings';
 import Friends from './pages/friends';
 import Photos from './pages/photos';
+import Passions from './pages/passions/list-passion';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
               <Route path='settings' element={<Settings />} />
               <Route path='friends' element={<Friends />} />
               <Route path='photos' element={<Photos />} />
+              <Route path='passions' element={<Passions />} />
             </Route>
           </Routes>
         </BrowserRouter>

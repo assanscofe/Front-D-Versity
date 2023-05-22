@@ -5,12 +5,14 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { addPassion } from '../services/api'
+import { addPassion } from '../../services/api'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { emitPassionAdded } from './event';
 
 const styleModal = {
   position: 'absolute',
@@ -33,13 +35,14 @@ const styleForm = {
 }
 
 export default function TransitionsModal({ setIsModalOpen }) {
-
+    const history = useNavigate();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [imageDataUrl, setImageDataUrl] = useState(null);
 
     const handleCloseModal = () => {
+    toast.success('La passion a été ajoutée avec succès')
     setIsModalOpen(false);
     };
 
@@ -80,13 +83,16 @@ export default function TransitionsModal({ setIsModalOpen }) {
     })
        .then((data) => {
           console.log(data);
-          toast.success('La passion a été ajoutée avec succès');
           setIsModalOpen(false);
+          emitPassionAdded(data);
+          toast.success('La passion a été ajoutée avec succès');
        })
        .catch((error) => {
           toast.error('Une erreur s\'est produite lors de l\'ajout de la passion');
           console.error(error);
        });
+
+      history('/navHome/passions')
   }; 
 
   return (
@@ -135,7 +141,7 @@ export default function TransitionsModal({ setIsModalOpen }) {
               />              
 
                 <div>
-                    <input type="file" onChange={handleImageChange} />
+                    <input required type="file" onChange={handleImageChange} />
                     {imageDataUrl && <img width="100" height="100" src={imageDataUrl} alt="Uploaded image" />}
                 </div>
               <Divider sx={{margin:2,border:'none'}}></Divider>

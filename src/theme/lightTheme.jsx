@@ -4,7 +4,8 @@ let lightTheme = createTheme({
     palette: {
         mode: 'light',
         background: {
-            default: '#f0f7fc'
+            // default: '#f0f7fc'
+            default: '#fff'
         },
         primary: {
             main: '#2469d8',

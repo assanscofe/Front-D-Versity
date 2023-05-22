@@ -58,7 +58,6 @@ const SignUp = () => {
                 md: '100vh',
                 xl: '100vh'
             },
-            overflowY:'hidden',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -66,15 +65,16 @@ const SignUp = () => {
         }}>
             <Box sx={{
                 width: {
-                    xs: 100,
-                    md: 150,
-                    xl: 180
+                    xs: 90,
+                    md: 120,
+                    xl: 150
                 },
                 height: {
                     xs: 'auto',
                     md: '10vh'
                 },
                 margin: '1rem 0',
+                background: 'red'
             }}>
                 <img src={Logo} alt="Logo" width={"100%"} />
             </Box>
@@ -82,11 +82,12 @@ const SignUp = () => {
             <Paper sx={{
                 width: {
                     xs: '100%',
-                    sm: '90%',
+                    sm: '60%',
                     md: '90%',
                     lg: '80%',
-                    xl: '70%',
+                    xl: '60%',
                 },
+                height: '70vh',
                 padding: 3,
                 borderRadius: 3,
                 display: 'flex',
@@ -94,12 +95,11 @@ const SignUp = () => {
                 flexDirection: 'column',
                 rowGap: '1rem',
                 boxShadow: '5px 5px 10px #2469d822',
-
             }}>
-                <Stepper spacing={4} activeStep={activeStep} alternativeLabel sx={{ width: '90%', height: '8vh' }}>
+                <Stepper spacing={4} activeStep={activeStep} alternativeLabel sx={{ width: '90%', height: '6vh' }}>
                     {formSteps.map((step, label) => (
                         <Step key={label}>
-                            <StepLabel ></StepLabel>
+                            <StepLabel >{step.label}</StepLabel>
                         </Step>
                     ))}
                 </Stepper>

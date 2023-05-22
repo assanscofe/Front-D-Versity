@@ -47,7 +47,7 @@ const Step3 = () => {
                     height: {
                         xs: 'auto',
                         sm:'auto',
-                        md: 460,
+                        md: 450,
                     },
                     display: 'flex',
                     justifyContent: 'center',

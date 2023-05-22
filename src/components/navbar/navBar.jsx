@@ -67,12 +67,15 @@ const StyledToolbar = styled(Toolbar)({
 })
 
 const Search = styled("div")(({ theme }) => ({
-    width: '50%',
-    padding: '0.15rem 1rem',
-    borderRadius: '1rem',
+    width: '25%',
+    padding: '0.5rem 1rem',
+    borderRadius: '0.6rem',
+    display: 'flex',
+    alignItems: 'center',
 }))
 
 const Icons = styled(Box)(({ theme }) => ({
+    marginLeft: '2rem',
     display: 'none',
     alignItems: 'center',
     gap: '1.5rem',
@@ -108,10 +111,17 @@ const NavBar = () => {
 
     return (
         <>
-            <AppBar position='sticky' sx={{
+            {/* <Box>
+
+            </Box> */}
+
+            {/* <AppBar position='sticky' sx={{
                 boxShadow: 'none',
             }}>
-                <StyledToolbar>
+                <StyledToolbar sx={{
+                    background: 'transparent'
+
+                }}>
                     <IconButton sx={{
                         height: '3.2rem',
                         minHeight: '3rem',
@@ -119,6 +129,7 @@ const NavBar = () => {
                             xs: 'none',
                             sm: 'block'
                         }
+
                     }}>
                         <img src={Logo} alt='Logo Dversity' height={'100%'} />
                     </IconButton>
@@ -189,7 +200,7 @@ const NavBar = () => {
                         Déconnexion
                     </MyMenuItem>
                 </Menu>
-            </AppBar>
+            </AppBar> */}
             {/* <Outlet></Outlet> */}
 
             {/* <StyledAppBar>
@@ -261,6 +272,29 @@ const NavBar = () => {
                 </Stack>
             </StyledAppBar>
             <Outlet></Outlet> */}
+            <Box sx={{
+                width: '100%',
+                height: '8vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                padding: '0 2rem'
+            }}>
+                <Search sx={{
+                    background: darkMode ? '#121212' : '#fff'
+                }}>
+                    <InputBase placeholder='Rechercher...' sx={{ width: '100%', fontSize: '0.8rem' }} />
+                    <SearchIcon sx={{ color: darkMode ? '#2096f3' : '#2469d8' }} />
+                </Search>
+                <Icons>
+                    <Badge variant={'dot'} color={'error'}>
+                        <NotificationIcon sx={{ color: darkMode ? '#2096f3' : '#2469d8' }} />
+                    </Badge>
+                    <IconButton onClick={toggle}>
+                        {darkMode ? <WbSunnyOutlinedIcon sx={{ color: '#2096f3' }} /> : <DarkModeIcon sx={{ color: '#2469d8' }} />}
+                    </IconButton>
+                </Icons>
+            </Box>
         </>
     )
 }

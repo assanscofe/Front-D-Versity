@@ -33,18 +33,36 @@ function App() {
 
   const Layout = () => {
     return (
-      <Box flexDirection={'row'} sx={{
+      // <Box flexDirection={'row'} sx={{
+      //   overflow: 'auto',
+      //   height: '100vh'
+      // }}>
+      //   <NavBar />
+      //   <Box display={'flex'} >
+      //     <LeftBar />
+      //     <Box flex={6} flexGrow={1} sx={{ overflow: 'hidden' }}>
+      //       <Outlet></Outlet>
+      //     </Box>
+      //     <RightBar />
+      //   </Box>
+      // </Box>
+      <Box sx={{
+        display: 'flex',
         overflow: 'auto',
-        height: '100vh'
+        height: '100vh',
       }}>
-        <NavBar />
-        <Box display={'flex'} >
-          <LeftBar />
-          <Box flex={6} flexGrow={1} sx={{ overflow: 'hidden' }}>
-            <Outlet></Outlet>
-          </Box>
-          <RightBar />
+        <LeftBar />
+        <Box flex={6} flexGrow={1} sx={{
+          overflow: 'hidden',
+          borderRadius: 6,
+          background: darkMode ? '#252931' : '#daf0ff',
+          margin: '0.5rem',
+          padding: '1rem',
+        }} >
+          <NavBar />
+          <Outlet></Outlet>
         </Box>
+        {/* <RightBar/> */}
       </Box>
     )
   }

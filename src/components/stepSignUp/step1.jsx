@@ -33,19 +33,22 @@ const Step1 = () => {
                     <img src={Lol} alt="Lol" width={'100%'} height={'100%'} />
                 </Grid>
                 <Grid item xs={12} md={6} xl={6} sx={{
-                    height: {
-                        xs: 520,
-                        sm: 520,
-                        md: 460,
-                        xl: 460
-                    },
+                    // height: {
+                    //     // xs: 520,
+                    //     // sm: 520,
+                    //     md: 450,
+                    //     xl: 450
+                    // },
+                    height:'100%',
                     paddingX: {
                         xs: '1rem',
-                        md: '2rem',
-                        xl:'3rem'
+                        sm:'2rem',
+                        md: '3rem',
+                        lg:'4rem',
+                        xl:'5rem'
                     }
                 }}>
-                    <Stack direction={'column'} spacing={3} >
+                    <Stack direction={'column'} spacing={3}>
                         <Typography variant='h5' color='primary' sx={{
                             textAlign: 'center',
                             // fontWeight: '700',

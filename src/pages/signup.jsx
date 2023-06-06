@@ -62,6 +62,8 @@ const SignUp = () => {
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
+            backgroundColor: '#f0f7fc',
+
         }}>
             <Box sx={{
                 width: {
@@ -74,7 +76,6 @@ const SignUp = () => {
                     md: '10vh'
                 },
                 margin: '1rem 0',
-                background: 'red'
             }}>
                 <img src={Logo} alt="Logo" width={"100%"} />
             </Box>

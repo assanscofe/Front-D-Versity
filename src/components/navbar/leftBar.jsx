@@ -1,14 +1,14 @@
 import React from 'react'
 import { Stack, AppBar, Tooltip, IconButton, Grid, Box, Paper, List, ListItemButton, ListItemIcon, ListItemText, Divider, Avatar, Typography, Button, Badge, Card, CardMedia, CardContent, CardActions, InputBase } from '@mui/material'
 
-import { styled, makeStyles } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 // import { getAllPassions } from '../services/api'
 import { useNavigate, Outlet } from 'react-router-dom'
 
 //------------import Images-----------
 import LogoM from '../../assets/DD.png'
 import Logo from '../../assets/dversity.3.png'
-import PhotoProfile from '../../assets/Icons/20.png'
+import PhotoProfile from '../../assets/Icons/22.png'
 import ImageNature from '../../assets/nature.jpg'
 import PhotoUser from '../../assets/Icons/18.png'
 
@@ -54,15 +54,17 @@ const StyleSidebar = styled(Box)(({ theme }) => ({
 
 const StyleButton = styled('button')(({ theme }) => ({
     width: '2.4rem',
-    height:'2.4rem',
+    height: '2.4rem',
     borderRadius: '0.9rem',
     border: 'none',
-    background: '#147587',
     fill: '#fff',
     padding: '0.65rem',
     cursor: 'pointer',
-    '&:hover':{
-        opacity:'0.8'
+    '&:hover': {
+        opacity: '0.8'
+    },
+    '&:focus': {
+        outline: 'none'
     }
 }))
 
@@ -94,10 +96,9 @@ const LeftBar = () => {
 
 
     return (
-         <Box flex={2} p={2} sx={{
+        <Box flex={2} p={2} sx={{
             maxWidth: {
-                xs: '60px',
-                sm: '250px',
+                xs: '4rem',
                 md: '300px'
             },
             height: '100vh',
@@ -113,50 +114,58 @@ const LeftBar = () => {
             },
             // display: { xs: 'none', sm: 'none', md: 'block' }
         }}>
-            <Stack direction={'column'} sx={{height:'100%'}}>
+            <Stack direction={'column'} sx={{ height: '100%' }}>
                 <IconButton sx={{
-                        height: '3.2rem',
-                        minHeight: '3rem',
-                        display: {
-                            xs: 'none',
-                            sm: 'block'
-                        }
+                    height: '3.2rem',
+                    minHeight: '3rem',
+                    display: {
+                        xs: 'none',
+                        md: 'block'
+                    }
 
-                    }}>
-                        <img src={Logo} alt='Logo Dversity' height={'100%'} />
+                }}>
+                    <img src={Logo} alt='Logo Dversity' height={'100%'} />
                 </IconButton>
                 <IconButton sx={{
-                        height: '50px',
-                        display: {
-                            xs: 'block',
-                            sm: 'none'
-                        }
-                    }}>
-                        <img src={LogoM} alt='Logo Dversity' height={'100%'} />
+                    height: '50px',
+                    display: {
+                        xs: 'block',
+                        md: 'none'
+                    }
+                }}>
+                    <img src={LogoM} alt='Logo Dversity' height={'100%'} />
                 </IconButton>
-                <Divider sx={{margin:'1rem 0'}}></Divider>
+                <Divider sx={{ margin: '1rem 0' }}></Divider>
                 <Box flexGrow={1} sx={{
                     height: '100%',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    flexDirection:'column'
+                    flexDirection: 'column'
                 }}>
                     <Paper sx={{
                         width: '100%',
-                    boxShadow: 'none',
+                        boxShadow: 'none',
                         borderRadius: 3,
                         border: '1px solid #efefef',
-                    padding: '0.8rem'
+                        padding: {
+                            xs: '0',
+                            md: '0.8rem'
+                        }
 
-                }}>
+                    }}>
                         <Stack direction='row' spacing={1} alignItems='center' justifySelf='center'>
                             <MyAvatar src={PhotoProfile} alt='Photo profile' sx={{
-                                width: '35px',
-                                height: '35px',
+                                width: '2rem',
+                                height: '2rem',
                                 padding: '0'
                             }} />
-                            <Box>
+                            <Box sx={{
+                                display: {
+                                    xs: 'none',
+                                    md: 'block'
+                                }
+                            }}>
                                 <Typography sx={{
                                     fontSize: '0.7rem',
                                     fontWeight: 800,
@@ -169,17 +178,20 @@ const LeftBar = () => {
                             </Box>
                         </Stack>
                     </Paper>
-                    <Grid container sx={{ height:'60vh'}}>
-                        <Grid item xs={4} md={4} sx={{
-                            borderRight: '1px solid #efefef',
+                    <Grid container sx={{ height: '60vh' }}>
+                        <Grid item xs={12} md={4} sx={{
+                            borderRight: {
+                                xs: 'none',
+                                md: '1px solid #efefef'
+                            },
                             display: 'flex',
                             justifyContent: 'space-between',
                             alignItems: 'center',
-                            flexDirection:'column'
+                            flexDirection: 'column',
                         }}>
                             <Box sx={{
                                 width: '100%',
-                                height:'25vh',
+                                height: '25vh',
                                 display: 'flex',
                                 justifyContent: 'flex-end',
                                 alignItems: 'center',
@@ -187,15 +199,33 @@ const LeftBar = () => {
                                 rowGap: 2,
                             }}>
                                 <Tooltip
+                                    title='Ajouter une passion'
+                                    placement='right'
+                                    arrow
+                                    enterDelay={300}
+                                    leaveDelay={200}
+                                    sx={{ bgcolor: '#ffda5f', color: '#fff' }}
+                                >
+                                    <StyleButton sx={{
+                                        background: '#ffda5f',
+                                        display: {
+                                            xs: 'block',
+                                            md: 'none'
+                                        }
+                                    }}>
+                                        <IconHome style={{ width: '100%', height: '100%' }} />
+                                    </StyleButton>
+                                </Tooltip>
+                                <Tooltip
                                     title='Profil'
                                     placement='right'
                                     arrow
                                     enterDelay={300}
                                     leaveDelay={200}
-                                    sx={{ bgcolor: '#ee4266',color:'#fff' }}
+                                    sx={{ bgcolor: '#ee4266', color: '#fff' }}
                                 >
-                                    <StyleButton style={{background: '#ee4266' }}>
-                                        <IconUser style={{ width: '100%', height: '100%'}}/>
+                                    <StyleButton style={{ background: '#ee4266' }} onClick={() => navigate('/profil')}>
+                                        <IconUser style={{ width: '100%', height: '100%' }} />
                                     </StyleButton>
                                 </Tooltip>
                                 <Tooltip
@@ -204,10 +234,10 @@ const LeftBar = () => {
                                     arrow
                                     enterDelay={300}
                                     leaveDelay={200}
-                                    sx={{ bgcolor: '#50e450',color:'#fff' }}
+                                    sx={{ bgcolor: '#50e450', color: '#fff' }}
                                 >
-                                    <StyleButton sx={{background: '#50e450'}}>
-                                        <IconPhotos style={{ width: '100%', height: '100%'}}/>
+                                    <StyleButton sx={{ background: '#50e450' }} onClick={() => navigate('/photos')}>
+                                        <IconPhotos style={{ width: '100%', height: '100%' }} />
                                     </StyleButton>
                                 </Tooltip>
                                 <Tooltip
@@ -216,12 +246,12 @@ const LeftBar = () => {
                                     arrow
                                     enterDelay={300}
                                     leaveDelay={200}
-                                    sx={{ bgcolor: '#4ac0d5',color:'#fff' }}
+                                    sx={{ bgcolor: '#4ac0d5', color: '#fff' }}
                                 >
-                                    <StyleButton sx={{background:'#4ac0d5'}}>
-                                        <IconMessage style={{ width: '100%', height: '100%'}} />
+                                    <StyleButton sx={{ background: '#4ac0d5' }} onClick={() => navigate('/messages')}>
+                                        <IconMessage style={{ width: '100%', height: '100%' }} />
                                     </StyleButton>
-                                </Tooltip>  
+                                </Tooltip>
                             </Box>
                             <Tooltip
                                 title='Jeux'
@@ -229,19 +259,19 @@ const LeftBar = () => {
                                 arrow
                                 enterDelay={300}
                                 leaveDelay={200}
-                                sx={{bgcolor:'#2469d8',color:'#fff'}}
+                                sx={{ bgcolor: '#2469d8', color: '#fff' }}
                             >
                                 <IconButton sx={{
                                     width: '50px',
                                     height: '50px',
                                     fill: '#2469d8',
-                                }}>
-                                    <IconGames style={{width:'100%',height:'100%'}}/>
+                                }} onClick={() => navigate('/profil')}>
+                                    <IconGames style={{ width: '100%', height: '100%' }} />
                                 </IconButton>
                             </Tooltip>
                             <Box sx={{
-                                width:'100%',
-                                height:'25vh',
+                                width: '100%',
+                                height: '25vh',
                                 display: 'flex',
                                 justifyContent: 'flex-start',
                                 alignItems: 'center',
@@ -254,10 +284,28 @@ const LeftBar = () => {
                                     arrow
                                     enterDelay={300}
                                     leaveDelay={200}
-                                    sx={{bgcolor:'#fa7e5c',color:'#fff'}}
+                                    sx={{ bgcolor: '#fa7e5c', color: '#fff' }}
                                 >
-                                    <StyleButton sx={{background: '#fa7e5c'}}>
-                                        <IconBookmark style={{ width: '100%', height: '100%'}}/>
+                                    <StyleButton sx={{ background: '#fa7e5c' }}>
+                                        <IconBookmark style={{ width: '100%', height: '100%' }} />
+                                    </StyleButton>
+                                </Tooltip>
+                                <Tooltip
+                                    title='Ajouter une passion'
+                                    placement='right'
+                                    arrow
+                                    enterDelay={300}
+                                    leaveDelay={200}
+                                    sx={{ bgcolor: '#540d6e', color: '#fff' }}
+                                >
+                                    <StyleButton sx={{
+                                        background: '#540d6e',
+                                        display: {
+                                            xs: 'block',
+                                            md: 'none'
+                                        }
+                                    }}>
+                                        <IconPassions style={{ width: '100%', height: '100%' }} />
                                     </StyleButton>
                                 </Tooltip>
                                 <Tooltip
@@ -266,20 +314,23 @@ const LeftBar = () => {
                                     arrow
                                     enterDelay={300}
                                     leaveDelay={200}
-                                    sx={{bgcolor:'#999999'}}
+                                    sx={{ bgcolor: '#999999' }}
                                 >
-                                    <StyleButton sx={{background: '#999999'}}>
-                                        <IconSettings style={{ width: '100%', height: '100%'}}/>
+                                    <StyleButton sx={{ background: '#999999' }} onClick={() => navigate('/settings')}>
+                                        <IconSettings style={{ width: '100%', height: '100%' }} />
                                     </StyleButton>
                                 </Tooltip>
                             </Box>
                         </Grid>
-                        <Grid item xs={8} md={8} sx={{
-                            display: 'flex',
+                        <Grid item xs={0} md={8} sx={{
+                            display: {
+                                xs: 'none',
+                                md: 'flex'
+                            },
                             flexDirection: 'column',
                             alignItems: 'center',
                             justifyContent: 'center',
-                            rowGap:2
+                            rowGap: 2
                         }}>
                             <Button sx={{
                                 width: '150px',
@@ -287,10 +338,10 @@ const LeftBar = () => {
                                 borderRadius: 5,
                                 padding: '1rem 0',
                                 color: '#444',
-                                fill:'#444'
-                            }}>
-                                <IconHome style={{width:'15px',height:'15px'}} />
-                                <Typography sx={{ fontSize: '0.7rem',fontWeight:'bold',marginLeft:'1rem'}}>ACCUEIL</Typography>
+                                fill: '#444'
+                            }} onClick={() => navigate('')}>
+                                <IconHome style={{ width: '15px', height: '15px' }} />
+                                <Typography sx={{ fontSize: '0.7rem', fontWeight: 'bold', marginLeft: '1rem' }}>ACCUEIL</Typography>
                             </Button>
                             <Button sx={{
                                 width: '150px',
@@ -299,24 +350,29 @@ const LeftBar = () => {
                                 border: '1px solid #efefef',
                                 padding: '1rem',
                                 color: '#444',
-                                fill:'#444'
+                                fill: '#444'
                             }}>
-                                <IconPassions style={{width:'15px',height:'15px'}}/>
-                                <Typography sx={{ fontSize: '0.7rem',fontWeight:'bold',marginLeft:'1rem'}}>PASSIONS</Typography>
+                                <IconPassions style={{ width: '15px', height: '15px' }} />
+                                <Typography sx={{ fontSize: '0.7rem', fontWeight: 'bold', marginLeft: '1rem' }}>PASSIONS</Typography>
                             </Button>
                         </Grid>
                     </Grid>
                     <Button sx={{
                         width: '60%',
-                        padding:'0.8rem',
+                        padding: '0.6rem',
                         borderRadius: 3,
-                        color: '#fff',
-                        background: '#d7415e',
+                        // color: '#fff',
+                        // background: '#d7415e',
                         display: 'flex',
-                        justifyContent:'space-evenly'
-                    }}>
-                        <SignOutIcon/>
-                        <Typography>Déconnexion</Typography>
+                        justifyContent: 'space-evenly'
+                    }} variant={'contained'} color={'secondary'}>
+                        <SignOutIcon />
+                        <Typography sx={{
+                            display: {
+                                xs: 'none',
+                                md: 'block'
+                            }
+                        }}>Déconnexion</Typography>
                     </Button>
                 </Box>
             </Stack>
@@ -424,4 +480,3 @@ export default LeftBar
         //         </Box>
         //     </Stack>
         // </StyleSidebar>
-       

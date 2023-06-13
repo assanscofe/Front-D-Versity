@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState}  from 'react'
 import { Stack, AppBar, Tooltip, IconButton, Grid, Box, Paper, List, ListItemButton, ListItemIcon, ListItemText, Divider, Avatar, Typography, Button, Badge, Card, CardMedia, CardContent, CardActions, InputBase } from '@mui/material'
 
 import { styled } from '@mui/material/styles'
@@ -32,7 +32,7 @@ import { ReactComponent as IconHome } from '../../assets/SVG/home.svg'
 import { ReactComponent as IconPassions } from '../../assets/SVG/apps.svg'
 import { ReactComponent as IconMessage } from '../../assets/SVG/messages.svg'
 import { ReactComponent as IconBookmark } from '../../assets/SVG/bookmark.svg'
-
+import TransitionsModal from '../addPassion/addPassion'
 
 
 const StyleSidebar = styled(Box)(({ theme }) => ({
@@ -94,7 +94,7 @@ const MyAvatar = styled(Avatar)({
 const LeftBar = () => {
     const navigate = useNavigate();
 
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
     return (
         <Box flex={2} p={2} sx={{
             maxWidth: {
@@ -351,10 +351,12 @@ const LeftBar = () => {
                                 padding: '1rem',
                                 color: '#444',
                                 fill: '#444'
-                            }}>
+                            }} onClick={() => setIsModalOpen(true)} >
+
                                 <IconPassions style={{ width: '15px', height: '15px' }} />
                                 <Typography sx={{ fontSize: '0.7rem', fontWeight: 'bold', marginLeft: '1rem' }}>PASSIONS</Typography>
                             </Button>
+                            {isModalOpen && <TransitionsModal setIsModalOpen={setIsModalOpen} />}
                         </Grid>
                     </Grid>
                     <Button sx={{

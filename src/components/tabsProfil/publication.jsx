@@ -1,5 +1,5 @@
-import React from 'react'
-import { Box, Paper, Grid, Button, Typography, Avatar, IconButton } from '@mui/material'
+import React, { useState }from 'react'
+import { Box, Paper, Grid,Modal, Button, Typography, Avatar, IconButton } from '@mui/material'
 import {styled} from '@mui/material/styles'
 import avatar from '../../assets/Icons/22.png'
 import img1 from '../../assets/1146218.png'
@@ -10,6 +10,7 @@ import { ReactComponent as IconHeart } from '../../assets/SVG/heart (1).svg'
 import { ReactComponent as IconComment } from '../../assets/SVG/comment.svg'
 import { ReactComponent as IconShare } from '../../assets/SVG/share.svg'
 import { ReactComponent as IconDots } from '../../assets/SVG/menu-dots.svg'
+import MyModal from './modalPublication';
 
 const MyButton = styled(Button)({
     border: '1px solid #ddd',
@@ -34,6 +35,16 @@ const MyBox = styled(Box)({
 })
 
 const Publication = () => {
+
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    const openModal = () => {
+        setModalIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
     return (
         <Box sx={{
             width: '100%',
@@ -43,6 +54,7 @@ const Publication = () => {
             rowGap: '1rem',
             marginBottom:'1rem'
         }}>
+            <MyModal isOpen={modalIsOpen} closeModal={closeModal} />
             <Paper sx={{
                 width: '100%',
                 // height:'7rem',
@@ -72,7 +84,8 @@ const Publication = () => {
                             padding: '0.5rem 1rem',
                             width: '100%',
                             color:'#999'
-                        }}>
+                        }}
+                        onClick={openModal}>
                             Quoi de neuf ?
                         </Box>
                     </Grid>

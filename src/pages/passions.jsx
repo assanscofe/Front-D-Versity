@@ -16,15 +16,15 @@ import {
     Box
 } from '@mui/material'
 import Color from 'color-thief-react'
-// import { getAllPassions } from '../services/api'
-// import eventEmitter, { PASSION_ADDED } from '../components/addPassion/event';
+import { getAllPassions } from '../services/api'
+import eventEmitter, { PASSION_ADDED } from '../components/addPassion/event';
 
 //-----------import images--------
-import img1 from '../assets/1132869.jpg'
-import img2 from '../assets/1135879.png'
-import img3 from '../assets/1143088.jpg'
-import img4 from '../assets/1146218.png'
-import img5 from '../assets/1280277.jpg'
+// import img1 from '../assets/1132869.jpg'
+// import img2 from '../assets/1135879.png'
+// import img3 from '../assets/1143088.jpg'
+// import img4 from '../assets/1146218.png'
+// import img5 from '../assets/1280277.jpg'
 
 
 const MyAccordion = styled(Accordion)({
@@ -50,50 +50,50 @@ const StyleAccordion = styled('div')(({ theme }) => ({
     padding:'1rem 1rem 2rem 1rem'
 }))
 
-const passions = [
-    {
-        id: 1,
-        passionImage: img1,
-        passionName: 'Musique',
-        passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-    },
-    {
-        id: 2,
-        passionImage: img2,
-        passionName: 'Musique',
-        passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-    },
-    {
-        id: 3,
-        passionImage: img3,
-        passionName: 'Musique',
-        passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blablabla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-    },
-    {
-        id: 4,
-        passionImage: img4,
-        passionName: 'Musique',
-        passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-    },
-    {
-        id: 5,
-        passionImage: img5,
-        passionName: 'Musique',
-        passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-    },
-    {
-        id: 6,
-        passionImage: img1,
-        passionName: 'Musique',
-        passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-    },
-    {
-        id: 7,
-        passionImage: img2,
-        passionName: 'Musique',
-        passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-    },
-]
+// const passions = [
+//     {
+//         id: 1,
+//         passionImage: img1,
+//         passionName: 'Musique',
+//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
+//     },
+//     {
+//         id: 2,
+//         passionImage: img2,
+//         passionName: 'Musique',
+//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
+//     },
+//     {
+//         id: 3,
+//         passionImage: img3,
+//         passionName: 'Musique',
+//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blablabla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
+//     },
+//     {
+//         id: 4,
+//         passionImage: img4,
+//         passionName: 'Musique',
+//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
+//     },
+//     {
+//         id: 5,
+//         passionImage: img5,
+//         passionName: 'Musique',
+//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
+//     },
+//     {
+//         id: 6,
+//         passionImage: img1,
+//         passionName: 'Musique',
+//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
+//     },
+//     {
+//         id: 7,
+//         passionImage: img2,
+//         passionName: 'Musique',
+//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
+//     },
+// ]
 
 const Passions = () => {
 
@@ -104,34 +104,34 @@ const Passions = () => {
     };
 
 
-    // const [passions, setPassions] = useState([]);
+    const [passions, setPassions] = useState([]);
 
-    // useEffect(() => {
-    //     getAllPassions()
-    //         .then(data => {
-    //             // Tri des passions dans l'ordre décroissant par leur identifiant
-    //             const sortedPassions = data.sort((a, b) => b.id - a.id);
-    //             setPassions(sortedPassions);
-    //         })
-    //         .catch(error => {
-    //             console.error(error);
-    //         });
+    useEffect(() => {
+        getAllPassions()
+             .then(data => {
+                 // Tri des passions dans l'ordre décroissant par leur identifiant
+                const sortedPassions = data.sort((a, b) => b.id - a.id);
+                setPassions(sortedPassions);
+            })
+            .catch(error => {
+                 console.error(error);
+            });
 
-    //     // Écoutez l'événement de nouvelle passion ajoutée
-    //     eventEmitter.on(PASSION_ADDED, handlePassionAdded);
+         // Écoutez l'événement de nouvelle passion ajoutée
+         eventEmitter.on(PASSION_ADDED, handlePassionAdded);
 
-    //     // Nettoyez les écouteurs d'événements lorsque le composant est démonté
-    //     return () => {
-    //         eventEmitter.off(PASSION_ADDED, handlePassionAdded);
-    //     };
+         // Nettoyez les écouteurs d'événements lorsque le composant est démonté
+        return () => {
+             eventEmitter.off(PASSION_ADDED, handlePassionAdded);
+         };
 
-    // }, []);
+    }, []);
 
-    // // Fonction de gestion de l'événement de nouvelle passion ajoutée
-    // const handlePassionAdded = (passion) => {
-    //     // Mettez à jour la liste des passions avec la nouvelle passion
-    //     setPassions((prevPassions) => [passion, ...prevPassions]);
-    // };
+    // Fonction de gestion de l'événement de nouvelle passion ajoutée
+     const handlePassionAdded = (passion) => {
+         // Mettez à jour la liste des passions avec la nouvelle passion
+         setPassions((prevPassions) => [passion, ...prevPassions]);
+    };
     return (
         <>
             <Typography variant='h3' color='primary' >Passions</Typography>

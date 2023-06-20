@@ -36,15 +36,8 @@ const MyBox = styled(Box)({
 
 const Publication = () => {
 
-    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const openModal = () => {
-        setModalIsOpen(true);
-    };
-
-    const closeModal = () => {
-        setModalIsOpen(false);
-    };
     return (
         <Box sx={{
             width: '100%',
@@ -54,7 +47,6 @@ const Publication = () => {
             rowGap: '1rem',
             marginBottom:'1rem'
         }}>
-            <MyModal isOpen={modalIsOpen} closeModal={closeModal} />
             <Paper sx={{
                 width: '100%',
                 // height:'7rem',
@@ -78,16 +70,46 @@ const Publication = () => {
                         alignItems: 'center',
                         padding:'0 1rem'
                     }}>
+                        {isModalOpen && <MyModal setIsModalOpen={setIsModalOpen} />}
                         <Box sx={{
                             background: '#efefef',
                             borderRadius:6,
                             padding: '0.5rem 1rem',
                             width: '100%',
-                            color:'#999'
+                            color:'#999',
+                            cursor: 'pointer',
                         }}
-                        onClick={openModal}>
+                        onClick={() => setIsModalOpen(true)}
+                        >
                             Quoi de neuf ?
                         </Box>
+                        {/* <div  style={{
+                               
+                                borderRadius: 6,
+                                width: '100%',
+                                color: '#999',
+                                cursor: 'pointer',
+                            }} >
+                        {isClicked ? (
+                            <textarea
+                            style={{
+                                background: '#efefef',
+                                borderRadius: 6,
+                                padding: '0.5rem 1rem',
+                                width: '100%',
+                                color: 'black',
+                            }}
+                            autoFocus={true}
+                            placeholder="Quoi de neuf ?"
+                            />
+                        ) : (
+                            <div
+                            onClick={handleClick}
+                            >
+                            Quoi de neuf ?
+                            </div>
+                        )}
+                        </div> */}
                     </Grid>
                     <Grid item xs={11} sx={{
                         marginLeft: 'auto',

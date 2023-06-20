@@ -10,6 +10,8 @@ import {styled} from '@mui/material/styles'
 import {ReactComponent as IconPhotos} from '../../assets/SVG/picture (1).svg'
 import {ReactComponent as IconVideos} from '../../assets/SVG/play (1).svg'
 import { ReactComponent as IconPlanning } from '../../assets/SVG/bookmark (1).svg'
+import { getAllPassions } from '../../services/api'
+import { addPost } from '../../services/api'
 
 const styleModal = {
     position: 'absolute',
@@ -41,6 +43,24 @@ export default function MyModal({ setIsModalOpen }) {
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [previewImages, setPreviewImages] = useState([]);
     const fileInputRef = useRef(null);
+    const [passions, setPassions] = useState([]);
+
+
+    useEffect(() => {
+      getAllPassions()
+           .then(data => {
+               // Tri des passions dans l'ordre décroissant par leur identifiant
+              const sortedPassions = data.sort((a, b) => b.id - a.id);
+              setPassions(sortedPassions);
+          })
+          .catch(error => {
+               console.error(error);
+          });
+    
+      return;
+
+    }, []);
+
 
     const handleCloseModal = () => {
       console.log('hey')
@@ -70,35 +90,44 @@ export default function MyModal({ setIsModalOpen }) {
     };
     
     const handleDescriptionChange = (event) => {
-       // setDescription(event.target.value);
+        setDescription(event.target.value);
+    };
+
+
+    const [selectedOption, setSelectedOption] = useState('');
+
+    const handleOptionChange = (event) => {
+      console.log(event.target.value)
+      setSelectedOption(event.target.value);
     };
 
     const handleSubmit = (event) => {
-
-        // event.preventDefault();
-        // const formData = new FormData();
-        // formData.append('passionName', title);
-        // formData.append('passionDescription', description);
-        // formData.append('passionImage', image);
-        // console.log("formData", formData.get('passionImage'))
-        // addPassion(title, description, image, {
-        //     headers: {
-        //         'Content-Type': 'multipart/form-data',
-        //     },
-        // })
-        //     .then((data) => {
-        //         console.log(data);
-        //         setIsModalOpen(false);
-        //         //emitPassionAdded(data);
-        //         toast.success('La passion a été ajoutée avec succès');
-        //     })
-        //     .catch((error) => {
-        //         toast.error('Une erreur s\'est produite lors de l\'ajout de la passion');
-        //         console.error(error);
-        //     });
-
-        // history('/navHome/passions')
+      event.preventDefault();
+    
+      // const formData = new FormData();
+      // formData.append('postDescription', description);
+      // selectedFiles.forEach((file) => {
+      //   formData.append('postImage', file);
+      // });
+      // formData.append('passion', selectedOption);
+      // console.log(formData.get('postImage'))
+      console.log('reto', selectedFiles[0] + description + selectedOption)
+      // addPost(selectedFiles[0], description, selectedOption, 11, {
+      //   headers: {
+      //       'Content-Type': 'multipart/form-data',
+      //   },
+      //   }) .then((data) => {
+      //     console.log('eto data',data);
+      //     setIsModalOpen(false);
+      //     toast.success('Publiée avec succès');
+      //   })
+      //   .catch((error) => {
+      //     toast.error('Une erreur s\'est produite');
+      //     console.error(error);
+      //   });
+       
     };
+    
 
     return (
         <div>
@@ -122,6 +151,27 @@ export default function MyModal({ setIsModalOpen }) {
                             <Typography id="transition-modal-title" variant="h6" component="h2">
                               Nouvelle Publication
                             </Typography>
+                            <div>
+                            <label htmlFor="selectOption">Passion concernée:</label>
+                            <select id="selectOption" value={selectedOption} onChange={handleOptionChange}
+                                    style={{
+                                      padding: '0.6rem',
+                                      margin: '0.6rem',
+                                      fontSize: '14px',
+                                      border: '1px solid #ccc',
+                                      borderRadius: '4px',
+                                      backgroundColor: '#f7f7f7',
+                                      color: '#333',
+                                      width: '200px',
+                                    }}
+                              >
+                              {passions.map((passion) => (
+                                <option key={passion.id} value={passion.id}>
+                                  {passion.passionName}
+                                </option>
+                              ))}
+                            </select>                      
+                          </div>                            
                             <TextField
                                 id="outlined-multiline-static"
                                 label="Quoi de neuf?"
@@ -169,7 +219,7 @@ export default function MyModal({ setIsModalOpen }) {
                             />
                           ))}                       
                             <Divider sx={{ margin: 2, border: 'none' }}></Divider>
-                            <Button type="submit" variant="contained" color="primary">
+                            <Button onClick={handleSubmit} type="submit" variant="contained" color="primary">
                                 Publier
                             </Button>
                             <Button onClick={handleCloseModal} >Annuler</Button>

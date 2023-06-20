@@ -9,6 +9,17 @@ const api = axios.create({
 
 export default api;
 
+export const addPost = (postImage, postDescription, passion, user) => {
+    return api.post('/posts/', {
+        postImage,
+        postDescription,
+        passion,
+        user,
+    }).then(response => {
+        return response.data
+    })
+}
+
 export const addPassion = (passionName, passionDescription, passionImage) => {
     return api.post('/addPassion/', {
         passionName,
@@ -18,6 +29,7 @@ export const addPassion = (passionName, passionDescription, passionImage) => {
         return response.data
     })
 }
+
 export const getAllPassions = () => {
     return api.get('/passions/').then(response => {
         return response.data

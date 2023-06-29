@@ -112,19 +112,19 @@ export default function MyModal({ setIsModalOpen }) {
       // formData.append('passion', selectedOption);
       // console.log(formData.get('postImage'))
       console.log('reto', selectedFiles[0] + description + selectedOption)
-      // addPost(selectedFiles[0], description, selectedOption, 11, {
-      //   headers: {
-      //       'Content-Type': 'multipart/form-data',
-      //   },
-      //   }) .then((data) => {
-      //     console.log('eto data',data);
-      //     setIsModalOpen(false);
-      //     toast.success('Publiée avec succès');
-      //   })
-      //   .catch((error) => {
-      //     toast.error('Une erreur s\'est produite');
-      //     console.error(error);
-      //   });
+      addPost(selectedFiles[0], description, selectedOption, 11, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+        }) .then((data) => {
+          console.log('eto data',data);
+          setIsModalOpen(false);
+          toast.success('Publiée avec succès');
+        })
+        .catch((error) => {
+          toast.error('Une erreur s\'est produite');
+          console.error(error);
+        });
        
     };
     

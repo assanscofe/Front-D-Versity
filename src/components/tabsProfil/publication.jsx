@@ -12,6 +12,7 @@ import { ReactComponent as IconShare } from '../../assets/SVG/share.svg'
 import { ReactComponent as IconDots } from '../../assets/SVG/menu-dots.svg'
 import MyModal from './modalPublication';
 import { getPostByUserId } from '../../services/api'
+import { getAllPost } from '../../services/api'
 
 const MyButton = styled(Button)({
     border: '1px solid #ddd',
@@ -40,17 +41,35 @@ const Publication = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [userPosts, setUserPosts] = useState([]);
 
-    useEffect(() => {
+     useEffect(() => {
         const userId = 11; // a dynamiser
       
         getPostByUserId(userId)
           .then(data => {
             setUserPosts(data);
           })
-          .catch(error => {
-            console.error('Erreur lors de la récupération des publications:', error);
-          });
+           .catch(error => {
+             console.error('Erreur lors de la récupération des publications:', error);
+           });
       }, []);
+    // const [posts, setPosts] = useState([]);
+
+    // useEffect(() => {
+    //     getAllPost()
+    //          .then(data => {
+    //              // Tri des passions dans l'ordre décroissant par leur identifiant
+    //             const sorted = data.sort((a, b) => b.id - a.id);
+    //             setPosts(sorted);
+    //         })
+    //         .catch(error => {
+    //              console.error(error);
+    //         });
+
+    //     return () => {
+    //        //  eventEmitter.off(PASSION_ADDED, handlePassionAdded);
+    //      };
+
+    // }, []);
 
     return (
         <Box sx={{
@@ -144,15 +163,14 @@ const Publication = () => {
                 }}>
                     <Typography paragraph>Illustration...</Typography>
                 </Box> */}
-                <div>
-                    {userPosts.map(post => (
+               {/* <div>
+                    {posts.map(post => (
                     <div key={post.id}>
                         <h2>{post.postDescription}</h2>
                         <p></p>
-                        {/* Affichez d'autres informations sur la publication */}
                     </div>
                     ))}
-                </div>
+                </div>  */}
                 <Box sx={{
                     width: '100%',
                     height: '18rem',

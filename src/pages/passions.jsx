@@ -21,11 +21,6 @@ import eventEmitter, { PASSION_ADDED } from '../components/addPassion/event';
 
 //-----------import images--------
 // import img1 from '../assets/1132869.jpg'
-// import img2 from '../assets/1135879.png'
-// import img3 from '../assets/1143088.jpg'
-// import img4 from '../assets/1146218.png'
-// import img5 from '../assets/1280277.jpg'
-
 
 const MyAccordion = styled(Accordion)({
     width: '18rem',
@@ -54,42 +49,6 @@ const StyleAccordion = styled('div')(({ theme }) => ({
 //     {
 //         id: 1,
 //         passionImage: img1,
-//         passionName: 'Musique',
-//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-//     },
-//     {
-//         id: 2,
-//         passionImage: img2,
-//         passionName: 'Musique',
-//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-//     },
-//     {
-//         id: 3,
-//         passionImage: img3,
-//         passionName: 'Musique',
-//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blablabla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-//     },
-//     {
-//         id: 4,
-//         passionImage: img4,
-//         passionName: 'Musique',
-//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-//     },
-//     {
-//         id: 5,
-//         passionImage: img5,
-//         passionName: 'Musique',
-//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-//     },
-//     {
-//         id: 6,
-//         passionImage: img1,
-//         passionName: 'Musique',
-//         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
-//     },
-//     {
-//         id: 7,
-//         passionImage: img2,
 //         passionName: 'Musique',
 //         passionDescription: 'bla bla blabla blabla bla bla blabla blabla bla bla blabla blabla'
 //     },
@@ -137,14 +96,14 @@ const Passions = () => {
             <Typography variant='h3' color='primary' >Passions</Typography>
             <StyleAccordion>
                 {passions.map(passion => (
-                    <Color src={passion.passionImage} format="hex">
+                    <Color key={passion.id} src={passion.passionImage} format="hex">
                         {({ data, loading, error }) => (
                             <MyAccordion
-                                key={passion.id}
+                                key={passion.id} 
                                 expanded={expanded === passion.id}
                                 onChange={handleChange(passion.id)}
                             >
-                                <AccordionSummary
+                                    <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                     aria-controls={`${passion.id}-content`}
                                     id={`${passion.id}-header`}

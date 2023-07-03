@@ -26,6 +26,12 @@ export const getPostByUserId = (userId) => {
     })
 }
 
+export const getAllPost = () => {
+    return api.get('/posts/').then(response => {
+        return response.data
+    })
+}
+
 export const addPassion = (passionName, passionDescription, passionImage) => {
     return api.post('/passions/', {
         passionName,

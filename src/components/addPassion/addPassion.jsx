@@ -85,7 +85,7 @@ export default function TransitionsModal({ setIsModalOpen }) {
                 console.error(error);
             });
 
-        history('/navHome/passions')
+        history('/passions')
     };
 
     return (

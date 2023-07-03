@@ -1,4 +1,4 @@
-import React, { useState }from 'react'
+import React, { useState, useEffect}from 'react'
 import { Box, Paper, Grid,Modal, Button, Typography, Avatar, IconButton } from '@mui/material'
 import {styled} from '@mui/material/styles'
 import avatar from '../../assets/Icons/22.png'
@@ -11,6 +11,7 @@ import { ReactComponent as IconComment } from '../../assets/SVG/comment.svg'
 import { ReactComponent as IconShare } from '../../assets/SVG/share.svg'
 import { ReactComponent as IconDots } from '../../assets/SVG/menu-dots.svg'
 import MyModal from './modalPublication';
+import { getPostByUserId } from '../../services/api'
 
 const MyButton = styled(Button)({
     border: '1px solid #ddd',
@@ -37,6 +38,19 @@ const MyBox = styled(Box)({
 const Publication = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [userPosts, setUserPosts] = useState([]);
+
+    useEffect(() => {
+        const userId = 11; // a dynamiser
+      
+        getPostByUserId(userId)
+          .then(data => {
+            setUserPosts(data);
+          })
+          .catch(error => {
+            console.error('Erreur lors de la récupération des publications:', error);
+          });
+      }, []);
 
     return (
         <Box sx={{
@@ -83,33 +97,6 @@ const Publication = () => {
                         >
                             Quoi de neuf ?
                         </Box>
-                        {/* <div  style={{
-                               
-                                borderRadius: 6,
-                                width: '100%',
-                                color: '#999',
-                                cursor: 'pointer',
-                            }} >
-                        {isClicked ? (
-                            <textarea
-                            style={{
-                                background: '#efefef',
-                                borderRadius: 6,
-                                padding: '0.5rem 1rem',
-                                width: '100%',
-                                color: 'black',
-                            }}
-                            autoFocus={true}
-                            placeholder="Quoi de neuf ?"
-                            />
-                        ) : (
-                            <div
-                            onClick={handleClick}
-                            >
-                            Quoi de neuf ?
-                            </div>
-                        )}
-                        </div> */}
                     </Grid>
                     <Grid item xs={11} sx={{
                         marginLeft: 'auto',
@@ -157,6 +144,15 @@ const Publication = () => {
                 }}>
                     <Typography paragraph>Illustration...</Typography>
                 </Box> */}
+                <div>
+                    {userPosts.map(post => (
+                    <div key={post.id}>
+                        <h2>{post.postDescription}</h2>
+                        <p></p>
+                        {/* Affichez d'autres informations sur la publication */}
+                    </div>
+                    ))}
+                </div>
                 <Box sx={{
                     width: '100%',
                     height: '18rem',

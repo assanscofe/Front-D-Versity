@@ -3,25 +3,31 @@ import axios from 'axios'
 const api = axios.create({
     baseURL: 'http://localhost:8000/api/',
     headers: {
-        'content-Type': 'application/json',
+        'content-Type': 'multipart/form-data',
     }
 });
 
 export default api;
 
-export const addPost = (postImage, postDescription, passion, user) => {
+export const addPost = (postDescription,postImage, user, passion) => {
     return api.post('/posts/', {
-        postImage,
         postDescription,
-        passion,
+        postImage,
         user,
+        passion,
     }).then(response => {
         return response.data
     })
 }
 
+export const getPostByUserId = (userId) => {
+    return api.get('/posts/user/' + userId).then(response => {
+        return response.data
+    })
+}
+
 export const addPassion = (passionName, passionDescription, passionImage) => {
-    return api.post('/addPassion/', {
+    return api.post('/passions/', {
         passionName,
         passionDescription,
         passionImage,
@@ -35,16 +41,19 @@ export const getAllPassions = () => {
         return response.data
     })
 }
+
 export const getPassion = (idPassion) => {
     return api.get('/passions/' + idPassion).then(response => {
         return response.data
     })
 }
+
 export const updatePassion = (idPassion) => {
     return api.put('/passions/' + idPassion).then(response => {
         return response.data
     })
 }
+
 export const deletePassion = (idPassion) => {
     return api.delete('/passions/' + idPassion).then(response => {
         return response.data

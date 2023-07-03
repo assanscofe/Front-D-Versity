@@ -45,7 +45,6 @@ export default function MyModal({ setIsModalOpen }) {
     const fileInputRef = useRef(null);
     const [passions, setPassions] = useState([]);
 
-
     useEffect(() => {
       getAllPassions()
            .then(data => {
@@ -60,7 +59,6 @@ export default function MyModal({ setIsModalOpen }) {
       return;
 
     }, []);
-
 
     const handleCloseModal = () => {
       console.log('hey')
@@ -112,7 +110,7 @@ export default function MyModal({ setIsModalOpen }) {
       // formData.append('passion', selectedOption);
       // console.log(formData.get('postImage'))
       console.log('reto', selectedFiles[0] + description + selectedOption)
-      addPost(selectedFiles[0], description, selectedOption, 11, {
+      addPost( description, selectedFiles[0], 11, selectedOption, {
         headers: {
             'Content-Type': 'multipart/form-data',
         },

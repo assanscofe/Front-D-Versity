@@ -8,10 +8,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {styled} from '@mui/material/styles'
 import {ReactComponent as IconPhotos} from '../../assets/SVG/picture (1).svg'
-import {ReactComponent as IconVideos} from '../../assets/SVG/play (1).svg'
+//import {ReactComponent as IconVideos} from '../../assets/SVG/play (1).svg'
 import { ReactComponent as IconPlanning } from '../../assets/SVG/bookmark (1).svg'
 import { getAllPassions } from '../../services/api'
 import { addPost } from '../../services/api'
+import { emitPostAdded } from '../addPassion/event';
 
 const styleModal = {
     position: 'absolute',
@@ -115,6 +116,7 @@ export default function MyModal({ setIsModalOpen }) {
         },
         }) .then((data) => {
           console.log('eto data',data);
+          emitPostAdded(data);
           setIsModalOpen(false);
           toast.success('Publiée avec succès');
         })

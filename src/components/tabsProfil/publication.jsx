@@ -15,6 +15,7 @@ import { getPostByUserId } from '../../services/api'
 import { getAllPost } from '../../services/api'
 import moment from 'moment';
 import 'moment/locale/fr'; // Importez la localisation française si nécessaire
+import eventEmitter, { POST_ADDED } from '../addPassion/event';
 
 const MyButton = styled(Button)({
     border: '1px solid #ddd',
@@ -71,11 +72,19 @@ const Publication = () => {
                   console.error(error);
              });
 
+         // Écoutez l'événement de nouvelle passion ajoutée
+         eventEmitter.on(POST_ADDED, handlePostAdded);
+
          return () => {
-            //  eventEmitter.off(PASSION_ADDED, handlePassionAdded);
+              eventEmitter.off(POST_ADDED, handlePostAdded);
           };
 
     }, []);
+        // Fonction de gestion de l'événement de nouvelle passion ajoutée
+        const handlePostAdded = (post) => {
+            // Mettez à jour la liste des passions avec la nouvelle passion
+            setPosts((prevPost) => [post, ...prevPost]);
+       };
 
     return (
         <Box sx={{
@@ -187,7 +196,7 @@ const Publication = () => {
                             borderRadius: '1rem',
                         }}>
                             <h4>{post.id}</h4>
-                            <h2>{post.postDescription}</h2>
+                            <h3>{post.postDescription}</h3>
                             <img src={post.postImage} alt={post.postImage} width="100%" height="100%" style={{objectFit:'cover'}} />
                         </Box>
                         <Box sx={{

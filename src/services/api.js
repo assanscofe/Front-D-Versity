@@ -3,7 +3,7 @@ import axios from 'axios'
 const api = axios.create({
     baseURL: 'http://localhost:8000/api/',
     headers: {
-        'content-Type': 'multipart/form-data',
+        'Content-Type': 'multipart/form-data',
     }
 });
 
@@ -27,7 +27,7 @@ export const getPostByUserId = (userId) => {
 }
 
 export const getAllPost = () => {
-    return api.get('/posts/').then(response => {
+    return api.get('/posts/all').then(response => {
         return response.data
     })
 }

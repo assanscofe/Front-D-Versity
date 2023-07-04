@@ -116,7 +116,7 @@ const Profil = () => {
                                 width: '100%',
                                 height:'calc(100% - 7vh)',
                                 padding: '0 1rem',
-                                overflowY: 'scroll',
+                                //  overflowY: 'scroll',
                                 // scrollbarWidth: '0',
                                 // '&::-webkit-scrollbar': {
                                 //     display:'none'

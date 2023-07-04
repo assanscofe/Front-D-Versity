@@ -101,7 +101,6 @@ export default function MyModal({ setIsModalOpen }) {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-    
       // const formData = new FormData();
       // formData.append('postDescription', description);
       // selectedFiles.forEach((file) => {

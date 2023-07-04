@@ -13,6 +13,8 @@ import { ReactComponent as IconDots } from '../../assets/SVG/menu-dots.svg'
 import MyModal from './modalPublication';
 import { getPostByUserId } from '../../services/api'
 import { getAllPost } from '../../services/api'
+import moment from 'moment';
+import 'moment/locale/fr'; // Importez la localisation française si nécessaire
 
 const MyButton = styled(Button)({
     border: '1px solid #ddd',
@@ -24,7 +26,7 @@ const MyPaper = styled(Paper)({
     borderRadius: 15,
     width: '100%',
     height: 'auto',
-    padding:'1rem'
+    padding:'1rem',
 })
 
 const MyBox = styled(Box)({
@@ -33,7 +35,7 @@ const MyBox = styled(Box)({
     alignItems: 'center',
     columnGap: 1,
     color: '#444',
-    fill:'#444'
+    fill:'#444',
 })
 
 const Publication = () => {
@@ -41,35 +43,39 @@ const Publication = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [userPosts, setUserPosts] = useState([]);
 
-     useEffect(() => {
-        const userId = 11; // a dynamiser
+    //  useEffect(() => {
+    //     const userId = 11; // a dynamiser
       
-        getPostByUserId(userId)
-          .then(data => {
-            setUserPosts(data);
-          })
-           .catch(error => {
-             console.error('Erreur lors de la récupération des publications:', error);
-           });
-      }, []);
-    // const [posts, setPosts] = useState([]);
+    //     getPostByUserId(userId)
+    //       .then(data => {
+    //         setUserPosts(data);
+    //       })
+    //        .catch(error => {
+    //          console.error('Erreur lors de la récupération des publications:', error);
+    //        });
+    //   }, []);
+    const [posts, setPosts] = useState([]);
 
-    // useEffect(() => {
-    //     getAllPost()
-    //          .then(data => {
-    //              // Tri des passions dans l'ordre décroissant par leur identifiant
-    //             const sorted = data.sort((a, b) => b.id - a.id);
-    //             setPosts(sorted);
-    //         })
-    //         .catch(error => {
-    //              console.error(error);
-    //         });
+    useEffect(() => {
+         getAllPost()
+              .then(data => {
+                 // Tri des passions dans l'ordre décroissant par leur identifiant
+                const sorted = data.sort((a, b) => b.id - a.id);
+                // Conversion de la chaîne 'createdAt' en objet Date
+                sorted.forEach(post => {
+                    post.createdAt = moment(post.createdAt).format('DD/MM/YYYY');
+                });
+                setPosts(sorted);
+             })
+             .catch(error => {
+                  console.error(error);
+             });
 
-    //     return () => {
-    //        //  eventEmitter.off(PASSION_ADDED, handlePassionAdded);
-    //      };
+         return () => {
+            //  eventEmitter.off(PASSION_ADDED, handlePassionAdded);
+          };
 
-    // }, []);
+    }, []);
 
     return (
         <Box sx={{
@@ -78,7 +84,23 @@ const Publication = () => {
             display: 'flex',
             flexDirection: 'column',
             rowGap: '1rem',
-            marginBottom:'1rem'
+            marginBottom:'1rem',
+            maxHeight: 'calc(100vh - 100px)',
+            overflow:'auto',
+            '&::-webkit-scrollbar': {
+                width: '6px',
+                backgroundColor: 'transparent',
+              },
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: 'transparent',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: '#ccc',
+                borderRadius: '3px',
+              },
+              '&::-webkit-scrollbar-thumb:hover': {
+                backgroundColor: '#999',
+              },
         }}>
             <Paper sx={{
                 width: '100%',
@@ -131,78 +153,69 @@ const Publication = () => {
                     </Grid>
                 </Grid>
             </Paper>
-            <MyPaper >
-                <Box sx={{
-                    display: 'flex',
-                    justifyContent:'space-between'
-                }}>
-                    <Box sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        columnGap: 1,
-                        marginBottom:'0.5rem'
-                    }}>
-                        <Avatar 
-                            src={avatar}
-                            sx={{background:'#2a5078'}}
-                        />
-                        <Box sx={{}}>
-                            <Typography sx={{fontWeight:'bold',fontSize:'0.9rem'}}>Nom Utilisateur</Typography>
-                            <Typography color='GrayText' sx={{fontSize:'0.6rem'}}>1 heure</Typography>
+            {posts.map(post => (
+                 <div key={post.id}>
+                    <MyPaper >
+                        <Box sx={{
+                            display: 'flex',
+                            justifyContent:'space-between'
+                        }}>
+                            <Box sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                columnGap: 1,
+                                marginBottom:'0.5rem'
+                            }}>
+                                <Avatar 
+                                    src={avatar}
+                                    sx={{background:'#2a5078'}}
+                                />
+                                <Box sx={{}}>
+                                    <Typography sx={{fontWeight:'bold',fontSize:'0.9rem'}}>Nom Utilisateur</Typography>
+                                    <Typography color='GrayText' sx={{ fontSize: '0.6rem' }}>
+                                        {post.createdAt}
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            <IconButton>
+                                <IconDots style={{ width: 15, height: 15,fill:'#444' }} />
+                            </IconButton>
                         </Box>
-                    </Box>
-                    <IconButton>
-                        <IconDots style={{ width: 15, height: 15,fill:'#444' }} />
-                    </IconButton>
-                </Box>
-                {/* <Box sx={{
-                    width: '100%',
-                    height: 'auto',
-                    padding: '0 1rem',
-                    margin:'0'
-                }}>
-                    <Typography paragraph>Illustration...</Typography>
-                </Box> */}
-               {/* <div>
-                    {posts.map(post => (
-                    <div key={post.id}>
-                        <h2>{post.postDescription}</h2>
-                        <p></p>
-                    </div>
-                    ))}
-                </div>  */}
-                <Box sx={{
-                    width: '100%',
-                    height: '18rem',
-                    borderRadius: '1rem',
-                    overflow:'hidden'
-                }}>
-                    <img src={img1} alt="image 1" width={'100%'} height={'100%'} style={{objectFit:'cover'}} />
-                </Box>
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    columnGap:2
-                }}>
-                    <MyBox >
-                        <IconButton>
-                            <IconHeart style={{ width: 15, height: 15,fill:'#d7415e' }} />
-                        </IconButton>
-                        <Typography>25</Typography>
-                    </MyBox>
-                    <MyBox>
-                        <IconButton>
-                            <IconComment style={{ width: 15, height: 15 }} />
-                        </IconButton>
-                        <Typography>2</Typography>
-                    </MyBox>
-                    <MyBox>
-                        <IconButton>
-                            <IconShare style={{ width: 15, height: 15 }} />
-                        </IconButton>
-                    </MyBox>
-                </Box>
-            </MyPaper>
+                        <Box sx={{
+                            width: '100%',
+                            height: 'auto',
+                            borderRadius: '1rem',
+                        }}>
+                            <h4>{post.id}</h4>
+                            <h2>{post.postDescription}</h2>
+                            <img src={post.postImage} alt={post.postImage} width="100%" height="100%" style={{objectFit:'cover'}} />
+                        </Box>
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            columnGap:2,
+                        }}>
+                            <MyBox >
+                                <IconButton>
+                                    <IconHeart style={{ width: 15, height: 15,fill:'#d7415e' }} />
+                                </IconButton>
+                                <Typography>25</Typography>
+                            </MyBox>
+                            <MyBox>
+                                <IconButton>
+                                    <IconComment style={{ width: 15, height: 15 }} />
+                                </IconButton>
+                                <Typography>2</Typography>
+                            </MyBox>
+                            <MyBox>
+                                <IconButton>
+                                    <IconShare style={{ width: 15, height: 15 }} />
+                                </IconButton>
+                            </MyBox>
+                        </Box>
+                    </MyPaper>                    
+                </div>
+            ))}
         </Box>
     )
 }

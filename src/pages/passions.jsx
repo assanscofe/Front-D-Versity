@@ -102,7 +102,7 @@ const Passions = () => {
          setPassions((prevPassions) => [passion, ...prevPassions]);
     };
     return (
-        <div>
+        <>
             <Typography variant='h3' color='primary' >Passions</Typography>
             <StyleAccordion>
                 {passions.map(passion => (
@@ -151,7 +151,7 @@ const Passions = () => {
                                         marginBottom:'0.5rem',
                                         marginTop:'1rem'
                                     }}>
-                                    <MyButton>communautés</MyButton>
+                                    <MyButton>communauté</MyButton>
                                     <MyButton>Evènements</MyButton>
                                     </Box>
                                 </AccordionDetails>
@@ -160,7 +160,7 @@ const Passions = () => {
                     </Color>
                 ))}
             </StyleAccordion>
-        </div>
+        </>
     );
 }
 

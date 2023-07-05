@@ -102,7 +102,7 @@ const Passions = () => {
          setPassions((prevPassions) => [passion, ...prevPassions]);
     };
     return (
-        <>
+        <div>
             <Typography variant='h3' color='primary' >Passions</Typography>
             <StyleAccordion>
                 {passions.map(passion => (
@@ -160,7 +160,7 @@ const Passions = () => {
                     </Color>
                 ))}
             </StyleAccordion>
-        </>
+        </div>
     );
 }
 

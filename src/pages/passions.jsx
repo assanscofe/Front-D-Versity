@@ -21,9 +21,19 @@ import eventEmitter, { PASSION_ADDED } from '../components/addPassion/event';
 
 //-----------import images--------
 // import img1 from '../assets/1132869.jpg'
+const MyButton = styled(Button)({
+    border: '1px solid #444',
+    borderRadius: '1.5rem',
+    padding: '0.375rem 1.5rem',
+    color:'#444',
+})
 
 const MyAccordion = styled(Accordion)({
     width: '18rem',
+    backgroundColor: '#f5f5f5',
+    border: '1px solid #ccc',
+    borderRadius: '0.5rem',
+    marginBottom: '1rem',
 })
 
 const StyleAccordion = styled('div')(({ theme }) => ({
@@ -103,10 +113,11 @@ const Passions = () => {
                                 expanded={expanded === passion.id}
                                 onChange={handleChange(passion.id)}
                             >
-                                    <AccordionSummary
+                                <AccordionSummary
                                     expandIcon={<ExpandMoreIcon />}
                                     aria-controls={`${passion.id}-content`}
                                     id={`${passion.id}-header`}
+                                    
                                 >
                                     <Box sx={{
                                         width: '6rem',
@@ -114,20 +125,35 @@ const Passions = () => {
                                         borderRadius: 1,
                                         overflow:'hidden'
                                     }}>
-                                        <img src={passion.passionImage} alt={passion.passionName} width="100%" height="100%" />
+                                        <img src={passion.passionImage} alt={passion.passionName}   
+                                        style={{
+                                            width: '100%',
+                                            height: 'auto',
+                                            display: 'block',
+                                            objectFit: 'cover',
+                                      }}/>
                                     </Box> &nbsp;
                                     <Typography
                                         variant='h6'
-                                        color={'text.secondary'}
+                                        color="text.secondary"
                                         sx={{
-                                            margin:'2rem auto'
+                                          marginTop: 'auto',
+                                          marginBottom: 'auto',
                                         }}
                                     >{passion.passionName}</Typography>
                                 </AccordionSummary>
                                 <AccordionDetails>
                                     <Typography>{passion.passionDescription}</Typography>
-                                    <Typography>Communautés</Typography>
-                                    <Typography>Evènements</Typography>
+                                    <Box sx={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        columnGap: 1,
+                                        marginBottom:'0.5rem',
+                                        marginTop:'1rem'
+                                    }}>
+                                    <MyButton>communautés</MyButton>
+                                    <MyButton>Evènements</MyButton>
+                                    </Box>
                                 </AccordionDetails>
                             </MyAccordion>
                         )}
@@ -139,46 +165,3 @@ const Passions = () => {
 }
 
 export default Passions
-{/* <Card key={passion.id} sx={{
-    width: '12rem',
-    height: '15rem',
-    background: data+'77',
-    borderRadius: 6,
-    transition:'all .01s ease',
-    '&:hover': {
-        boxShadow: '0 6px 0 '+data+' , 0 10px 10px '+data+'55 ,0 15px 15px '+data+'33',
-        transform: 'scale(1.03,1.03)',
-        transition: 'all 0.1s ease',
-    },
-    position:'relative'
-}} >
-    <CardMedia 
-        component='img'
-        height='50%'
-        image={passion.passionImage}
-        alt={passion.passionName}
-    />
-    <CardContent sx={{height:'35%'}}>
-        <Typography variant={'h5'} color={'white'} textAlign={'center'}>{passion.passionName}</Typography>
-        <Typography sx={{fontSize:'0.7rem'}}>{passion.passionDescription }</Typography>
-    </CardContent>
-    <Divider sx={{margin:'0 1rem'}}></Divider>
-    <CardActions sx={{
-        padding: '0',
-        position: 'absolute',
-        bottom: '0',
-        width: '100%',
-        height:'15%'
-    }}>
-        <Button sx={{
-            width: '100%',
-            margin: 'auto',
-            color: data,
-            background: data,
-            '&:hover': {
-                background: data+'88',
-                color:'#fff'
-            }
-        }}>Rejoindre</Button>
-    </CardActions>
-</Card>    */}

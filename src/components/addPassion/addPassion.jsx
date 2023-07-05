@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Backdrop, Box, Modal, Fade, Button, Typography, TextField, Divider } from '@mui/material'
 import { addPassion } from '../../services/api'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { emitPassionAdded } from './event';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {styled} from '@mui/material/styles';
+import {ReactComponent as IconPhotos} from '../../assets/SVG/picture (1).svg'
 
 const styleModal = {
     position: 'absolute',
@@ -27,17 +29,30 @@ const styleForm = {
     //   alignItems: 'center',
 }
 
+const MyButton = styled(Button)({
+    border: '1px solid #ddd',
+    borderRadius: '1.5rem',
+    padding: '0.375rem 1.5rem',
+    color:'#333'
+  })
+  
+
 export default function TransitionsModal({ setIsModalOpen }) {
     const history = useNavigate();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [image, setImage] = useState(null);
     const [imageDataUrl, setImageDataUrl] = useState(null);
+    const fileInputRef = useRef(null);
 
     const handleCloseModal = () => {
-        toast.success('La passion a été ajoutée avec succès')
+        console.log('La passion a ete ')
         setIsModalOpen(false);
     };
+
+    const handleButtonClicked = () => {
+        fileInputRef.current.click();
+      };
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -77,15 +92,16 @@ export default function TransitionsModal({ setIsModalOpen }) {
             .then((data) => {
                 console.log(data);
                 setIsModalOpen(false);
-                emitPassionAdded(data);
                 toast.success('La passion a été ajoutée avec succès');
+                emitPassionAdded(data);   
+                history('/passions')   
             })
             .catch((error) => {
                 toast.error('Une erreur s\'est produite lors de l\'ajout de la passion');
                 console.error(error);
             });
 
-        history('/passions')
+       
     };
 
     return (
@@ -110,6 +126,21 @@ export default function TransitionsModal({ setIsModalOpen }) {
                             <Typography id="transition-modal-title" variant="h6" component="h2">
                                 Ajouter une nouvelle passion
                             </Typography>
+
+                            <div>
+                            <MyButton                 
+                            onClick={handleButtonClicked}
+                            startIcon={<IconPhotos style={{ width: 10, height: 10,fill:'#2096f3' }} /> }>
+                            Photo </MyButton>
+                            <input
+                            required
+                            type="file"
+                            onChange={handleImageChange}
+                            ref={fileInputRef}
+                            style={{ display: 'none' }}
+                            />
+                            {imageDataUrl && <img width="100" height="100" src={imageDataUrl} alt="Uploaded image" />}
+                            </div>
                             <TextField
                                 id="outlined-basic"
                                 label="Titre de la passion"
@@ -132,11 +163,6 @@ export default function TransitionsModal({ setIsModalOpen }) {
                                 required
                                 sx={{ width: '100%' }}
                             />
-
-                            <div>
-                                <input required type="file" onChange={handleImageChange} />
-                                {imageDataUrl && <img width="100" height="100" src={imageDataUrl} alt="Uploaded image" />}
-                            </div>
                             <Divider sx={{ margin: 2, border: 'none' }}></Divider>
                             <Button type="submit" variant="contained" color="primary">
                                 Valider

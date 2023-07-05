@@ -25,7 +25,7 @@ const MyButton = styled(Button)({
 })
 const MyPaper = styled(Paper)({
     borderRadius: 15,
-    width: '100%',
+    width: '85%',
     height: 'auto',
     padding:'1rem',
 })
@@ -112,7 +112,7 @@ const Publication = () => {
               },
         }}>
             <Paper sx={{
-                width: '100%',
+                width: '85%',
                 // height:'7rem',
                 borderRadius: 4,
                 padding:'1rem'
@@ -180,7 +180,7 @@ const Publication = () => {
                                     sx={{background:'#2a5078'}}
                                 />
                                 <Box sx={{}}>
-                                    <Typography sx={{fontWeight:'bold',fontSize:'0.9rem'}}>Nom Utilisateur</Typography>
+                                    <Typography sx={{fontWeight:'bold',fontSize:'0.9rem'}}>RABESOA Nicky</Typography>
                                     <Typography color='GrayText' sx={{ fontSize: '0.6rem' }}>
                                         {post.createdAt}
                                     </Typography>
@@ -195,9 +195,14 @@ const Publication = () => {
                             height: 'auto',
                             borderRadius: '1rem',
                         }}>
-                            <h4>{post.id}</h4>
-                            <h3>{post.postDescription}</h3>
-                            <img src={post.postImage} alt={post.postImage} width="100%" height="100%" style={{objectFit:'cover'}} />
+                            <p>{post.postDescription}</p>
+                            <img src={post.postImage} alt={post.postImage} width="auto" height="auto" 
+                                style={{
+                                    marginTop:'1rem',
+                                    maxWidth: '100%',
+                                    maxHeight: '100%',
+                                    
+                            }} />
                         </Box>
                         <Box sx={{
                             display: 'flex',

@@ -80,7 +80,7 @@ const Profil = () => {
                             }}>
                                 <img src={avatar} alt="avatar" width={'100%'} height={'100%'} />
                             </Box>
-                            <Typography variant='h6'>Nom utilisateur</Typography>
+                            <Typography variant='h6'>RABESOA Nicky</Typography>
                             <Typography>Bio</Typography>
                             <Button>Suivre</Button>
                         </Paper>

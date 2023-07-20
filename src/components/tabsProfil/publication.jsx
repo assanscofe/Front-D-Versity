@@ -16,6 +16,8 @@ import { getAllPost } from '../../services/api'
 import moment from 'moment';
 import 'moment/locale/fr'; // Importez la localisation française si nécessaire
 import eventEmitter, { POST_ADDED } from '../addPassion/event';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MyButton = styled(Button)({
     border: '1px solid #ddd',
@@ -42,49 +44,58 @@ const MyBox = styled(Box)({
 const Publication = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [userPosts, setUserPosts] = useState([]);
-
-    //  useEffect(() => {
-    //     const userId = 11; // a dynamiser
-      
-    //     getPostByUserId(userId)
-    //       .then(data => {
-    //         setUserPosts(data);
-    //       })
-    //        .catch(error => {
-    //          console.error('Erreur lors de la récupération des publications:', error);
-    //        });
-    //   }, []);
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-         getAllPost()
-              .then(data => {
-                 // Tri des passions dans l'ordre décroissant par leur identifiant
-                const sorted = data.sort((a, b) => b.id - a.id);
-                // Conversion de la chaîne 'createdAt' en objet Date
-                sorted.forEach(post => {
-                    post.createdAt = moment(post.createdAt).format('DD/MM/YYYY');
-                });
-                setPosts(sorted);
-             })
-             .catch(error => {
-                  console.error(error);
-             });
+        const userId = 11; // a dynamiser
+      
+        getPostByUserId(userId)
+          .then(data => {
+            // Tri des passions dans l'ordre décroissant par leur identifiant
+            const sorted = data.sort((a, b) => b.id - a.id);
+            // Conversion de la chaîne 'createdAt' en objet Date
+            sorted.forEach(post => {
+                post.createdAt = moment(post.createdAt).format('DD/MM/YYYY');
+            });
+            setPosts(sorted);
+          //  toast.success('Publications récupérées avec succès !');
+          })
+           .catch(error => {
+             console.error('Erreur lors de la récupération des publications:', error);
+             toast.error('Une erreur est survenue lors de la récupération des publications.');
+           });
 
-         // Écoutez l'événement de nouvelle passion ajoutée
-         eventEmitter.on(POST_ADDED, handlePostAdded);
+        // Écoutez l'événement de nouvelle passion ajoutée
+        eventEmitter.on(POST_ADDED, handlePostAdded);
 
-         return () => {
-              eventEmitter.off(POST_ADDED, handlePostAdded);
-          };
+        return () => {
+            eventEmitter.off(POST_ADDED, handlePostAdded);
+        };    
 
     }, []);
-        // Fonction de gestion de l'événement de nouvelle passion ajoutée
-        const handlePostAdded = (post) => {
+
+    // const [posts, setPosts] = useState([]);
+
+    // useEffect(() => {
+    //      getAllPost()
+    //           .then(data => {
+    //              // Tri des passions dans l'ordre décroissant par leur identifiant
+    //             const sorted = data.sort((a, b) => b.id - a.id);
+    //             // Conversion de la chaîne 'createdAt' en objet Date
+    //             sorted.forEach(post => {
+    //                 post.createdAt = moment(post.createdAt).format('DD/MM/YYYY');
+    //             });
+    //             setPosts(sorted);
+    //          })
+    //          .catch(error => {
+    //               console.error(error);
+    //          });
+    // }, []);
+    //     // Fonction de gestion de l'événement de nouvelle passion ajoutée
+    const handlePostAdded = (post) => {
             // Mettez à jour la liste des passions avec la nouvelle passion
-            setPosts((prevPost) => [post, ...prevPost]);
-       };
+        setPosts((prevPost) => [post, ...prevPost]);
+    };
 
     return (
         <Box sx={{
@@ -111,6 +122,7 @@ const Publication = () => {
                 backgroundColor: '#999',
               },
         }}>
+            <ToastContainer />             
             <Paper sx={{
                 width: '85%',
                 // height:'7rem',
@@ -227,7 +239,7 @@ const Publication = () => {
                                 </IconButton>
                             </MyBox>
                         </Box>
-                    </MyPaper>                    
+                    </MyPaper>       
                 </div>
             ))}
         </Box>

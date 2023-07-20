@@ -4,7 +4,7 @@ import { addPassion } from '../../services/api'
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { emitPassionAdded } from './event';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {styled} from '@mui/material/styles';
 import {ReactComponent as IconPhotos} from '../../assets/SVG/picture (1).svg'
@@ -94,7 +94,7 @@ export default function TransitionsModal({ setIsModalOpen }) {
                 setIsModalOpen(false);
                 toast.success('La passion a été ajoutée avec succès');
                 emitPassionAdded(data);   
-                history('/passions')   
+               // history('/passions')   
             })
             .catch((error) => {
                 toast.error('Une erreur s\'est produite lors de l\'ajout de la passion');
@@ -105,8 +105,8 @@ export default function TransitionsModal({ setIsModalOpen }) {
     };
 
     return (
-        <div>
-            <ToastContainer />
+        <div>    
+            <ToastContainer />        
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -172,6 +172,7 @@ export default function TransitionsModal({ setIsModalOpen }) {
                     </Box>
                 </Fade>
             </Modal>
+            
         </div>
     );
 }

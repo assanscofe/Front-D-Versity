@@ -132,8 +132,7 @@ export default function TransitionsModal({ setIsModalOpen }) {
                             onClick={handleButtonClicked}
                             startIcon={<IconPhotos style={{ width: 10, height: 10,fill:'#2096f3' }} /> }>
                             Photo </MyButton>
-                            <input
-                            required
+                            <input                            
                             type="file"
                             onChange={handleImageChange}
                             ref={fileInputRef}

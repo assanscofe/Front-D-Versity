@@ -18,6 +18,9 @@ import 'moment/locale/fr'; // Importez la localisation française si nécessaire
 import eventEmitter, { POST_ADDED } from '../addPassion/event';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 
 const MyButton = styled(Button)({
     border: '1px solid #ddd',
@@ -97,6 +100,7 @@ const Publication = () => {
         setPosts((prevPost) => [post, ...prevPost]);
     };
 
+    
     return (
         <Box sx={{
             width: '100%',

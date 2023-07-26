@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Backdrop, Box, Modal, Fade, Button, Typography, TextField, Divider } from '@mui/material'
-import { addPassion } from '../../services/api'
+import { addPassion, updatePassion} from '../../services/api'
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { emitPassionAdded } from './event';
@@ -37,7 +37,7 @@ const MyButton = styled(Button)({
   })
   
 
-export default function TransitionsModal({ setIsModalOpen }) {
+export default function TransitionsModal({ setIsModalOpen, passionToUpdate, updatePassionInList, }) {
     const history = useNavigate();
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -45,6 +45,15 @@ export default function TransitionsModal({ setIsModalOpen }) {
     const [imageDataUrl, setImageDataUrl] = useState(null);
     const fileInputRef = useRef(null);
 
+    useEffect(() => {
+        // Si passionToUpdate est fourni, initialisez les valeurs du formulaire pour le mode mise à jour
+        if (passionToUpdate) {
+            setTitle(passionToUpdate.passionName);
+            setDescription(passionToUpdate.passionDescription);
+            setImageDataUrl(passionToUpdate.passionImage)
+        }
+    }, [passionToUpdate]);
+    
     const handleCloseModal = () => {
         console.log('La passion a ete ')
         setIsModalOpen(false);
@@ -84,24 +93,40 @@ export default function TransitionsModal({ setIsModalOpen }) {
         formData.append('passionDescription', description);
         formData.append('passionImage', image);
         console.log("formData", formData.get('passionImage'))
-        addPassion(title, description, image, {
-            headers: {
+        if (passionToUpdate) {
+            updatePassion(passionToUpdate.id, title, description,image, {
+              headers: {
                 'Content-Type': 'multipart/form-data',
-            },
-        })
-            .then((data) => {
+              },
+            })
+              .then((data) => {
+                updatePassionInList(data);
                 console.log(data);
                 setIsModalOpen(false);
-                toast.success('La passion a été ajoutée avec succès');
-                emitPassionAdded(data);   
-               // history('/passions')   
-            })
-            .catch((error) => {
-                toast.error('Une erreur s\'est produite lors de l\'ajout de la passion');
+                toast.success('La passion a été mise à jour avec succès');
+              })
+              .catch((error) => {
+                toast.error('Une erreur s\'est produite lors de la mise à jour de la passion');
                 console.error(error);
-            });
-
-       
+              });
+          } else {
+            addPassion(title, description, image, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+                .then((data) => {
+                    console.log(data);
+                    setIsModalOpen(false);
+                    toast.success('La passion a été ajoutée avec succès');
+                    emitPassionAdded(data);   
+                // history('/passions')   
+                })
+                .catch((error) => {
+                    toast.error('Une erreur s\'est produite lors de l\'ajout de la passion');
+                    console.error(error);
+                });
+        }
     };
 
     return (
@@ -123,9 +148,9 @@ export default function TransitionsModal({ setIsModalOpen }) {
                 <Fade in={true}>
                     <Box sx={styleModal}>
                         <form onSubmit={handleSubmit} style={styleForm}>
-                            <Typography id="transition-modal-title" variant="h6" component="h2">
-                                Ajouter une nouvelle passion
-                            </Typography>
+                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                            {passionToUpdate ? 'Modifier la passion' : 'Ajouter une nouvelle passion'}
+                        </Typography>
 
                             <div>
                             <MyButton                 

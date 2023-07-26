@@ -15,7 +15,7 @@ import eventEmitter, { PASSION_ADDED } from '../components/addPassion/event';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
-
+import TransitionsModal from '../components/addPassion/addPassion'
 //-----------import images--------
 // import img1 from '../assets/1132869.jpg'
 const MyButton = styled(Button)({
@@ -89,6 +89,10 @@ const Passions = () => {
 
     const [passionToDeleteId, setPassionToDeleteId] = useState(null);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [passionToUpdate, setPassionToUpdate] = useState(null);
+
     useEffect(() => {
         Modal.setAppElement('#root'); // Utilisez le sélecteur CSS de l'élément racine de votre application
     }, []);
@@ -149,7 +153,19 @@ const Passions = () => {
         setPassionToDeleteId(null);
     };
 
-
+    const handleEdit = (passion) => {
+        setPassionToUpdate(passion);
+        setIsModalOpen(true);
+    };
+      
+    const updatePassionInList = (updatedPassion) => {
+        setPassions((prevPassions) =>
+          prevPassions.map((passion) =>
+            passion.id === updatedPassion.id ? updatedPassion : passion
+          )
+        );
+    };
+         
     return (
         <>
             <Typography variant='h3' color='primary' >Passions</Typography>
@@ -206,9 +222,10 @@ const Passions = () => {
                                     {/* <MyButton>communauté</MyButton>
                                     <MyButton>Evènements</MyButton> */}
                                     <MyButton onClick={() => handleDelete(passion.id)}>Supprimer</MyButton>
-                                    <MyButton>Modifier</MyButton>
+                                    <MyButton onClick={() => handleEdit(passion)}>Modifier</MyButton>
                                     </Box>
                                 </AccordionDetails>
+                                {isModalOpen && <TransitionsModal setIsModalOpen={setIsModalOpen} passionToUpdate={passionToUpdate} updatePassionInList={updatePassionInList}/>}
                             </MyAccordion>
                         )}
                     </Color>
@@ -238,9 +255,9 @@ const Passions = () => {
             >
                 <h2>Confirmer la suppression</h2>
                 <p>Voulez-vous vraiment supprimer cette passion ?</p>
-                <div style={{ display: 'flex', justifyContent: 'space-around' , marginTop:'25px'}}>
-                <DeleteButton onClick={confirmDelete}>Oui</DeleteButton>
+                <div style={{ display: 'flex', justifyContent: 'space-around' , marginTop:'25px'}}>               
                 <MyButton onClick={closeModal}>Non</MyButton>
+                <DeleteButton onClick={confirmDelete}>Oui</DeleteButton>
                 </div>
             </Modal>
         </>

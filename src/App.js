@@ -5,7 +5,12 @@ import darkTheme from './theme/darkTheme'
 
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 import { Box, ThemeProvider } from '@mui/material';
+<<<<<<< HEAD
 import { useSelector } from 'react-redux';
+=======
+import { Provider } from 'react-redux';
+import { store } from './redux/Store'
+>>>>>>> 3f590f00c296cb386c0571fddfb73c244c34338a
 import CssBaseline from '@mui/material/CssBaseline'
 import { useContext } from 'react'
 import { DarkModeContext } from './context/darkModeContext';

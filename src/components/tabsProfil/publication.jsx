@@ -17,6 +17,11 @@ import { getAllPost } from '../../services/api'
 import moment from 'moment';
 import 'moment/locale/fr'; // Importez la localisation française si nécessaire
 import eventEmitter, { POST_ADDED } from '../addPassion/event';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
 
 const MyButton = styled(Button)({
     border: '1px solid #ddd',
@@ -26,7 +31,7 @@ const MyButton = styled(Button)({
 })
 const MyPaper = styled(Paper)({
     borderRadius: 15,
-    width: '100%',
+    width: '85%',
     height: 'auto',
     padding: '1rem',
 })
@@ -45,50 +50,60 @@ const Publication = () => {
     const user_data = useSelector((state) => state.auth.user.user)
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [userPosts, setUserPosts] = useState([]);
-
-    //  useEffect(() => {
-    //     const userId = 11; // a dynamiser
-
-    //     getPostByUserId(userId)
-    //       .then(data => {
-    //         setUserPosts(data);
-    //       })
-    //        .catch(error => {
-    //          console.error('Erreur lors de la récupération des publications:', error);
-    //        });
-    //   }, []);
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        getAllPost()
-            .then(data => {
-                // Tri des passions dans l'ordre décroissant par leur identifiant
-                const sorted = data.sort((a, b) => b.id - a.id);
-                // Conversion de la chaîne 'createdAt' en objet Date
-                sorted.forEach(post => {
-                    post.createdAt = moment(post.createdAt).format('DD/MM/YYYY');
-                });
-                setPosts(sorted);
-            })
-            .catch(error => {
-                console.error(error);
+        const userId = 11; // a dynamiser
+      
+        getPostByUserId(userId)
+          .then(data => {
+            // Tri des passions dans l'ordre décroissant par leur identifiant
+            const sorted = data.sort((a, b) => b.id - a.id);
+            // Conversion de la chaîne 'createdAt' en objet Date
+            sorted.forEach(post => {
+                post.createdAt = moment(post.createdAt).format('DD/MM/YYYY');
             });
+            setPosts(sorted);
+          //  toast.success('Publications récupérées avec succès !');
+          })
+           .catch(error => {
+             console.error('Erreur lors de la récupération des publications:', error);
+             toast.error('Une erreur est survenue lors de la récupération des publications.');
+           });
 
         // Écoutez l'événement de nouvelle passion ajoutée
         eventEmitter.on(POST_ADDED, handlePostAdded);
 
         return () => {
             eventEmitter.off(POST_ADDED, handlePostAdded);
-        };
+        };    
 
     }, []);
-    // Fonction de gestion de l'événement de nouvelle passion ajoutée
+
+    // const [posts, setPosts] = useState([]);
+
+    // useEffect(() => {
+    //      getAllPost()
+    //           .then(data => {
+    //              // Tri des passions dans l'ordre décroissant par leur identifiant
+    //             const sorted = data.sort((a, b) => b.id - a.id);
+    //             // Conversion de la chaîne 'createdAt' en objet Date
+    //             sorted.forEach(post => {
+    //                 post.createdAt = moment(post.createdAt).format('DD/MM/YYYY');
+    //             });
+    //             setPosts(sorted);
+    //          })
+    //          .catch(error => {
+    //               console.error(error);
+    //          });
+    // }, []);
+    //     // Fonction de gestion de l'événement de nouvelle passion ajoutée
     const handlePostAdded = (post) => {
-        // Mettez à jour la liste des passions avec la nouvelle passion
+            // Mettez à jour la liste des passions avec la nouvelle passion
         setPosts((prevPost) => [post, ...prevPost]);
     };
 
+    
     return (
         <Box sx={{
             width: '100%',
@@ -114,8 +129,9 @@ const Publication = () => {
                 backgroundColor: '#999',
             },
         }}>
+            <ToastContainer />             
             <Paper sx={{
-                width: '100%',
+                width: '85%',
                 // height:'7rem',
                 borderRadius: 4,
                 padding: '1rem'
@@ -183,7 +199,7 @@ const Publication = () => {
                                     sx={{ background: '#2a5078' }}
                                 />
                                 <Box sx={{}}>
-                                    <Typography sx={{ fontWeight: 'bold', fontSize: '0.9rem' }}>Nom Utilisateur</Typography>
+                                    <Typography sx={{fontWeight:'bold',fontSize:'0.9rem'}}>RABESOA Nicky</Typography>
                                     <Typography color='GrayText' sx={{ fontSize: '0.6rem' }}>
                                         {post.createdAt}
                                     </Typography>
@@ -198,9 +214,14 @@ const Publication = () => {
                             height: 'auto',
                             borderRadius: '1rem',
                         }}>
-                            <h4>{post.id}</h4>
-                            <h3>{post.postDescription}</h3>
-                            <img src={post.postImage} alt={post.postImage} width="100%" height="100%" style={{ objectFit: 'cover' }} />
+                            <p>{post.postDescription}</p>
+                            <img src={post.postImage} alt={post.postImage} width="auto" height="auto" 
+                                style={{
+                                    marginTop:'1rem',
+                                    maxWidth: '100%',
+                                    maxHeight: '100%',
+                                    
+                            }} />
                         </Box>
                         <Box sx={{
                             display: 'flex',
@@ -225,7 +246,7 @@ const Publication = () => {
                                 </IconButton>
                             </MyBox>
                         </Box>
-                    </MyPaper>
+                    </MyPaper>       
                 </div>
             ))}
         </Box>

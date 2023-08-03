@@ -48,7 +48,8 @@ export const getAllPassions = () => {
         return response.data
     })
 }
-export const getPassion = (idPassion) => {
+
+export const getPassionById = (idPassion) => {
     return api.get('/passions/' + idPassion).then(response => {
         return response.data
     })
@@ -59,11 +60,17 @@ export const getPassionName = (idPassion) => {
         return response.data.passionName
     })
 }
-export const updatePassion = (idPassion) => {
-    return api.put('/passions/' + idPassion).then(response => {
+
+export const updatePassion = (idPassion, passionName, passionDescription, passionImage) => {
+    return api.put('/passions/' + idPassion, {
+        passionName, 
+        passionDescription, 
+        passionImage
+    }).then(response => {
         return response.data
     })
 }
+
 export const deletePassion = (idPassion) => {
     return api.delete('/passions/' + idPassion).then(response => {
         return response.data

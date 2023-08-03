@@ -1,8 +1,9 @@
 import React from 'react'
+import Passions from '../../pages/passions'
 
 const MyPassions = () => {
     return (
-        <div>MyPassions</div>
+        <><Passions/></>
     )
 }
 

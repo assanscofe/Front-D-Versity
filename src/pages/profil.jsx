@@ -35,7 +35,7 @@ const Profil = () => {
     }
 
     return (
-        <>
+        <div>
             <Box sx={{
                 width: '100%',
                 height: 'calc(100% - 8vh)',
@@ -134,7 +134,7 @@ const Profil = () => {
                     </Grid>
                 </Grid>
             </Box>
-        </>
+        </div>
     )
 }
 

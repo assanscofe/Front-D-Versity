@@ -1,0 +1,55 @@
+.containers{
+    display:flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 20px;
+    margin-bottom: 40px;
+    overflow-x: auto;
+}
+.guideTitle{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-left: 50px;
+    max-width: 50%;
+    text-align: left;
+}
+.contenus{
+    box-shadow: -3px -3px 6px 2px rgb(27, 23, 23);
+    margin: auto;
+    width:100%; 
+    max-width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    padding:20px;
+    border-radius: 10px;
+    overflow-x: auto;
+}
+.guide{
+    display: flex;
+    align-items: center;
+}
+p{
+    margin:10px;
+    padding: 10px;
+}
+.editButton {
+    color: #fff;
+    background-color:  rgba(38, 114, 201, 0.747);  
+    border: none;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s;
+    height: 40px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.editButton:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+hr{
+    width: 100%;
+    border: 0.072px solid grey;
+}
+

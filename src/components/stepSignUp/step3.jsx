@@ -1,36 +1,42 @@
-import React,{useState} from 'react'
-import { Grid, Box,Typography,Avatar } from '@mui/material'
+import React, { useState } from 'react'
+import { Grid, Box, Typography, Avatar, Button, Stack } from '@mui/material'
 // import photo from '../../assets/Icons/1.png'
 import Avatars from './listAvatar'
 import Fonds from './listBackground'
 
-const Step3 = () => {
-    
+const Step3 = ({ onComplete, back }) => {
+
     const [selectedAvatar, setSelectedAvatar] = useState(Avatars[0]);
-    
-    const [selectBackground,setSelectBackground] = useState(Fonds[0])
-    
+
+    const [selectBackground, setSelectBackground] = useState(Fonds[0])
+
+
     const handleAvatarSelect = (avatar) => {
-      setSelectedAvatar(avatar);
-      console.log(selectedAvatar)
+        setSelectedAvatar(avatar);
     };
     const handleBackgroundSelect = (background) => {
-      setSelectBackground(background);
-      console.log(selectBackground)
+        setSelectBackground(background);
     };
 
+    const handleNext = () => {
+        onComplete({
+            data3: {
+                'avatar': selectedAvatar.nom,
+                'background': selectBackground.color
+            }
+        })
+    }
+
     return (
-        <Box sx={{ width: '100%', height: '100%', paddingY:1 }}>
+        <Stack direction={'column'} spacing={1} sx={{ width: '100%', height: '100%', paddingY: 1 }}>
             <Grid container >
                 <Grid item md={6} xl={6} sx={{
-                    display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
                     flexDirection: 'column',
                     display: {
-                        xs: 'none',
-                        sm:'none',
-                        md:'flex'
+                        sm: 'none',
+                        md: 'flex'
                     }
                 }}>
                     <Box sx={{
@@ -46,26 +52,26 @@ const Step3 = () => {
                 <Grid item md={6} xl={6} sx={{
                     height: {
                         xs: 'auto',
-                        sm:'auto',
+                        sm: 'auto',
                         md: 450,
                     },
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
                     flexDirection: 'column',
-                    rowGap:1
+                    rowGap: 1
                 }}>
-                    
+
                     <Box sx={{
                         width: 150,
                         height: 150,
                         background: selectBackground.color,
                         borderRadius: 3,
                         display: {
-                        xs: 'flex',
-                        md:'none'
-                    },
-                        
+                            xs: 'flex',
+                            md: 'none'
+                        },
+
                     }}>
                         <img src={selectedAvatar.img} alt="Profile" width={'100%'} height={'100%'} />
                     </Box>
@@ -75,16 +81,16 @@ const Step3 = () => {
                         display: 'flex',
                         alignItems: 'center',
                         overflow: 'hidden',
-                        
+
                     }}>
                         <Grid container spacing={2} alignItems="center" sx={{
-                            width:'100%',
+                            width: '100%',
                             height: {
                                 xs: 120,
-                                sm:120,
-                                md:'auto'
+                                sm: 120,
+                                md: 'auto'
                             },
-                            margin:0,
+                            margin: 0,
                             overflowY: "scroll",
                             scrollbarWidth: "none",
                             "&::-webkit-scrollbar": {
@@ -93,9 +99,9 @@ const Step3 = () => {
                             "::-webkit-scrollbar": {
                                 display: "none",
                             },
-                        
+
                         }}>
-                            {Avatars.map((avatar,key) => (
+                            {Avatars.map((avatar, key) => (
                                 <Grid item key={key}>
                                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                         <Avatar
@@ -103,7 +109,7 @@ const Step3 = () => {
                                             src={avatar.img}
                                             sx={{ width: 35, height: 35, cursor: 'pointer', ...(selectedAvatar && selectedAvatar.id === avatar.id && { border: '3px solid #2469d8' }) }}
                                             onClick={() => handleAvatarSelect(avatar)}
-                                            />
+                                        />
                                     </Box>
                                 </Grid>
                             ))}
@@ -114,16 +120,16 @@ const Step3 = () => {
                         width: '100%',
                         marginBottom: '1rem',
                         overflow: 'hidden',
-                        
+
                     }}>
                         <Grid container spacing={2} alignItems="center" sx={{
-                            width:'100%',
+                            width: '100%',
                             height: {
                                 xs: 120,
-                                sm:120,
-                                md:'auto'
+                                sm: 120,
+                                md: 'auto'
                             },
-                            margin:0,
+                            margin: 0,
                             overflowY: "scroll",
                             scrollbarWidth: "none",
                             "&::-webkit-scrollbar": {
@@ -132,9 +138,9 @@ const Step3 = () => {
                             "::-webkit-scrollbar": {
                                 display: "none",
                             },
-                        
+
                         }}>
-                            {Fonds.map((fond,key) => (
+                            {Fonds.map((fond, key) => (
                                 <Grid item key={key}>
                                     <Box sx={{
                                         width: 35,
@@ -144,7 +150,7 @@ const Step3 = () => {
                                         borderRadius: 50,
                                         ...(selectBackground && selectBackground.id === fond.id && { border: '3px solid #2469d8' })
                                     }}
-                                            onClick={() => handleBackgroundSelect(fond)}>
+                                        onClick={() => handleBackgroundSelect(fond)}>
                                     </Box>
                                 </Grid>
                             ))}
@@ -152,7 +158,11 @@ const Step3 = () => {
                     </Box>
                 </Grid>
             </Grid>
-        </Box>
+            <Stack direction={'row'} justifyContent={'flex-end'} spacing={1}>
+                <Button variant="contained" onClick={back} size='small'>Retour</Button>
+                <Button variant="contained" onClick={handleNext} size='small'>S'inscrire</Button>
+            </Stack>
+        </Stack>
     )
 }
 

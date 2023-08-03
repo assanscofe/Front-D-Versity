@@ -4,8 +4,8 @@ import { addPassion } from '../../services/api'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { emitPassionAdded } from './event';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
 const styleModal = {
     position: 'absolute',
@@ -85,7 +85,7 @@ export default function TransitionsModal({ setIsModalOpen }) {
                 console.error(error);
             });
 
-        history('/passions')
+        history('/navHome/passions')
     };
 
     return (

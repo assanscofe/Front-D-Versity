@@ -102,13 +102,7 @@ export default function MyModal({ setIsModalOpen }) {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      // const formData = new FormData();
-      // formData.append('postDescription', description);
-      // selectedFiles.forEach((file) => {
-      //   formData.append('postImage', file);
-      // });
-      // formData.append('passion', selectedOption);
-      // console.log(formData.get('postImage'))
+
       console.log('reto', selectedFiles[0] + description + selectedOption)
       addPost( description, selectedFiles[0], 11, selectedOption, {
         headers: {

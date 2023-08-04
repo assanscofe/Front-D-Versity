@@ -1,26 +1,36 @@
-import * as React from 'react';
-import { Backdrop, Grid, Box, Modal, Fade, Button, Typography, TextField, Divider } from '@mui/material'
+import * as React from "react";
+import {
+  Backdrop,
+  Grid,
+  Box,
+  Modal,
+  Fade,
+  Button,
+  Typography,
+  TextField,
+  Divider,
+} from "@mui/material";
 // import { addPassion } from '../../services/api'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from "react";
 // import { useNavigate } from 'react-router-dom'
 //import { emitPassionAdded } from './event';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { styled } from '@mui/material/styles'
-import { ReactComponent as IconPhotos } from '../../assets/SVG/picture (1).svg'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { styled } from "@mui/material/styles";
+import { ReactComponent as IconPhotos } from "../../assets/SVG/picture (1).svg";
 //import {ReactComponent as IconVideos} from '../../assets/SVG/play (1).svg'
-import { ReactComponent as IconPlanning } from '../../assets/SVG/bookmark (1).svg'
-import { getAllPassions } from '../../services/api'
-import { addPost } from '../../services/api'
-import { emitPostAdded } from '../addPassion/event';
+import { ReactComponent as IconPlanning } from "../../assets/SVG/bookmark (1).svg";
+import { getAllPassions } from "../../services/api";
+import { addPost } from "../../services/api";
+import { emitPostAdded } from "../addPassion/event";
 
 const styleModal = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   width: 600,
-  bgcolor: 'background.paper',
+  bgcolor: "background.paper",
   //   border: '2px solid #000',
   boxShadow: 24,
   p: 2,
@@ -28,19 +38,19 @@ const styleModal = {
 };
 
 const styleForm = {
-  width: '100%',
-}
+  width: "100%",
+};
 
 const MyButton = styled(Button)({
-  border: '1px solid #ddd',
-  borderRadius: '1.5rem',
-  padding: '0.375rem 1.5rem',
-  color: '#333'
-})
+  border: "1px solid #ddd",
+  borderRadius: "1.5rem",
+  padding: "0.375rem 1.5rem",
+  color: "#333",
+});
 
 export default function MyModal({ setIsModalOpen }) {
   // const history = useNavigate();
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
   const fileInputRef = useRef(null);
@@ -48,21 +58,20 @@ export default function MyModal({ setIsModalOpen }) {
 
   useEffect(() => {
     getAllPassions()
-      .then(data => {
+      .then((data) => {
         // Tri des passions dans l'ordre décroissant par leur identifiant
         const sortedPassions = data.sort((a, b) => b.id - a.id);
         setPassions(sortedPassions);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
 
     return;
-
   }, []);
 
   const handleCloseModal = () => {
-    console.log('hey')
+    console.log("hey");
     setIsModalOpen(false);
   };
 
@@ -82,7 +91,10 @@ export default function MyModal({ setIsModalOpen }) {
         reader.onload = (event) => {
           const imageDataUrl = event.target.result;
           setSelectedFiles((prevSelectedFiles) => [...prevSelectedFiles, file]);
-          setPreviewImages((prevPreviewImages) => [...prevPreviewImages, imageDataUrl]);
+          setPreviewImages((prevPreviewImages) => [
+            ...prevPreviewImages,
+            imageDataUrl,
+          ]);
         };
       });
     }
@@ -92,41 +104,33 @@ export default function MyModal({ setIsModalOpen }) {
     setDescription(event.target.value);
   };
 
-
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState("");
 
   const handleOptionChange = (event) => {
-    console.log(event.target.value)
+    console.log(event.target.value);
     setSelectedOption(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // const formData = new FormData();
-    // formData.append('postDescription', description);
-    // selectedFiles.forEach((file) => {
-    //   formData.append('postImage', file);
-    // });
-    // formData.append('passion', selectedOption);
-    // console.log(formData.get('postImage'))
-    console.log('reto', selectedFiles[0] + description + selectedOption)
+
+    console.log("reto", selectedFiles[0] + description + selectedOption);
     addPost(description, selectedFiles[0], 11, selectedOption, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
-    }).then((data) => {
-      console.log('eto data', data);
-      emitPostAdded(data);
-      setIsModalOpen(false);
-      toast.success('Publiée avec succès');
     })
+      .then((data) => {
+        console.log("eto data", data);
+        emitPostAdded(data);
+        setIsModalOpen(false);
+        toast.success("Publiée avec succès");
+      })
       .catch((error) => {
-        toast.error('Une erreur s\'est produite');
+        toast.error("Une erreur s'est produite");
         console.error(error);
       });
-
   };
-
 
   return (
     <div>
@@ -147,21 +151,28 @@ export default function MyModal({ setIsModalOpen }) {
         <Fade in={true}>
           <Box sx={styleModal}>
             <form onSubmit={handleSubmit} style={styleForm}>
-              <Typography id="transition-modal-title" variant="h6" component="h2">
+              <Typography
+                id="transition-modal-title"
+                variant="h6"
+                component="h2"
+              >
                 Nouvelle Publication
               </Typography>
               <div>
                 <label htmlFor="selectOption">Passion concernée:</label>
-                <select id="selectOption" value={selectedOption} onChange={handleOptionChange}
+                <select
+                  id="selectOption"
+                  value={selectedOption}
+                  onChange={handleOptionChange}
                   style={{
-                    padding: '0.6rem',
-                    margin: '0.6rem',
-                    fontSize: '14px',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    backgroundColor: '#f7f7f7',
-                    color: '#333',
-                    width: '200px',
+                    padding: "0.6rem",
+                    margin: "0.6rem",
+                    fontSize: "14px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    backgroundColor: "#f7f7f7",
+                    color: "#333",
+                    width: "200px",
                   }}
                 >
                   {passions.map((passion) => (
@@ -181,23 +192,36 @@ export default function MyModal({ setIsModalOpen }) {
                 value={description}
                 onChange={handleDescriptionChange}
                 required
-                sx={{ width: '100%' }}
+                sx={{ width: "100%" }}
               />
-              <Grid item xs={12} sx={{
-                marginLeft: 'auto',
-                padding: ' 1rem 0 1rem',
-                display: 'flex',
-                flexDirection: 'row',
-                columnGap: 1,
-
-              }}>
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  marginLeft: "auto",
+                  padding: " 1rem 0 1rem",
+                  display: "flex",
+                  flexDirection: "row",
+                  columnGap: 1,
+                }}
+              >
                 <MyButton
-                  startIcon={<IconPhotos style={{ width: 10, height: 10, fill: '#2096f3' }} />}
+                  startIcon={
+                    <IconPhotos
+                      style={{ width: 10, height: 10, fill: "#2096f3" }}
+                    />
+                  }
                   onClick={handleButtonClicked}
                 >
                   Photos / Videos
                 </MyButton>
-                <MyButton startIcon={<IconPlanning style={{ width: 10, height: 10, fill: '#d7415e' }} />}>
+                <MyButton
+                  startIcon={
+                    <IconPlanning
+                      style={{ width: 10, height: 10, fill: "#d7415e" }}
+                    />
+                  }
+                >
                   Planning
                 </MyButton>
                 <input
@@ -206,22 +230,27 @@ export default function MyModal({ setIsModalOpen }) {
                   multiple
                   onChange={handleFileChange}
                   ref={fileInputRef}
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                 />
               </Grid>
               {previewImages.map((previewImage, index) => (
                 <img
                   key={index}
                   src={previewImage}
-                  alt={'Selected Image' + (index + 1)}
-                  style={{ width: '150px', height: '150px' }}
+                  alt={`Selected Image ${index + 1}`}
+                  style={{ width: "150px", height: "150px" }}
                 />
               ))}
-              <Divider sx={{ margin: 2, border: 'none' }}></Divider>
-              <Button onClick={handleSubmit} type="submit" variant="contained" color="primary">
+              <Divider sx={{ margin: 2, border: "none" }}></Divider>
+              <Button
+                onClick={handleSubmit}
+                type="submit"
+                variant="contained"
+                color="primary"
+              >
                 Publier
               </Button>
-              <Button onClick={handleCloseModal} >Annuler</Button>
+              <Button onClick={handleCloseModal}>Annuler</Button>
             </form>
           </Box>
         </Fade>

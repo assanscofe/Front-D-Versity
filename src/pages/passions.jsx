@@ -11,7 +11,6 @@ import {
 
 } from '@mui/material'
 import Masonry from '@mui/lab/Masonry'
-import Color from 'color-thief-react'
 import { getAllPassions, deletePassion } from '../services/api'
 import eventEmitter, { PASSION_ADDED } from '../components/addPassion/event';
 import { toast, ToastContainer } from 'react-toastify';
@@ -173,8 +172,6 @@ const Passions = () => {
             ) : (
                 <StyleAccordion>
                 {passions.map(passion => (
-                    <Color key={passion.id} src={passion.passionImage} format="hex">
-                        {({ data, loading, error }) => (
                             <MyAccordion
                                 key={passion.id} 
                                 expanded={expanded === passion.id}
@@ -226,8 +223,6 @@ const Passions = () => {
                                 </AccordionDetails>
                                 {isModalOpen && <TransitionsModal setIsModalOpen={setIsModalOpen} passionToUpdate={passionToUpdate} updatePassionInList={updatePassionInList}/>}
                             </MyAccordion>
-                        )}
-                    </Color>
                 ))}
             </StyleAccordion>
             )}

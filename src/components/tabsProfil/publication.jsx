@@ -12,7 +12,7 @@ import { ReactComponent as IconComment } from '../../assets/SVG/comment.svg'
 import { ReactComponent as IconShare } from '../../assets/SVG/share.svg'
 import { ReactComponent as IconDots } from '../../assets/SVG/menu-dots.svg'
 import MyModal from './modalPublication';
-// import { getPostByUserId } from '../../services/api'
+import { getPostByUserId } from '../../services/api'
 import { getAllPost } from '../../services/api'
 import moment from 'moment';
 import 'moment/locale/fr'; // Importez la localisation française si nécessaire

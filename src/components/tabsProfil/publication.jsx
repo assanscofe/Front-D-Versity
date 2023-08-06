@@ -54,7 +54,6 @@ const Publication = () => {
       
         getPostByUserId(userId)
           .then(data => {
-            // Tri des passions dans l'ordre décroissant par leur identifiant
             const sorted = data.sort((a, b) => b.id - a.id);
             // Conversion de la chaîne 'createdAt' en objet Date
             sorted.forEach(post => {
@@ -68,7 +67,6 @@ const Publication = () => {
              toast.error('Une erreur est survenue lors de la récupération des publications.');
            });
 
-        // Écoutez l'événement de nouvelle passion ajoutée
         eventEmitter.on(POST_ADDED, handlePostAdded);
 
         return () => {

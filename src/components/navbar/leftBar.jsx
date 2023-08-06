@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Stack, Tooltip, IconButton, Grid, Box, Paper, ListItemButton, Divider, Avatar, Typography, Button, Badge } from '@mui/material'
 
 import { styled } from '@mui/material/styles'
-// import { getAllPassions } from '../services/api'
 import { useNavigate, Outlet } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/authSlice'
@@ -30,7 +29,7 @@ import { ReactComponent as IconHome } from '../../assets/SVG/home.svg'
 import { ReactComponent as IconPassions } from '../../assets/SVG/apps.svg'
 import { ReactComponent as IconMessage } from '../../assets/SVG/messages.svg'
 import { ReactComponent as IconBookmark } from '../../assets/SVG/bookmark.svg'
-
+import TransitionsModal from '../addPassion/addPassion';
 
 
 const StyleSidebar = styled(Box)(({ theme }) => ({
@@ -93,6 +92,7 @@ const LeftBar = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const user_data = useSelector(state => state.auth.user.user)
+    const [isModalOpen, setIsModalOpen] = useState(false);
     // console.log(user_data)
 
 
@@ -345,6 +345,7 @@ const LeftBar = () => {
                                 <IconHome style={{ width: '15px', height: '15px' }} />
                                 <Typography sx={{ fontSize: '0.7rem', fontWeight: 'bold', marginLeft: '1rem' }}>ACCUEIL</Typography>
                             </Button>
+                            {isModalOpen && <TransitionsModal setIsModalOpen={setIsModalOpen} />}
                             <Button sx={{
                                 width: '150px',
                                 background: '#fff',
@@ -353,7 +354,7 @@ const LeftBar = () => {
                                 padding: '1rem',
                                 color: '#444',
                                 fill: '#444'
-                            }}>
+                            }} onClick={() => setIsModalOpen(true)}>
                                 <IconPassions style={{ width: '15px', height: '15px' }} />
                                 <Typography sx={{ fontSize: '0.7rem', fontWeight: 'bold', marginLeft: '1rem' }}>PASSIONS</Typography>
                             </Button>

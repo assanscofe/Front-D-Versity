@@ -100,6 +100,7 @@ const Passions = () => {
             .then(data => {
                 // Tri des passions dans l'ordre décroissant par leur identifiant
                 const sortedPassions = data.sort((a, b) => b.id - a.id);
+                console.log("boucl ici?")
                 setPassions(sortedPassions);
             })
             .catch(error => {
@@ -111,14 +112,16 @@ const Passions = () => {
 
         // Nettoyez les écouteurs d'événements lorsque le composant est démonté
         return () => {
+            console.log("boucl la?")
             eventEmitter.off(PASSION_ADDED, handlePassionAdded);
         };
 
-    }, [passions]);
+    }, []);
 
     // Fonction de gestion de l'événement de nouvelle passion ajoutée
     const handlePassionAdded = (passion) => {
          // Mettez à jour la liste des passions avec la nouvelle passion
+         console.log("ou alors la?")
          setPassions((prevPassions) => [passion, ...prevPassions]);
     };
 

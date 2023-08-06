@@ -34,7 +34,7 @@ export const getAllPost = () => {
 
 
 export const addPassion = (passionName, passionDescription, passionImage) => {
-    return api.post('/addPassion/', {
+    return api.post('/passions/', {
         passionName,
         passionDescription,
         passionImage,

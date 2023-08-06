@@ -1,6 +1,20 @@
 import React, { useState } from 'react'
 import { styled } from '@mui/material/styles';
-import { Paper, Stack, Typography, Button, TextField, Box, Divider, Link, FormControlLabel, Checkbox } from '@mui/material'
+import {
+    Paper,
+    Stack,
+    Typography,
+    Button,
+    TextField,
+    Box,
+    Divider,
+    Link,
+    FormControlLabel,
+    Checkbox
+} from '@mui/material'
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 //--------import Redux-------
 import { login } from '../redux/authSlice'
@@ -22,6 +36,7 @@ const StyledContent = styled('div')(({ theme }) => ({
 
 const SignIn = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [user, setUser] = useState({
         email: '',
@@ -37,10 +52,8 @@ const SignIn = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(login(user.email, user.password))
-    };
-
-
+        dispatch(login(user.email, user.password, navigate)).then(() => toast('success'))
+    }
 
     return (
         <StyledContent>
@@ -77,7 +90,7 @@ const SignIn = () => {
                             fontWeight: '700',
                             letterSpacing: '0.09rem'
                         }}>
-                            Welcome Back
+                            Bienvenue
                         </Typography>
                         <Button
                             variant='outlined'
@@ -86,7 +99,7 @@ const SignIn = () => {
                                 textTransform: 'none',
                                 backgroundColor: '#f0f7fc'
                             }} startIcon={<img src={GoogleIcon} alt="Logo" width={"20px"} />} size={'small'}>
-                            Sign In With Google
+                            Se connecter avec Google
                         </Button>
                         <Typography
                             variant="body2"
@@ -108,7 +121,7 @@ const SignIn = () => {
                                         })
                                     }
                                     variant='outlined'
-                                    label="Email"
+                                    label="Adresse email"
                                     size='small' />
                                 <TextField
                                     value={user.password}
@@ -117,7 +130,7 @@ const SignIn = () => {
                                         password: e.target.value
                                     })}
                                     variant='outlined'
-                                    label="Password"
+                                    label="Mot de passe"
                                     type='password'
                                     size='small'
                                     sx={{ mt: 2 }}
@@ -153,7 +166,7 @@ const SignIn = () => {
                                             },
                                             textTransform: 'none'
                                         }}>
-                                        Sign In
+                                        Se connecter
                                     </Button>
                                     <Divider />
                                     <Link href='/signup' sx={{
@@ -169,6 +182,7 @@ const SignIn = () => {
                     </Stack>
                 </Stack>
             </Paper>
+            <ToastContainer position='top-right' />
         </StyledContent>
     )
 }

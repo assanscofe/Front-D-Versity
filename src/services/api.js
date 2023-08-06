@@ -3,13 +3,13 @@ import axios from 'axios'
 const api = axios.create({
     baseURL: 'http://localhost:8000/api/',
     headers: {
-        'Content-Type': 'multipart/form-data',
+        'content-Type': 'multipart/form-data',
     }
 });
 
 export default api;
 
-export const addPost = (postDescription,postImage, user, passion) => {
+export const addPost = (postDescription, postImage, user, passion) => {
     return api.post('/posts/', {
         postDescription,
         postImage,
@@ -32,8 +32,9 @@ export const getAllPost = () => {
     })
 }
 
+
 export const addPassion = (passionName, passionDescription, passionImage) => {
-    return api.post('/passions/', {
+    return api.post('/addPassion/', {
         passionName,
         passionDescription,
         passionImage,
@@ -54,6 +55,12 @@ export const getPassionById = (idPassion) => {
     })
 }
 
+export const getPassionName = (idPassion) => {
+    return api.get('/passions/' + idPassion).then(response => {
+        return response.data.passionName
+    })
+}
+
 export const updatePassion = (idPassion, passionName, passionDescription, passionImage) => {
     return api.put('/passions/' + idPassion, {
         passionName, 
@@ -70,6 +77,35 @@ export const deletePassion = (idPassion) => {
     })
 }
 
+export const getAllEvents = () => {
+    return api.get('/events/').then(response => {
+        return response.data
+    })
+}
+
+export const getEvent = (idEvent) => {
+    return api.get('/events/' + idEvent).then(response => {
+        return response.data
+    })
+}
+export const addEvent = (eventName,coverPhoto,startdate,endDate,startTime,endTime,location,description,user,passion) => {
+    return api.post('/events/', {
+        eventName,
+        coverPhoto,
+        startdate,
+        endDate,
+        startTime,
+        endTime,
+        location,
+        description,
+        user,
+        passion
+    }).then(response => {
+        return response.data
+    })
+}
+
+
 export const LoginUser = (username, password) => {
 
     return api.post('/login/', {
@@ -79,6 +115,21 @@ export const LoginUser = (username, password) => {
         return response.data;
     })
 };
+
+export const SignUpUser = (email, username, first_name, last_name, password, avatar, background, passions) => {
+    return api.post('/signup/', {
+        email,
+        username,
+        first_name,
+        last_name,
+        password,
+        avatar,
+        background,
+        passions
+    }).then(response => {
+        return response.data
+    })
+}
 
 export const getUser = () => {
     return api.get('/users/').then(response => {

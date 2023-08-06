@@ -1,13 +1,14 @@
+import React from 'react'
 import './App.css'
 import lightTheme from './theme/lightTheme'
 import darkTheme from './theme/darkTheme'
 
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom';
 import { Box, ThemeProvider } from '@mui/material';
-import { Provider } from 'react-redux';
-import { store } from './redux/Store'
+import { useSelector } from 'react-redux';
 import CssBaseline from '@mui/material/CssBaseline'
 import { useContext } from 'react'
+import { DarkModeContext } from './context/darkModeContext';
 
 import SignIn from './pages/signin'
 import SignUp from './pages/signup'
@@ -19,18 +20,21 @@ import Profil from './pages/profil';
 import Settings from './pages/settings';
 import Friends from './pages/friends';
 import Photos from './pages/photos';
-import ContentHome from './pages/contentHome';
 import Messages from './pages/messages';
-import { DarkModeContext } from './context/darkModeContext';
+import Events from './pages/events';
+import EventContent from './components/events/eventContent';
+import Articles from './pages/articles';
+import ListArticles from './components/articles/listArticles';
+import Guides from './pages/guides';
 
 
 function App() {
 
-  const currentUser = true;
+  const currentUser = useSelector((state) => state.auth.isAuthenticated);
+  // const currentUser = true
+  console.log('hehe ' + currentUser)
 
   const { darkMode } = useContext(DarkModeContext)
-
-  console.log(darkMode)
 
   const Layout = () => {
     return (
@@ -96,7 +100,27 @@ function App() {
         },
         {
           path: '/friends/:id',
-          element: <Profil />
+          element: <Friends />
+        },
+        {
+          path: '/events',
+          element: <Events />
+        },
+        {
+          path: '/events/:id',
+          element: <EventContent />
+        },
+        {
+          path: '/articles',
+          element: <Articles />,
+        },
+        {
+          path: '/articles/:id',
+          element: <ListArticles />
+        },
+        {
+          path: '/guides',
+          element: <Guides />
         },
       ]
     },
@@ -112,12 +136,11 @@ function App() {
 
 
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-        <CssBaseline />
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </Provider>
+
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <CssBaseline />
+      <RouterProvider router={router} />
+    </ThemeProvider>
   );
 }
 

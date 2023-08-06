@@ -1,19 +1,17 @@
-import React, {useState}  from 'react'
-import { Stack, AppBar, Tooltip, IconButton, Grid, Box, Paper, List, ListItemButton, ListItemIcon, ListItemText, Divider, Avatar, Typography, Button, Badge, Card, CardMedia, CardContent, CardActions, InputBase } from '@mui/material'
+import React from 'react'
+import { Stack, Tooltip, IconButton, Grid, Box, Paper, ListItemButton, Divider, Avatar, Typography, Button, Badge } from '@mui/material'
 
 import { styled } from '@mui/material/styles'
 // import { getAllPassions } from '../services/api'
 import { useNavigate, Outlet } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../../redux/authSlice'
 
 //------------import Images-----------
 import LogoM from '../../assets/DD.png'
 import Logo from '../../assets/dversity.3.png'
-import PhotoProfile from '../../assets/Icons/22.png'
-import ImageNature from '../../assets/nature.jpg'
-import PhotoUser from '../../assets/Icons/18.png'
 
 //--------------import Icons ------------
-import ProfileIcon from '@mui/icons-material/PersonOutlineRounded'
 import HomeIcon from '@mui/icons-material/HomeOutlined'
 import PeopleIcon from '@mui/icons-material/PeopleOutlineRounded'
 import SettingsIcon from '@mui/icons-material/SettingsOutlined'
@@ -32,7 +30,7 @@ import { ReactComponent as IconHome } from '../../assets/SVG/home.svg'
 import { ReactComponent as IconPassions } from '../../assets/SVG/apps.svg'
 import { ReactComponent as IconMessage } from '../../assets/SVG/messages.svg'
 import { ReactComponent as IconBookmark } from '../../assets/SVG/bookmark.svg'
-import TransitionsModal from '../addPassion/addPassion'
+
 
 
 const StyleSidebar = styled(Box)(({ theme }) => ({
@@ -86,15 +84,18 @@ const MyBadge = styled(Badge)(({ theme }) => ({
     }
 }))
 const MyAvatar = styled(Avatar)({
-    background: '#96d7d1',
+    // background: '#96d7d1',
     borderRadius: '0.8rem',
     padding: '0.1rem'
 })
 
 const LeftBar = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const user_data = useSelector(state => state.auth.user.user)
+    // console.log(user_data)
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+
     return (
         <Box flex={2} p={2} sx={{
             maxWidth: {
@@ -155,10 +156,11 @@ const LeftBar = () => {
 
                     }}>
                         <Stack direction='row' spacing={1} alignItems='center' justifySelf='center'>
-                            <MyAvatar src={PhotoProfile} alt='Photo profile' sx={{
+                            <MyAvatar src={user_data.avatar} alt={user_data.last_name} sx={{
                                 width: '2rem',
                                 height: '2rem',
-                                padding: '0'
+                                padding: '0',
+                                bgcolor: user_data.background
                             }} />
                             <Box sx={{
                                 display: {
@@ -170,11 +172,11 @@ const LeftBar = () => {
                                     fontSize: '0.7rem',
                                     fontWeight: 800,
                                     color: '#404040'
-                                }}>RABESOA Nicky</Typography>
+                                }}>{user_data.first_name} {user_data.last_name}</Typography>
                                 <Typography sx={{
                                     fontSize: '0.5rem',
                                     // color: '#808080'
-                                }}>rabesoanicky@gmail.com</Typography>
+                                }}>{user_data.email}</Typography>
                             </Box>
                         </Stack>
                     </Paper>
@@ -351,12 +353,10 @@ const LeftBar = () => {
                                 padding: '1rem',
                                 color: '#444',
                                 fill: '#444'
-                            }} onClick={() => setIsModalOpen(true)} >
-
+                            }}>
                                 <IconPassions style={{ width: '15px', height: '15px' }} />
                                 <Typography sx={{ fontSize: '0.7rem', fontWeight: 'bold', marginLeft: '1rem' }}>PASSIONS</Typography>
                             </Button>
-                            {isModalOpen && <TransitionsModal setIsModalOpen={setIsModalOpen} />}
                         </Grid>
                     </Grid>
                     <Button sx={{
@@ -367,7 +367,7 @@ const LeftBar = () => {
                         // background: '#d7415e',
                         display: 'flex',
                         justifyContent: 'space-evenly'
-                    }} variant={'contained'} color={'secondary'}>
+                    }} variant={'contained'} color={'secondary'} onClick={() => dispatch(logout())}>
                         <SignOutIcon />
                         <Typography sx={{
                             display: {
@@ -383,102 +383,3 @@ const LeftBar = () => {
 }
 
 export default LeftBar
-        // <StyleSidebar flex={2} p={2} sx={{ display: { xs: 'none', sm: 'none', md: 'block' } }}>
-        //     <Stack direction={'column'} spacing={2}>
-        //         <Paper sx={{
-        //             // background: '#fff',
-        //             boxShadow: 'none',
-        //             borderRadius: 3,
-        //             padding: '0.8rem'
-
-        //         }}>
-        //             <Stack direction='row' spacing={1} alignItems='center' justifySelf='center'>
-        //                 <MyAvatar src={PhotoProfile} alt='Photo profile' sx={{
-        //                     width: '35px',
-        //                     height: '35px',
-        //                     padding: '0'
-        //                 }} />
-        //                 <Box>
-        //                     <Typography sx={{
-        //                         fontSize: '0.7rem',
-        //                         fontWeight: 800,
-        //                         // color: '#404040'
-        //                     }}>RABESOA Nicky</Typography>
-        //                     <Typography sx={{
-        //                         fontSize: '0.5rem',
-        //                         // color: '#808080'
-        //                     }}>rabesoanicky@gmail.com</Typography>
-        //                 </Box>
-        //             </Stack>
-        //         </Paper>
-        //         <Paper sx={{
-        //             // background: '#fff',
-        //             boxShadow: 'none',
-        //             borderRadius: 3
-        //         }}>
-        //             <List>
-        //                 <MyListItemButton onClick={() => navigate('')}>
-        //                     <ListItemIcon sx={{ color: '#abb9c9' }}>
-        //                         <HomeIcon />
-        //                     </ListItemIcon>
-        //                     <MyListItemText sx={{}}>Accueil</MyListItemText>
-        //                 </MyListItemButton>
-        //                 <Divider sx={{ margin: '0 0.8rem', opacity: '0.4' }} />
-        //                 <MyListItemButton onClick={() => navigate('friends')}>
-        //                     <ListItemIcon sx={{ color: '#abb9c9' }}>
-        //                         <PeopleIcon />
-        //                     </ListItemIcon>
-        //                     <MyListItemText>Amis</MyListItemText>
-        //                 </MyListItemButton>
-        //                 <Divider sx={{ margin: '0 0.8rem', opacity: '0.4' }} />
-        //                 <MyListItemButton onClick={() => navigate('photos')}>
-        //                     <ListItemIcon sx={{ color: '#abb9c9' }}>
-        //                         <PhotoIcon />
-        //                     </ListItemIcon>
-        //                     <MyListItemText>Photos</MyListItemText>
-        //                 </MyListItemButton>
-        //                 <Divider sx={{ margin: '0 0.8rem', opacity: '0.4' }} />
-        //                 <MyListItemButton onClick={() => navigate('/profile')}>
-        //                     <ListItemIcon sx={{ color: '#abb9c9' }}>
-        //                         <ProfileIcon />
-        //                     </ListItemIcon>
-        //                     <MyListItemText>Profile</MyListItemText>
-        //                 </MyListItemButton>
-        //                 <Divider sx={{ margin: '0 0.8rem', opacity: '0.4' }} />
-        //                 <MyListItemButton onClick={() => navigate('settings')}>
-        //                     <ListItemIcon sx={{ color: '#abb9c9' }}>
-        //                         <SettingsIcon />
-        //                     </ListItemIcon>
-        //                     <MyListItemText>Paramètres</MyListItemText>
-        //                 </MyListItemButton>
-        //             </List>
-        //         </Paper>
-        //         <Box>
-        //             <Stack direction={'row'} alignContent="center" justifyContent={'space-between'} sx={{ padding: '0 2rem 0 1rem', marginBottom: 2 }}>
-        //                 <Typography variant={'body1'} sx={{
-        //                     // color: '#abb9c9',
-        //                     fontWeight: '400'
-        //                 }}>INVITATIONS</Typography>
-        //                 <MyBadge badgeContent={4} anchorOrigin={{ vertical: 'center', horizontal: 'right' }} />
-        //             </Stack>
-        //             <Card>
-        //                 <CardMedia
-        //                     component='img'
-        //                     height='130px'
-        //                     image={ImageNature}
-        //                     alt='Fond passion nature'
-        //                 />
-        //                 <CardContent>
-        //                     <Typography variant='h6'>Nature</Typography>
-        //                     <Typography sx={{ fontSize: '0.75rem' }} color='text.secondary'>
-        //                         Ensemble des êtres et des choses, monde, univers,...
-        //                     </Typography>
-        //                 </CardContent>
-        //                 <CardActions>
-        //                     <Button size='small'>Accepter</Button>
-        //                     <Button size='small'>Refuser</Button>
-        //                 </CardActions>
-        //             </Card>
-        //         </Box>
-        //     </Stack>
-        // </StyleSidebar>

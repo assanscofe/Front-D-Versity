@@ -41,16 +41,20 @@ export const {
     logoutSuccess,
 } = authSlice.actions;
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (email, password, navigate) => async (dispatch) => {
     dispatch(authRequest());
     try {
         const response = await api.post("login/", {
             email,
             password,
         });
-        console.log("success")
-        localStorage.setItem("access_token", response.data.access);
-        dispatch(authSuccess(response.data))
+        console.log(response)
+        if (response) {
+            console.log("success")
+            localStorage.setItem("access_token", response.data.tokens.access);
+            dispatch(authSuccess(response.data))
+            navigate('/')
+        }
     } catch (error) {
         dispatch(authError(error.response.data));
     }

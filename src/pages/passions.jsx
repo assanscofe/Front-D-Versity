@@ -7,9 +7,10 @@ import {
     Accordion,
     AccordionSummary,
     AccordionDetails,
-    Box
+    Box,
+
 } from '@mui/material'
-import Color from 'color-thief-react'
+import Masonry from '@mui/lab/Masonry'
 import { getAllPassions, deletePassion } from '../services/api'
 import eventEmitter, { PASSION_ADDED } from '../components/addPassion/event';
 import { toast, ToastContainer } from 'react-toastify';
@@ -44,12 +45,9 @@ const StyleAccordion = styled('div')(({ theme }) => ({
     '::-webkit-scrollbar': {
         display: 'none'
     },
-    display: 'flex',
-    flexDirection: 'row',
-    gap: '1rem',
-    flexWrap: 'wrap',
+
     marginTop: '1rem',
-    padding:'1rem 1rem 2rem 1rem'
+    padding: '1rem 1rem 2rem 1rem'
 }))
 
 const NoPassionMessage = styled(Typography)({
@@ -99,24 +97,24 @@ const Passions = () => {
 
     useEffect(() => {
         getAllPassions()
-             .then(data => {
-                 // Tri des passions dans l'ordre décroissant par leur identifiant
+            .then(data => {
+                // Tri des passions dans l'ordre décroissant par leur identifiant
                 const sortedPassions = data.sort((a, b) => b.id - a.id);
                 setPassions(sortedPassions);
             })
             .catch(error => {
-                 console.error(error);
+                console.error(error);
             });
 
-         // Écoutez l'événement de nouvelle passion ajoutée
-         eventEmitter.on(PASSION_ADDED, handlePassionAdded);
+        // Écoutez l'événement de nouvelle passion ajoutée
+        eventEmitter.on(PASSION_ADDED, handlePassionAdded);
 
-         // Nettoyez les écouteurs d'événements lorsque le composant est démonté
+        // Nettoyez les écouteurs d'événements lorsque le composant est démonté
         return () => {
-             eventEmitter.off(PASSION_ADDED, handlePassionAdded);
-         };
+            eventEmitter.off(PASSION_ADDED, handlePassionAdded);
+        };
 
-    }, []);
+    }, [passions]);
 
     // Fonction de gestion de l'événement de nouvelle passion ajoutée
     const handlePassionAdded = (passion) => {
@@ -174,8 +172,6 @@ const Passions = () => {
             ) : (
                 <StyleAccordion>
                 {passions.map(passion => (
-                    <Color key={passion.id} src={passion.passionImage} format="hex">
-                        {({ data, loading, error }) => (
                             <MyAccordion
                                 key={passion.id} 
                                 expanded={expanded === passion.id}
@@ -227,8 +223,6 @@ const Passions = () => {
                                 </AccordionDetails>
                                 {isModalOpen && <TransitionsModal setIsModalOpen={setIsModalOpen} passionToUpdate={passionToUpdate} updatePassionInList={updatePassionInList}/>}
                             </MyAccordion>
-                        )}
-                    </Color>
                 ))}
             </StyleAccordion>
             )}

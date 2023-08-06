@@ -1,10 +1,11 @@
-import React, { useState, useEffect}from 'react'
-import { Box, Paper, Grid,Modal, Button, Typography, Avatar, IconButton } from '@mui/material'
-import {styled} from '@mui/material/styles'
-import avatar from '../../assets/Icons/22.png'
-import img1 from '../../assets/1146218.png'
-import {ReactComponent as IconPhotos} from '../../assets/SVG/picture (1).svg'
-import {ReactComponent as IconVideos} from '../../assets/SVG/play (1).svg'
+import React, { useState, useEffect } from 'react'
+import { Box, Paper, Grid, Button, Typography, Avatar, IconButton } from '@mui/material'
+import { useSelector } from 'react-redux'
+import { styled } from '@mui/material/styles'
+import avatar from '../../assets/Icons/avatar22.png'
+// import img1 from '../../assets/1146218.png'
+import { ReactComponent as IconPhotos } from '../../assets/SVG/picture (1).svg'
+import { ReactComponent as IconVideos } from '../../assets/SVG/play (1).svg'
 import { ReactComponent as IconPlanning } from '../../assets/SVG/bookmark (1).svg'
 import { ReactComponent as IconHeart } from '../../assets/SVG/heart (1).svg'
 import { ReactComponent as IconComment } from '../../assets/SVG/comment.svg'
@@ -26,13 +27,13 @@ const MyButton = styled(Button)({
     border: '1px solid #ddd',
     borderRadius: '1.5rem',
     padding: '0.375rem 1.5rem',
-    color:'#333'
+    color: '#333'
 })
 const MyPaper = styled(Paper)({
     borderRadius: 15,
     width: '85%',
     height: 'auto',
-    padding:'1rem',
+    padding: '1rem',
 })
 
 const MyBox = styled(Box)({
@@ -41,10 +42,12 @@ const MyBox = styled(Box)({
     alignItems: 'center',
     columnGap: 1,
     color: '#444',
-    fill:'#444',
+    fill: '#444',
 })
 
 const Publication = () => {
+
+    const user_data = useSelector((state) => state.auth.user.user)
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [posts, setPosts] = useState([]);
@@ -106,30 +109,30 @@ const Publication = () => {
             display: 'flex',
             flexDirection: 'column',
             rowGap: '1rem',
-            marginBottom:'1rem',
+            marginBottom: '1rem',
             maxHeight: 'calc(100vh - 100px)',
-            overflow:'auto',
+            overflow: 'auto',
             '&::-webkit-scrollbar': {
                 width: '6px',
                 backgroundColor: 'transparent',
-              },
-              '&::-webkit-scrollbar-track': {
+            },
+            '&::-webkit-scrollbar-track': {
                 backgroundColor: 'transparent',
-              },
-              '&::-webkit-scrollbar-thumb': {
+            },
+            '&::-webkit-scrollbar-thumb': {
                 backgroundColor: '#ccc',
                 borderRadius: '3px',
-              },
-              '&::-webkit-scrollbar-thumb:hover': {
+            },
+            '&::-webkit-scrollbar-thumb:hover': {
                 backgroundColor: '#999',
-              },
+            },
         }}>
             <ToastContainer />             
             <Paper sx={{
                 width: '85%',
                 // height:'7rem',
                 borderRadius: 4,
-                padding:'1rem'
+                padding: '1rem'
             }}>
                 <Grid container >
                     <Grid item xs={1} sx={{
@@ -137,27 +140,27 @@ const Publication = () => {
                         <Box sx={{
                             width: '3rem',
                             height: '3rem',
-                            background: '#2a5078',
-                            borderRadius:50
+                            background: user_data.background,
+                            borderRadius: 50
                         }}>
-                            <img src={avatar} alt="avatar" width={ "100%"} />
+                            <img src={user_data.avatar} alt="avatar" width={"100%"} />
                         </Box>
                     </Grid>
                     <Grid item xs={11} sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        padding:'0 1rem'
+                        padding: '0 1rem'
                     }}>
                         {isModalOpen && <MyModal setIsModalOpen={setIsModalOpen} />}
                         <Box sx={{
                             background: '#efefef',
-                            borderRadius:6,
+                            borderRadius: 6,
                             padding: '0.5rem 1rem',
                             width: '100%',
-                            color:'#999',
+                            color: '#999',
                             cursor: 'pointer',
                         }}
-                        onClick={() => setIsModalOpen(true)}
+                            onClick={() => setIsModalOpen(true)}
                         >
                             Quoi de neuf ?
                         </Box>
@@ -168,30 +171,30 @@ const Publication = () => {
                         display: 'flex',
                         flexDirection: 'row',
                         columnGap: 1,
-                        
+
                     }}>
-                        <MyButton startIcon={<IconPhotos style={{ width: 10, height: 10,fill:'#2096f3' }} /> } >Photos</MyButton>
-                        <MyButton startIcon={<IconVideos style={{ width: 10, height: 10 ,fill:'#ffda5f'}} /> } >Videos</MyButton>
-                        <MyButton startIcon={<IconPlanning style={{ width: 10, height: 10,fill:'#d7415e' }} />} >Planning</MyButton>
+                        <MyButton startIcon={<IconPhotos style={{ width: 10, height: 10, fill: '#2096f3' }} />} >Photos</MyButton>
+                        <MyButton startIcon={<IconVideos style={{ width: 10, height: 10, fill: '#ffda5f' }} />} >Videos</MyButton>
+                        <MyButton startIcon={<IconPlanning style={{ width: 10, height: 10, fill: '#d7415e' }} />} >Planning</MyButton>
                     </Grid>
                 </Grid>
             </Paper>
             {posts.map(post => (
-                 <div key={post.id}>
+                <div key={post.id}>
                     <MyPaper >
                         <Box sx={{
                             display: 'flex',
-                            justifyContent:'space-between'
+                            justifyContent: 'space-between'
                         }}>
                             <Box sx={{
                                 display: 'flex',
                                 flexDirection: 'row',
                                 columnGap: 1,
-                                marginBottom:'0.5rem'
+                                marginBottom: '0.5rem'
                             }}>
-                                <Avatar 
+                                <Avatar
                                     src={avatar}
-                                    sx={{background:'#2a5078'}}
+                                    sx={{ background: '#2a5078' }}
                                 />
                                 <Box sx={{}}>
                                     <Typography sx={{fontWeight:'bold',fontSize:'0.9rem'}}>RABESOA Nicky</Typography>
@@ -201,7 +204,7 @@ const Publication = () => {
                                 </Box>
                             </Box>
                             <IconButton>
-                                <IconDots style={{ width: 15, height: 15,fill:'#444' }} />
+                                <IconDots style={{ width: 15, height: 15, fill: '#444' }} />
                             </IconButton>
                         </Box>
                         <Box sx={{
@@ -221,11 +224,11 @@ const Publication = () => {
                         <Box sx={{
                             display: 'flex',
                             flexDirection: 'row',
-                            columnGap:2,
+                            columnGap: 2,
                         }}>
                             <MyBox >
                                 <IconButton>
-                                    <IconHeart style={{ width: 15, height: 15,fill:'#d7415e' }} />
+                                    <IconHeart style={{ width: 15, height: 15, fill: '#d7415e' }} />
                                 </IconButton>
                                 <Typography>25</Typography>
                             </MyBox>

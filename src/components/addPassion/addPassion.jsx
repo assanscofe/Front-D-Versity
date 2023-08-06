@@ -97,7 +97,7 @@ export default function TransitionsModal({ setIsModalOpen, passionToUpdate, upda
         formData.append('passionImage', image);
         console.log("formData", formData.get('passionImage'))
         if (passionToUpdate) {
-            updatePassion(passionToUpdate.id, title, description,image,{
+            updatePassion(passionToUpdate.id, title, description,image, user_data.id, {
               headers: {
                 'Content-Type': 'multipart/form-data',
               },

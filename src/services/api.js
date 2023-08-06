@@ -71,11 +71,12 @@ export const getPassionName = (idPassion) => {
   });
 };
 
-export const updatePassion = (idPassion, passionName, passionDescription, passionImage) => {
+export const updatePassion = (idPassion, passionName, passionDescription, passionImage, creator) => {
     return api.put('/passions/' + idPassion, {
         passionName, 
         passionDescription, 
-        passionImage
+        passionImage,
+        creator
     }).then(response => {
         return response.data
     })

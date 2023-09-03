@@ -10,20 +10,16 @@ import {
   TextField,
   Divider,
 } from "@mui/material";
-// import { addPassion } from '../../services/api'
 import { useState, useEffect, useRef } from "react";
-// import { useNavigate } from 'react-router-dom'
-//import { emitPassionAdded } from './event';
+import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { styled } from "@mui/material/styles";
 import { ReactComponent as IconPhotos } from "../../assets/SVG/picture (1).svg";
-//import {ReactComponent as IconVideos} from '../../assets/SVG/play (1).svg'
 import { ReactComponent as IconPlanning } from "../../assets/SVG/bookmark (1).svg";
-import { getAllPassions } from "../../services/api";
+import { getAllPassions, updatePost } from "../../services/api";
 import { addPost } from "../../services/api";
 import { emitPostAdded } from "../addPassion/event";
-import { useSelector } from "react-redux";
 
 const styleModal = {
   position: "absolute",
@@ -49,9 +45,13 @@ const MyButton = styled(Button)({
   color: "#333",
 });
 
-export default function MyModal({ setIsModalOpen }) {
-  const user_data = useSelector((state) => state.auth.user.user);
+export default function MyModal({
+  setIsModalOpen,
+  postToUpdate,
+  updatePostInList,
+}) {
   // const history = useNavigate();
+  const user_data = useSelector((state) => state.auth.user.user);
   const [description, setDescription] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [previewImages, setPreviewImages] = useState([]);
@@ -71,6 +71,14 @@ export default function MyModal({ setIsModalOpen }) {
 
     return;
   }, []);
+
+  useEffect(() => {
+    if (postToUpdate) {
+      setDescription(postToUpdate.postDescription);
+      setSelectedFiles(postToUpdate.postImage);
+      // setPassions(postToUpdate.passion);
+    }
+  }, [postToUpdate]);
 
   const handleCloseModal = () => {
     console.log("hey");
@@ -115,8 +123,23 @@ export default function MyModal({ setIsModalOpen }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    console.log("reto", selectedFiles[0] + description + selectedOption);
+    // if (postToUpdate) {
+    //   updatePost(postToUpdate.id, description, selectedFiles[0], user_data.id, selectedOption, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //     },
+    //   })
+    //     .then((data) => {
+    //       updatePostInList(data);
+    //       setIsModalOpen(false);
+    //       toast.success('La publication a été mise à jour avec succès');
+    //     })
+    //     .catch((error) => {
+    //       toast.error('Une erreur s\'est produite lors de la mise à jour de la publication');
+    //       console.error(error);
+    //     });
+    // }
+    // else {
     addPost(description, selectedFiles[0], user_data.id, selectedOption, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -132,6 +155,7 @@ export default function MyModal({ setIsModalOpen }) {
         toast.error("Une erreur s'est produite");
         console.error(error);
       });
+    // }
   };
 
   return (
@@ -158,7 +182,9 @@ export default function MyModal({ setIsModalOpen }) {
                 variant="h6"
                 component="h2"
               >
-                Nouvelle Publication
+                {postToUpdate
+                  ? "Modifier la publication"
+                  : "Nouvelle publication"}
               </Typography>
               <div>
                 <label htmlFor="selectOption">Passion concernée:</label>
@@ -182,6 +208,18 @@ export default function MyModal({ setIsModalOpen }) {
                       {passion.passionName}
                     </option>
                   ))}
+
+                  {/* {Array.isArray(passions) ? (
+                                  passions.map((passion) => (
+                                    <option key={passion.id} value={passion.id}>
+                                      {passion.passionName}
+                                    </option>
+                                  ))
+                                ) : (
+                                  <option value={postToUpdate.passion.id}>
+                                    {postToUpdate.passion.passionName}
+                                  </option>
+                                )} */}
                 </select>
               </div>
               <TextField
@@ -236,7 +274,6 @@ export default function MyModal({ setIsModalOpen }) {
                 />
               </Grid>
               {previewImages.map((previewImage, index) => (
-                // eslint-disable-next-line jsx-a11y/img-redundant-alt
                 <img
                   key={index}
                   src={previewImage}

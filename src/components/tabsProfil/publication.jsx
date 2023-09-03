@@ -1,4 +1,4 @@
-import React, { useState, useEffect /*, useContext*/ } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Paper,
@@ -11,8 +11,6 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
-// import avatar from "../../assets/Icons/avatar22.png";
-// import img1 from '../../assets/1146218.png'
 import { ReactComponent as IconPhotos } from "../../assets/SVG/picture (1).svg";
 import { ReactComponent as IconVideos } from "../../assets/SVG/play (1).svg";
 import { ReactComponent as IconPlanning } from "../../assets/SVG/bookmark (1).svg";
@@ -26,22 +24,21 @@ import { getAllPost } from "../../services/api";
 import moment from "moment";
 import "moment/locale/fr"; // Importez la localisation française si nécessaire
 // import eventEmitter, { POST_ADDED } from "../addPassion/event";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import Menu from "@mui/material/Menu";
 // import MenuItem from "@mui/material/MenuItem";
-// import { SidebarContext } from "../../context/sidebarContext";
 import { useParams } from "react-router-dom";
 
 const MyButton = styled(Button)({
   border: "1px solid #ddd",
-  borderRadius: 12,
+  borderRadius: "1.5rem",
   padding: "0.375rem 1.5rem",
   color: "#333",
 });
 const MyPaper = styled(Paper)({
   borderRadius: 15,
-  width: "100%",
+  width: "85%",
   height: "auto",
   padding: "1rem",
 });

@@ -35,6 +35,8 @@ import { ReactComponent as IconMenu } from "../../assets/SVG/menu-burger.svg";
 
 import { SidebarContext } from "../../context/sidebarContext";
 
+import TransitionsModal from '../addPassion/addPassion';
+
 const StyleButton = styled("button")(({ theme }) => ({
   width: "100%",
   //   height: "2rem",
@@ -64,6 +66,7 @@ const LeftBar = () => {
   const dispatch = useDispatch();
   const user_data = useSelector((state) => state.auth.user.user);
   const { toggle, openSidebar } = useContext(SidebarContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <Box
@@ -511,7 +514,7 @@ const LeftBar = () => {
                       color: "#2469d8",
                     },
                   }}
-                  onClick={() => navigate("/messages")}
+                  // onClick={() => navigate("/messages")}
                 >
                   <Tooltip
                     title="Ajouter une passion"
@@ -521,6 +524,7 @@ const LeftBar = () => {
                     leaveDelay={200}
                     sx={{ bgcolor: "#540d6e", color: "#fff" }}
                   >
+                    {isModalOpen && <TransitionsModal setIsModalOpen={setIsModalOpen} />}
                     <StyleButton
                       sx={{
                         background: "#540d6e",
@@ -528,7 +532,7 @@ const LeftBar = () => {
                           xs: "block",
                           md: openSidebar ? "none" : "block",
                         },
-                      }}
+                      }} onClick={() => setIsModalOpen(true)}
                     >
                       <IconPassions style={{ width: "100%", height: "100%" }} />
                     </StyleButton>

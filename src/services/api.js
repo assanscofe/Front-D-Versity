@@ -42,17 +42,27 @@ export const getAllPost = () => {
   });
 };
 
-export const addPassion = (passionName, passionDescription, passionImage) => {
-  return api
-    .post("/addPassion/", {
-      passionName,
-      passionDescription,
-      passionImage,
+export const updatePost = (idPost, postDescription, postImage, user, passion) => {
+  return api.put('/posts/' + idPost, {
+      postDescription, 
+      postImage, 
+      user,
+      passion
+  }).then(response => {
+      return response.data
+  })
+}
+
+export const addPassion = (passionName, passionDescription, passionImage,creator) => {
+    return api.post('/passions/', {
+        passionName,
+        passionDescription,
+        passionImage,
+        creator,
+    }).then(response => {
+        return response.data
     })
-    .then((response) => {
-      return response.data;
-    });
-};
+}
 
 export const getAllPassions = () => {
   return api.get("/passions/").then((response) => {
@@ -72,22 +82,16 @@ export const getPassionName = (idPassion) => {
   });
 };
 
-export const updatePassion = (
-  idPassion,
-  passionName,
-  passionDescription,
-  passionImage
-) => {
-  return api
-    .put("/passions/" + idPassion, {
-      passionName,
-      passionDescription,
-      passionImage,
+export const updatePassion = (idPassion, passionName, passionDescription, passionImage, creator) => {
+    return api.put('/passions/' + idPassion, {
+        passionName, 
+        passionDescription, 
+        passionImage,
+        creator
+    }).then(response => {
+        return response.data
     })
-    .then((response) => {
-      return response.data;
-    });
-};
+}
 
 export const deletePassion = (idPassion) => {
   return api.delete("/passions/" + idPassion).then((response) => {

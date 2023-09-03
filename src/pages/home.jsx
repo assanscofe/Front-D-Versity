@@ -27,7 +27,7 @@ import img4 from "../assets/683409.jpg";
 import img5 from "../assets/pexels-eric-anada-1001990.jpg";
 import img6 from "../assets/432486.jpg";
 import img7 from "../assets/pexels-dzenina-lukac-1005012.jpg";
-import tt from "../assets/tt.png";
+// import tt from "../assets/tt.png";
 import imgSlider2 from "../assets/1135879.png";
 import imgSlider3 from "../assets/1146218.png";
 

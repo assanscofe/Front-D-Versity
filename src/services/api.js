@@ -237,3 +237,13 @@ export const getMessageById = async (id1, id2) => {
     console.log("Erreur lors de la récuperation des données ");
   }
 };
+
+export const search = async (query) => {
+  try {
+    return await api.get("/search/?query=" + query).then((response) => {
+      return response.data;
+    });
+  } catch (error) {
+    console.log("Erreur lors de la récuperation des données ");
+  }
+};

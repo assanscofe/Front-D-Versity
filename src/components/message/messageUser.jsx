@@ -8,7 +8,6 @@ import {
   Typography,
   IconButton,
   Box,
-  Link,
 } from "@mui/material";
 import EmojiPicker from "emoji-picker-react";
 import { EmojiStyle } from "emoji-picker-react";
@@ -65,13 +64,6 @@ const ChatInput = styled("div")(({ theme }) => ({
   flexDirection: "row",
   columnGap: "0.5rem",
 }));
-const Header = styled(Box)({
-  width: "100%",
-  display: "flex",
-  justifyContent: "center",
-  flexDirection: "column",
-  alignItems: "center",
-});
 
 const MessageUser = () => {
   const dispatch = useDispatch();
@@ -190,6 +182,7 @@ const MessageUser = () => {
       })
     );
     setMessage("");
+    setShowEmoji(!showEmoji);
   };
 
   return (

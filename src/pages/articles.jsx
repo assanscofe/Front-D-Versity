@@ -18,8 +18,8 @@ import ModalAddArticle from "../components/addArticle/modalAddArticle";
 import { useDispatch, useSelector } from "react-redux";
 import { getArticle, getArticleById } from "../redux/articleSlice";
 import moment from "moment";
-import { likeArticle } from "../services/api";
-import { addNotification } from "../services/api";
+// import { likeArticle } from "../services/api";
+// import { addNotification } from "../services/api";
 import { ToastContainer } from "react-toastify";
 
 const LikeButton = ({ articleId, userIdPost }) => {
@@ -57,7 +57,7 @@ const LikeButton = ({ articleId, userIdPost }) => {
   }, [articleLikeSocket]);
 
   const handleClick = () => {
-    const message = "a réagi à votre publication";
+    // const message = "a réagi à votre publication";
     // likeArticle(articleId);
     const action = isLiked ? "unlike" : "like";
     articleLikeSocket.send(

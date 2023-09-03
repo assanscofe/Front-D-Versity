@@ -3,7 +3,6 @@ import {
   IconButton,
   Box,
   Badge,
-  InputBase,
   Stack,
   Menu,
   MenuItem,
@@ -13,23 +12,16 @@ import {
 import { styled } from "@mui/material/styles";
 import { DarkModeContext } from "../../context/darkModeContext";
 import moment from "moment";
+import SearchBar from "./searchBar";
+import ispm from "../../assets/ispm.png";
 
 //--------------import Icons ------------
-import SearchIcon from "@mui/icons-material/SearchRounded";
 import DarkModeIcon from "@mui/icons-material/DarkModeOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import { ReactComponent as IconNotification } from "../../assets/SVG/bell.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotification } from "../../redux/notificationSlice";
 import { getUserById } from "../../redux/authSlice";
-
-const Search = styled("div")(({ theme }) => ({
-  width: "25%",
-  padding: "0.5rem 1rem",
-  borderRadius: "0.6rem",
-  display: "flex",
-  alignItems: "center",
-}));
 
 const Icons = styled(Box)(({ theme }) => ({
   marginLeft: "2rem",
@@ -204,17 +196,7 @@ const NavBar = () => {
           // bgcolor:'background.paper'
         }}
       >
-        <Search
-          sx={{
-            background: darkMode ? "#121212" : "#fff",
-          }}
-        >
-          <InputBase
-            placeholder="Rechercher..."
-            sx={{ width: "100%", fontSize: "0.8rem" }}
-          />
-          <SearchIcon sx={{ color: darkMode ? "#2096f3" : "#2469d8" }} />
-        </Search>
+        <SearchBar />
         <Icons>
           <IconButton onClick={handleOpenMenu}>
             <Badge variant={"dot"} color={"error"}>
@@ -235,6 +217,9 @@ const NavBar = () => {
               <DarkModeIcon sx={{ color: "#2469d8" }} />
             )}
           </IconButton>
+          <Box sx={{ width: 35, height: 35 }}>
+            <img src={ispm} alt="Logo Ispm" width={"100%"} height={"100%"} />
+          </Box>
         </Icons>
       </Box>
     </>

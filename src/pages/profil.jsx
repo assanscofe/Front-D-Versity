@@ -4,7 +4,6 @@ import {
   Grid,
   Typography,
   Button,
-  Paper,
   Stack,
   Avatar,
   Tab,
@@ -12,8 +11,6 @@ import {
 } from "@mui/material";
 import { TabPanel, TabList, TabContext } from "@mui/lab";
 
-import fond from "../assets/798904.png";
-// import avatar from '../assets/Icons/avatar22.png'
 import Publication from "../components/tabsProfil/publication";
 import MyPassions from "../components/tabsProfil/myPassions";
 import AddIcon from "@mui/icons-material/Add";
@@ -27,8 +24,8 @@ import {
 } from "../redux/followSlice";
 import { getUserById } from "../redux/authSlice";
 import { useParams } from "react-router-dom";
-import { ReactComponent as IconPublication } from "../assets/SVG/book-open-cover (1).svg";
-import { ReactComponent as IconEdit } from "../assets/SVG/following (1).svg";
+// import { ReactComponent as IconPublication } from "../assets/SVG/book-open-cover (1).svg";
+// import { ReactComponent as IconEdit } from "../assets/SVG/following (1).svg";
 
 const Profil = () => {
   const user = useParams();

@@ -17,7 +17,6 @@ import {
   Typography,
 } from "@mui/material";
 import { DarkModeContext } from "../../context/darkModeContext";
-import avatar from "../../assets/Icons/avatar41.png";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../redux/authSlice";
 

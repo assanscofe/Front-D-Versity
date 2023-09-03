@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect /*, useContext*/ } from "react";
 import {
   Box,
   Paper,
@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
-import avatar from "../../assets/Icons/avatar22.png";
+// import avatar from "../../assets/Icons/avatar22.png";
 // import img1 from '../../assets/1146218.png'
 import { ReactComponent as IconPhotos } from "../../assets/SVG/picture (1).svg";
 import { ReactComponent as IconVideos } from "../../assets/SVG/play (1).svg";
@@ -21,16 +21,16 @@ import { ReactComponent as IconComment } from "../../assets/SVG/comment.svg";
 import { ReactComponent as IconShare } from "../../assets/SVG/share.svg";
 import { ReactComponent as IconDots } from "../../assets/SVG/menu-dots.svg";
 import MyModal from "./modalPublication";
-import { getPostByUserId } from "../../services/api";
+// import { getPostByUserId } from "../../services/api";
 import { getAllPost } from "../../services/api";
 import moment from "moment";
 import "moment/locale/fr"; // Importez la localisation française si nécessaire
-import eventEmitter, { POST_ADDED } from "../addPassion/event";
-import { toast, ToastContainer } from "react-toastify";
+// import eventEmitter, { POST_ADDED } from "../addPassion/event";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { SidebarContext } from "../../context/sidebarContext";
+// import Menu from "@mui/material/Menu";
+// import MenuItem from "@mui/material/MenuItem";
+// import { SidebarContext } from "../../context/sidebarContext";
 import { useParams } from "react-router-dom";
 
 const MyButton = styled(Button)({
@@ -59,7 +59,7 @@ const Publication = () => {
   const id_profil = useParams();
 
   const user_data = useSelector((state) => state.auth.user.user);
-  const { openSidebar } = useContext(SidebarContext);
+  // const { openSidebar } = useContext(SidebarContext);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   // const [posts, setPosts] = useState([]);
@@ -115,10 +115,10 @@ const Publication = () => {
       });
   }, [isModalOpen]);
   //     // Fonction de gestion de l'événement de nouvelle passion ajoutée
-  const handlePostAdded = (post) => {
-    // Mettez à jour la liste des passions avec la nouvelle passion
-    setPosts((prevPost) => [post, ...prevPost]);
-  };
+  // const handlePostAdded = (post) => {
+  //   // Mettez à jour la liste des passions avec la nouvelle passion
+  //   setPosts((prevPost) => [post, ...prevPost]);
+  // };
   // console.log(posts);
 
   return (

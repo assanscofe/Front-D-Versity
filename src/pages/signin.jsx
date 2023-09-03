@@ -23,8 +23,10 @@ import { useDispatch, useSelector } from "react-redux";
 //------import IMG--------------
 import Logo from "../assets/dversity.3.png";
 import GoogleIcon from "../assets/icon google.png";
+import LogoIspm from "../assets/ispm.png";
 
 const StyledContent = styled("div")(({ theme }) => ({
+  position: "relative",
   width: "100%",
   height: "100vh",
   display: "flex",
@@ -96,6 +98,17 @@ const SignIn = () => {
       ) : (
         ""
       )}
+      <Box
+        sx={{
+          position: "absolute",
+          top: "1rem",
+          right: "1rem",
+          width: 150,
+          height: 150,
+        }}
+      >
+        <img src={LogoIspm} alt="Logo ispm" width="100%" height="100%" />
+      </Box>
       <Paper
         sx={{
           width: "100%",

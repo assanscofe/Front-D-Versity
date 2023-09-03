@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import {
   Stack,
   Tooltip,
@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/authSlice";
 
 //------------import Images-----------
-import LogoM from "../../assets/DD.png";
+// import LogoM from "../../assets/DD.png";
 import Logo from "../../assets/dversity.3.png";
 
 //--------------import Icons ------------

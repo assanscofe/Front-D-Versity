@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import React, { useEffect, useState, useMemo } from "react";
+// import { io } from "socket.io-client";
 
 const Test = () => {
-  const notificationSocket = new WebSocket(
-    "ws://127.0.0.1:8000/ws/notification/"
+  const notificationSocket = useMemo(
+    () => new WebSocket("ws://127.0.0.1:8000/ws/notification/"),
+    []
   );
   const [data, setData] = useState([]);
 
@@ -30,7 +31,7 @@ const Test = () => {
     notificationSocket.onclose = function () {
       console.log("connexion ferme");
     };
-  }, []);
+  }, [notificationSocket]);
 
   const handleClick = () => {
     const user = document.querySelector("#user").value;

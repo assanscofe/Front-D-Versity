@@ -10,7 +10,7 @@ import {
   Typography,
   // CardActions,
   // IconButton,
-  Accordion,
+  // Accordion,
   // AccordionSummary,
   // AccordionDetails,
   Box,
@@ -21,13 +21,13 @@ import {
 // import Masonry from '@mui/lab/Masonry'
 import { getAllPassions } from "../services/api";
 import eventEmitter, { PASSION_ADDED } from "../components/addPassion/event";
-import img1 from "../assets/432486.jpg";
+// import img1 from "../assets/432486.jpg";
 import img2 from "../assets/683409.jpg";
 import img3 from "../assets/798904.png";
 
-const MyAccordion = styled(Accordion)({
-  width: "18rem",
-});
+// const MyAccordion = styled(Accordion)({
+//   width: "18rem",
+// });
 
 const StyleAccordion = styled("div")(({ theme }) => ({
   height: "auto",
@@ -46,11 +46,11 @@ const StyleAccordion = styled("div")(({ theme }) => ({
 }));
 
 const Passions = () => {
-  const [expanded, setExpanded] = useState(false);
+  // const [expanded, setExpanded] = useState(false);
 
-  const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
-  };
+  // const handleChange = (panel) => (event, isExpanded) => {
+  //   setExpanded(isExpanded ? panel : false);
+  // };
 
   const [passions, setPassions] = useState([]);
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   // Box,
   Button,
@@ -22,7 +22,6 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as IconDate } from "../assets/SVG/clock-three.svg";
 import { ReactComponent as IconPosition } from "../assets/SVG/marker.svg";
 import { ReactComponent as IconAddEvent } from "../assets/SVG/add.svg";
-// import IconStar from '@mui/icons-material/StarBorderRounded'
 import IconStarActive from "@mui/icons-material/StarRounded";
 import img2 from "../assets/1143088.jpg";
 import img4 from "../assets/1146218.png";
@@ -30,13 +29,17 @@ import ModalAddEvent from "../components/events/modalAddEvent";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvent } from "../redux/eventSlice";
 import { getPassion } from "../redux/passionSlice";
+import { ToastContainer } from "react-toastify";
+import { SidebarContext } from "../context/sidebarContext";
+import moment from "moment";
 
 const Events = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const dataEvent = useSelector((state) => state.event.data);
   const dataPassion = useSelector((state) => state.passion.data);
-  console.log(dataPassion);
+
+  const { openSidebar } = useContext(SidebarContext);
 
   const [data, setData] = useState([]);
   const [collection, setCollection] = useState([]);
@@ -78,6 +81,7 @@ const Events = () => {
 
   return (
     <>
+      <ToastContainer position="top-right" />
       <Stack
         direction={"column"}
         spacing={2}
@@ -96,7 +100,9 @@ const Events = () => {
             <Typography variant="h6" color={"primary.main"}>
               Evènements
             </Typography>
-            <FormControl sx={{ m: 1, width: 120, borderRadius: 4 }}>
+            <FormControl
+              sx={{ m: 1, width: { xs: 90, md: 120 }, borderRadius: 4 }}
+            >
               <Select
                 defaultValue={"Tous"}
                 displayEmpty
@@ -125,13 +131,14 @@ const Events = () => {
             sx={{ borderRadius: 5 }}
             variant="outlined"
             onClick={() => handleOpenClose()}
-            startIcon={
-              <IconAddEvent
-                style={{ width: 20, height: 20, fill: "#2469d8" }}
-              />
-            }
           >
-            Créer
+            <IconAddEvent style={{ width: 20, height: 20, fill: "#2469d8" }} />
+            <Typography
+              variant="body2"
+              sx={{ display: { xs: "none", md: "block" }, marginLeft: 1 }}
+            >
+              Créer
+            </Typography>
           </Button>
           <ModalAddEvent isOpen={openModal} onClose={handleOpenClose} />
         </Stack>
@@ -148,16 +155,19 @@ const Events = () => {
             "::-webkit-scrollbar": {
               display: "none",
             },
+            borderRadius: 3,
           }}
         >
           {data.map((elt, index) => (
             <Grid
+              key={index}
               item
               xs={12}
-              sm={6}
-              md={4}
-              xl={2.4}
-              sx={{ padding: "0 0 1rem 1rem" }}
+              md={openSidebar ? 4 : 3}
+              xl={openSidebar ? 2.4 : 2}
+              sx={{
+                padding: "0 1rem 1rem 0",
+              }}
             >
               <Card
                 key={index}
@@ -215,14 +225,16 @@ const Events = () => {
                       sx={{ fontSize: "0.8rem" }}
                       color="text.secondary"
                     >
-                      {elt.startDate}
+                      {moment(elt.startDate, "YYYY-MM-DD").format(
+                        "Do MMMM YYYY"
+                      )}
                     </Typography>
                     <Divider orientation="vertical" flexItem />
                     <Typography
                       sx={{ fontSize: "0.8rem" }}
                       color="text.secondary"
                     >
-                      {elt.startTime}
+                      {moment(elt.startTime, "HH:mm:ss").format("LT")}
                     </Typography>
                   </Stack>
                   <Stack

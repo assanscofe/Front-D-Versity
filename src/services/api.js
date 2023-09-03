@@ -187,3 +187,53 @@ export const addNotification = async (message, sender, receiver, is_read) => {
     console.log("Erreur lors de la récuperation des données");
   }
 };
+
+export const followUser = async (following, follower) => {
+  try {
+    return await api
+      .post("/followUser/", {
+        following,
+        follower,
+      })
+      .then((response) => {
+        return response.data;
+      });
+  } catch (error) {
+    console.log("Erreur lors de la récuperation des données");
+  }
+};
+
+export const unfollowUser = async (following, follower) => {
+  try {
+    return await api
+      .post("/unfollowUser/", {
+        following,
+        follower,
+      })
+      .then((response) => {
+        return response.data;
+      });
+  } catch (error) {
+    console.log("Erreur lors de la récuperation des données");
+  }
+};
+
+export const getFollowById = async (idUser) => {
+  try {
+    return await api.get("/followers/" + idUser).then((response) => {
+      return response.data;
+    });
+  } catch (error) {
+    console.log("Erreur lors de la récuperation des données");
+  }
+};
+
+export const getMessageById = async (id1, id2) => {
+  try {
+    return await api.get("/messages/" + id1 + "/" + id2).then((response) => {
+      return response.data;
+    });
+  } catch (error) {
+    console.log("Erreur lors de la récuperation des données ");
+  }
+};

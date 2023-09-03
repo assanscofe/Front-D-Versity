@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Stack,
@@ -11,14 +11,22 @@ import {
 } from "@mui/material";
 import GoogleIcon from "../../assets/icon google.png";
 import Lol from "../../assets/8056324.jpg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addFormData } from "../../redux/authSlice";
+import { getUser } from "../../redux/authSlice";
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   flexGrow: 1,
 }));
+
+const ErrorTypography = styled(Typography)(({ theme }) => ({
+  fontSize: "0.8rem",
+  color: "#d7415e",
+}));
+
 const Step1 = ({ onComplete }) => {
   const dispatch = useDispatch();
+  const allUser = useSelector((state) => state.auth.dataAllUser);
   const [data, setData] = useState({
     username: "",
     first_name: "",
@@ -27,10 +35,32 @@ const Step1 = ({ onComplete }) => {
     password: "",
     Cpassword: "",
   });
+  const [errorUsername, setErrorUsername] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [errorPassword, setErrorPassword] = useState(false);
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
 
   const handleNext = () => {
-    dispatch(addFormData(data));
-    onComplete();
+    let existUsername = allUser.find((user) => data.username === user.username);
+    let existEmail = allUser.find((user) => data.email === user.email);
+    if (existUsername) {
+      setErrorUsername(true);
+    } else setErrorUsername(false);
+    if (existEmail) {
+      setErrorEmail(true);
+    } else setErrorEmail(false);
+
+    if (!existUsername && !existEmail) {
+      if (data.password === data.Cpassword) {
+        dispatch(addFormData(data));
+        onComplete();
+      } else {
+        setErrorPassword(true);
+      }
+    }
   };
 
   return (
@@ -103,18 +133,27 @@ const Step1 = ({ onComplete }) => {
               OU
             </Typography>
             <Stack direction={"column"} spacing={2}>
-              <StyledTextField
-                variant="outlined"
-                label="Nom d'Utilisateur"
-                size="small"
-                value={data.username}
-                onChange={(e) =>
-                  setData({
-                    ...data,
-                    username: e.target.value,
-                  })
-                }
-              />
+              <Stack direction={"column"}>
+                <StyledTextField
+                  variant="outlined"
+                  label="Nom d'Utilisateur"
+                  size="small"
+                  value={data.username}
+                  onChange={(e) =>
+                    setData({
+                      ...data,
+                      username: e.target.value,
+                    })
+                  }
+                />
+                {errorUsername ? (
+                  <ErrorTypography>
+                    Le Nom d'utilisateur existe déja
+                  </ErrorTypography>
+                ) : (
+                  ""
+                )}
+              </Stack>
               <Stack
                 direction="row"
                 spacing={1}
@@ -171,19 +210,26 @@ const Step1 = ({ onComplete }) => {
                   })
                 }
               />
-              <StyledTextField
-                variant="outlined"
-                label="Adresse Email"
-                type={"email"}
-                size="small"
-                value={data.email}
-                onChange={(e) =>
-                  setData({
-                    ...data,
-                    email: e.target.value,
-                  })
-                }
-              />
+              <Stack direction="column">
+                <StyledTextField
+                  variant="outlined"
+                  label="Adresse Email"
+                  type={"email"}
+                  size="small"
+                  value={data.email}
+                  onChange={(e) =>
+                    setData({
+                      ...data,
+                      email: e.target.value,
+                    })
+                  }
+                />
+                {errorEmail ? (
+                  <ErrorTypography>L'adresse email existe déja</ErrorTypography>
+                ) : (
+                  ""
+                )}
+              </Stack>
 
               <StyledTextField
                 variant="outlined"
@@ -198,19 +244,26 @@ const Step1 = ({ onComplete }) => {
                   })
                 }
               />
-              <StyledTextField
-                variant="outlined"
-                label="Confirmer le Mot de Passe"
-                type={"password"}
-                size="small"
-                value={data.Cpassword}
-                onChange={(e) =>
-                  setData({
-                    ...data,
-                    Cpassword: e.target.value,
-                  })
-                }
-              />
+              <Stack>
+                <StyledTextField
+                  variant="outlined"
+                  label="Confirmer le Mot de Passe"
+                  type={"password"}
+                  size="small"
+                  value={data.Cpassword}
+                  onChange={(e) =>
+                    setData({
+                      ...data,
+                      Cpassword: e.target.value,
+                    })
+                  }
+                />
+                {errorPassword ? (
+                  <ErrorTypography>Erreur mot de passe</ErrorTypography>
+                ) : (
+                  ""
+                )}
+              </Stack>
               <Stack direction={"column"} spacing={2}>
                 <Divider />
                 <Link

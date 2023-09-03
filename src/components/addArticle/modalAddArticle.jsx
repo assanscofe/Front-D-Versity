@@ -18,7 +18,7 @@ import { ReactComponent as IconExit } from "../../assets/SVG/cross-small.svg";
 import { ReactComponent as IconPlus } from "../../assets/SVG/plus.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { addArticle } from "../../services/api";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getPassion } from "../../redux/passionSlice";
 
@@ -81,16 +81,14 @@ const ModalAddArticle = ({ isOpen, onClose }) => {
       data.passion
     ).then(() => {
       onClose();
-      toast.success("La passion a été ajoutée avec succès");
-      // navigate('/events')
+      toast.success("L'article a été ajoutée avec succès");
+      setData({
+        articleName: "",
+        articleContenu: "",
+        articleImage: null,
+        passion: null,
+      });
     });
-    setData({
-      articleName: "",
-      articleContenu: "",
-      articleImage: null,
-      passion: null,
-    });
-    onClose();
   };
   return (
     <Modal open={isOpen} onClose={onClose} BackdropComponent={CustomBackrop}>

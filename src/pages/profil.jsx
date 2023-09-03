@@ -1,162 +1,265 @@
-import React, { useState } from "react";
-import { Box, Grid, Typography, Button, Paper } from "@mui/material";
+import React, { useState, useContext, useEffect } from "react";
+import {
+  Box,
+  Grid,
+  Typography,
+  Button,
+  Paper,
+  Stack,
+  Avatar,
+  Tab,
+  Divider,
+} from "@mui/material";
+import { TabPanel, TabList, TabContext } from "@mui/lab";
 
 import fond from "../assets/798904.png";
 // import avatar from '../assets/Icons/avatar22.png'
 import Publication from "../components/tabsProfil/publication";
 import MyPassions from "../components/tabsProfil/myPassions";
-import { useSelector } from "react-redux";
-
-const tabsData = [
-  {
-    label: "Publication",
-    content: <Publication />,
-  },
-  {
-    label: "Mes Passions",
-    content: <MyPassions />,
-  },
-];
+import AddIcon from "@mui/icons-material/Add";
+import CheckIcon from "@mui/icons-material/Check";
+import { useDispatch, useSelector } from "react-redux";
+import { SidebarContext } from "../context/sidebarContext";
+import {
+  followUser,
+  unFollowUser,
+  getFollowByUser,
+} from "../redux/followSlice";
+import { getUserById } from "../redux/authSlice";
+import { useParams } from "react-router-dom";
+import { ReactComponent as IconPublication } from "../assets/SVG/book-open-cover (1).svg";
+import { ReactComponent as IconEdit } from "../assets/SVG/following (1).svg";
 
 const Profil = () => {
-  const [activeTab, setActiveTab] = useState(0);
+  const user = useParams();
+  const dispatch = useDispatch();
+  const user_data = useSelector((state) => state.auth.dataById);
+  const idUser = useSelector((state) => state.auth.user.user.id);
+  const followingUser = useSelector((state) => state.follow.dataById);
+  const { openSidebar } = useContext(SidebarContext);
+  const [value, setValue] = useState("1");
+  const [isFollowing, setIsFollowing] = useState(
+    followingUser
+      ? followingUser.followers.some(
+          (elt) => elt.following === parseInt(idUser)
+        )
+      : false
+  );
 
-  const user_data = useSelector((state) => state.auth.user.user);
+  // useEffect(() => {
+  //   setIsFollowing();
+  // }, [user, followingUser]);
 
-  const handleActive = (index) => {
-    setActiveTab(index);
+  useEffect(() => {
+    dispatch(getFollowByUser(user.id)).then((data) => {
+      setIsFollowing(
+        data.payload.followers.some((elt) => elt.following === parseInt(idUser))
+      );
+    });
+  }, [dispatch, idUser, user]);
+
+  useEffect(() => {
+    dispatch(getUserById(user.id));
+  }, [user, dispatch]);
+
+  const handleChange = (e, newValue) => {
+    setValue(newValue);
+  };
+
+  // console.log(followingUser);
+
+  const handleToggleFollow = () => {
+    if (isFollowing) {
+      dispatch(unFollowUser(idUser, user_data.id)).then(() => {
+        setIsFollowing(false);
+      });
+    } else {
+      dispatch(followUser(idUser, user_data.id));
+      setIsFollowing(true);
+    }
   };
 
   return (
-    <div>
-      <Box
-        sx={{
-          width: "100%",
-          height: "calc(100% - 8vh)",
-        }}
-      >
-        <Grid
-          container
+    <>
+      <TabContext value={value}>
+        <Box
           sx={{
-            height: "100%",
             width: "100%",
+            height: "100%",
+            maxHeight: "100%",
+            borderRadius: 5,
+            // overflowY: "auto",
+            // scrollbarWidth: "none",
+            // "&::-webkit-scrollbar": {
+            //   display: "none",
+            // },
+            // "::-webkit-scrollbar": {
+            //   display: "none",
+            // },
           }}
         >
-          <Grid
-            item
-            xs={12}
-            sx={{
-              height: "12rem",
-              overflow: "hidden",
-              borderRadius: "1rem 1rem 0.5rem 0.5rem",
-            }}
-          >
-            <img
-              src={fond}
-              alt="image1"
-              width={"100%"}
-              height={"100%"}
-              style={{ objectFit: "cover" }}
-            />
-          </Grid>
-          <Grid
-            item
-            xs={3.5}
-            sx={{
-              height: "calc(100% - 12rem)",
-              minWidth: "14rem",
-              position: "relative",
-            }}
-          >
-            <Paper
-              sx={{
-                position: "absolute",
-                top: "-4rem",
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "14rem",
-                height: "40vh",
-                borderRadius: 6,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: 1,
-              }}
-            >
-              <Box
+          <Grid container sx={{ width: "100%", height: "calc(100% - 5vh)" }}>
+            <Grid item xs={12} md={openSidebar ? 3.5 : 2.5} xl={2.5}>
+              <Stack
+                direction={"column"}
+                alignItems={"center"}
+                spacing={3}
                 sx={{
-                  width: "7rem",
-                  height: "7rem",
-                  borderRadius: 50,
-                  background: user_data.background,
-                  padding: "0.5rem",
+                  position: "relative",
+                  bgcolor: "background.paper",
+                  py: 4,
+                  borderRadius: 5,
+                  marginTop: 9,
                 }}
               >
-                <img
-                  src={user_data.avatar}
-                  alt="avatar"
-                  width={"100%"}
-                  height={"100%"}
-                />
-              </Box>
-              <Typography variant="h6">{user_data.username}</Typography>
-              <Typography>Bio</Typography>
-              <Button>Suivre</Button>
-            </Paper>
-          </Grid>
-          <Grid item xs={8.5} sx={{ padding: "0.5rem" }}>
-            <Box
-              sx={{
-                width: "100%",
-                height: "100%",
-                overflow: "hidden",
-              }}
-            >
-              <Box
-                sx={{
-                  width: "100%",
-                  height: "auto",
-                  padding: "0.5rem",
-                }}
-              >
-                {tabsData.map((elt, index) => (
-                  <Button
-                    key={index}
-                    onClick={() => handleActive(index)}
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: -75,
+                    width: 150,
+                    height: 150,
+                    bgcolor: user_data.background,
+                    borderRadius: 5,
+                  }}
+                >
+                  <Avatar
+                    src={user_data.avatar}
+                    alt={user_data.username}
+                    sx={{ width: "100%", height: "100%" }}
+                  />
+                </Box>
+                <Stack
+                  direction="column"
+                  alignItems={"center"}
+                  sx={{ paddingTop: 5 }}
+                >
+                  <Typography variant="h5">{user_data.username}</Typography>
+                  <Typography variant="body2">Bio</Typography>
+                </Stack>
+                <Stack
+                  direction="row"
+                  sx={{
+                    width: "100%",
+                    borderTop: "1px solid #efefef",
+                    borderBottom: "1px solid #efefef",
+                    paddingY: "0.5rem",
+                  }}
+                >
+                  <Stack
+                    direction={"column"}
+                    justifyContent="center"
+                    alignItems={"center"}
                     sx={{
-                      padding: "0.5rem 1.5rem",
-                      color: index === activeTab ? "#2469d8" : "#888",
-                      borderBottom:
-                        index === activeTab ? "0.2rem solid #2469d8" : "0",
+                      flex: "1",
                     }}
                   >
-                    {elt.label}
+                    <Typography variant="h6">
+                      {followingUser !== null
+                        ? followingUser.following.length
+                        : 0}
+                    </Typography>
+                    <Typography variant="caption">Suivi(e)</Typography>
+                  </Stack>
+                  <Divider
+                    orientation="vertical"
+                    style={{
+                      height: "3.5rem",
+                      border: "1px solid #efefef",
+                    }}
+                  />
+                  <Stack
+                    direction={"column"}
+                    justifyContent="center"
+                    alignItems={"center"}
+                    sx={{
+                      flex: "1",
+                    }}
+                  >
+                    <Typography variant="h6">
+                      {" "}
+                      {followingUser !== null
+                        ? followingUser.followers.length
+                        : 0}
+                    </Typography>
+                    <Typography variant="caption">followers</Typography>
+                  </Stack>
+                </Stack>
+                {user_data.id === idUser ? (
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      cursor: "pointer",
+                      textDecoration: "underline",
+                      color: "#2096f3",
+                    }}
+                  >
+                    Modifier mon profil
+                  </Typography>
+                ) : (
+                  <Button
+                    onClick={handleToggleFollow}
+                    variant={isFollowing ? "outlined" : "contained"}
+                    sx={{ borderRadius: 5, width: 100 }}
+                    size="small"
+                    endIcon={isFollowing ? <CheckIcon /> : <AddIcon />}
+                  >
+                    {isFollowing ? "Suivi(e)" : "Suivre"}
                   </Button>
-                ))}
+                )}
+              </Stack>
+            </Grid>
+            <Grid item xs={12} md={openSidebar ? 8.5 : 6.5} xl={7} px={2}>
+              <Box sx={{}}>
+                <TabList
+                  onChange={handleChange}
+                  textColor="primary"
+                  // indicatorColor="primary"
+                  centered
+                >
+                  <Tab label="publication" value="1" />
+                  <Tab label="Passions" value="2" />
+                  {/* <Tab
+                    value="3"
+                  /> */}
+                </TabList>
               </Box>
-              <Box
+              <Stack
+                direction={"column"}
                 sx={{
                   width: "100%",
-                  height: "calc(100% - 7vh)",
-                  padding: "0 1rem",
-                  //  overflowY: 'scroll',
-                  // scrollbarWidth: '0',
-                  // '&::-webkit-scrollbar': {
-                  //     display:'none'
-                  // },
-                  // '::-webkit-scrollbar': {
-                  //     display:'none'
-                  // }
+                  height: "100%",
                 }}
               >
-                {tabsData[activeTab].content}
-              </Box>
-            </Box>
+                <TabPanel
+                  value="1"
+                  sx={{
+                    position: "relative",
+                    width: "100%",
+                    maxHeight: "100%",
+                    px: { md: 0, xl: 12 },
+                  }}
+                >
+                  <Publication />
+                </TabPanel>
+                <TabPanel value="2">
+                  <MyPassions />
+                </TabPanel>
+              </Stack>
+            </Grid>
+            <Grid item xs={0} md={openSidebar ? 0 : 3} xl={2.5}>
+              <Stack
+                direction="column"
+                sx={{
+                  bgcolor: "background.paper",
+                  height: 500,
+                  borderRadius: 5,
+                }}
+              ></Stack>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
-    </div>
+        </Box>
+      </TabContext>
+    </>
   );
 };
 

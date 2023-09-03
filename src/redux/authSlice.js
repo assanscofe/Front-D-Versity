@@ -58,7 +58,7 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.isLoading = false;
       state.user = null;
-      // state.error = action.payload;
+      state.error = action.payload;
     },
     logoutSuccess: (state) => {
       state.isAuthenticated = false;
@@ -128,10 +128,10 @@ export const login = (email, password, navigate) => async (dispatch) => {
       email,
       password,
     });
-    console.log(response);
     if (response) {
       console.log("success");
       localStorage.setItem("access_token", response.data.tokens.access);
+      localStorage.setItem("refresh_token", response.data.tokens.refresh);
       dispatch(authSuccess(response.data));
       navigate("/");
     }
@@ -153,9 +153,18 @@ export const signup = (data, navigate) => async (dispatch) => {
   }
 };
 
-export const logout = () => (dispatch) => {
-  localStorage.removeItem("access_token");
-  dispatch(logoutSuccess());
+export const logout = () => async (dispatch) => {
+  try {
+    const refresh_token = localStorage.getItem("refresh_token");
+    const response = await api.post("logout/", { refresh_token });
+    if (response) {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("refresh_token");
+      dispatch(logoutSuccess());
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default authSlice.reducer;

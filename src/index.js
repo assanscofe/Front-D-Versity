@@ -6,12 +6,12 @@ import { SidebarContextProvider } from "./context/sidebarContext";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterMoment}>
       <DarkModeContextProvider>
         <SidebarContextProvider>
           <Provider store={store}>

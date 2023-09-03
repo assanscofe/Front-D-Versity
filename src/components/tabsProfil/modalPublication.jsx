@@ -23,6 +23,7 @@ import { ReactComponent as IconPlanning } from "../../assets/SVG/bookmark (1).sv
 import { getAllPassions } from "../../services/api";
 import { addPost } from "../../services/api";
 import { emitPostAdded } from "../addPassion/event";
+import { useSelector } from "react-redux";
 
 const styleModal = {
   position: "absolute",
@@ -49,6 +50,7 @@ const MyButton = styled(Button)({
 });
 
 export default function MyModal({ setIsModalOpen }) {
+  const user_data = useSelector((state) => state.auth.user.user);
   // const history = useNavigate();
   const [description, setDescription] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -115,7 +117,7 @@ export default function MyModal({ setIsModalOpen }) {
     event.preventDefault();
 
     console.log("reto", selectedFiles[0] + description + selectedOption);
-    addPost(description, selectedFiles[0], 11, selectedOption, {
+    addPost(description, selectedFiles[0], user_data.id, selectedOption, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -234,6 +236,7 @@ export default function MyModal({ setIsModalOpen }) {
                 />
               </Grid>
               {previewImages.map((previewImage, index) => (
+                // eslint-disable-next-line jsx-a11y/img-redundant-alt
                 <img
                   key={index}
                   src={previewImage}

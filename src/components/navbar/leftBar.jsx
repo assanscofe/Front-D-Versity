@@ -55,7 +55,7 @@ const StyleButton = styled("button")(({ theme }) => ({
 
 const MyAvatar = styled(Avatar)({
   // background: '#96d7d1',
-  borderRadius: "0.8rem",
+  borderRadius: 10,
   padding: "0.1rem",
 });
 
@@ -161,9 +161,11 @@ const LeftBar = () => {
               justifySelf="center"
             >
               <MyAvatar
+                onClick={() => navigate("/profil/" + user_data.id)}
                 src={user_data.avatar}
                 alt={user_data.last_name}
                 sx={{
+                  cursor: "pointer",
                   width: openSidebar ? "2rem" : "100%",
                   height: openSidebar ? "2rem" : "2.5rem",
                   padding: "0",
@@ -286,7 +288,7 @@ const LeftBar = () => {
                       color: "#2469d8",
                     },
                   }}
-                  onClick={() => navigate("/profil")}
+                  onClick={() => navigate("/profil/" + user_data.id)}
                 >
                   <Tooltip
                     title="Profil"
@@ -298,7 +300,7 @@ const LeftBar = () => {
                   >
                     <StyleButton
                       style={{ background: "#ee4266" }}
-                      onClick={() => navigate("/profil")}
+                      onClick={() => navigate("/profil/" + user_data.id)}
                     >
                       <IconUser style={{ width: "100%", height: "100%" }} />
                     </StyleButton>
@@ -429,7 +431,7 @@ const LeftBar = () => {
                       height: "50px",
                       fill: "#2469d8",
                     }}
-                    onClick={() => navigate("/profil")}
+                    onClick={() => navigate("/profil/" + user_data.id)}
                   >
                     <IconGames style={{ width: "100%", height: "100%" }} />
                   </IconButton>

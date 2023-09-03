@@ -16,21 +16,23 @@ import IconExit from "@mui/icons-material/CancelOutlined";
 
 const Step2 = ({ onComplete, back }) => {
   const dispatch = useDispatch();
-  //   const all_passion = useSelector((state) => state.passion.data);
-  const [allPassion, setAllPassion] = useState([]);
+  const allPassion = useSelector((state) => state.passion.data);
   const [choices, setChoices] = useState([]);
   console.log(choices);
 
   useEffect(() => {
-    dispatch(getPassion()).then((data) => setAllPassion(data.payload));
+    dispatch(getPassion());
   }, [dispatch]);
 
   const handleChoice = (e) => {
-    const index = choices.indexOf(e.target.value);
+    const index = choices.indexOf(parseInt(e.target.value));
+    console.log(index);
     if (index === -1) {
       setChoices([...choices, parseInt(e.target.value)]);
     } else {
-      setChoices(choices.filter((choice) => choice !== e.target.value));
+      setChoices(
+        choices.filter((choice) => choice !== parseInt(e.target.value))
+      );
     }
   };
   const handleRemove = (e) => {

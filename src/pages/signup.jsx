@@ -4,11 +4,8 @@ import Step1 from "../components/stepSignUp/step1";
 import Step2 from "../components/stepSignUp/step2";
 import Step3 from "../components/stepSignUp/step3";
 import Logo from "../assets/dversity.3.png";
-import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDispatch, useSelector } from "react-redux";
-import { signup } from "../redux/authSlice";
 
 const formSteps = [
   {
@@ -26,11 +23,7 @@ const formSteps = [
 ];
 
 const SignUp = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.formDataUser);
-  console.log(user);
-
+  localStorage.removeItem("access_token");
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -44,8 +37,6 @@ const SignUp = () => {
   const handleStepComplete = () => {
     if (activeStep < 2) {
       handleNext();
-    } else {
-      dispatch(signup(user, navigate));
     }
   };
 

@@ -15,8 +15,6 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
-// import { ToastContainer } from 'react-toastify'
-// import 'react-toastify/dist/ReactToastify.css'
 
 //--------import Redux-------
 import { login } from "../redux/authSlice";
@@ -42,6 +40,7 @@ const SignIn = () => {
   const navigate = useNavigate();
   const loading = useSelector((state) => state.auth.isLoading);
   const success = useSelector((state) => state.auth.signupSuccess);
+  const error = useSelector((state) => state.auth.error);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -55,6 +54,7 @@ const SignIn = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    localStorage.removeItem("access_token");
     dispatch(login(user.email, user.password, navigate));
   };
 
@@ -74,6 +74,24 @@ const SignIn = () => {
           }}
         >
           Inscription réussie{" "}
+        </Alert>
+      ) : (
+        ""
+      )}
+      {error !== null ? (
+        <Alert
+          severity="error"
+          sx={{
+            width: {
+              xs: "100%",
+              sm: 350,
+              md: 350,
+              lg: 380,
+              xl: 380,
+            },
+          }}
+        >
+          Email ou Mot de passe invalide{" "}
         </Alert>
       ) : (
         ""
@@ -198,13 +216,7 @@ const SignIn = () => {
                       color="primary"
                       type="submit"
                       sx={{
-                        width: {
-                          xs: "100%",
-                          sm: 280,
-                          md: 280,
-                          lg: 300,
-                          xl: 300,
-                        },
+                        width: "100%",
                         textTransform: "none",
                       }}
                       loading
@@ -212,7 +224,7 @@ const SignIn = () => {
                       Se connecter
                     </LoadingButton>
                   ) : (
-                    <LoadingButton
+                    <Button
                       variant="contained"
                       color="primary"
                       type="submit"
@@ -222,7 +234,7 @@ const SignIn = () => {
                       }}
                     >
                       Se connecter
-                    </LoadingButton>
+                    </Button>
                   )}
                   <Divider />
                   <Link
@@ -243,7 +255,6 @@ const SignIn = () => {
           </Stack>
         </Stack>
       </Paper>
-      {/* <ToastContainer position='top-right' /> */}
     </StyledContent>
   );
 };

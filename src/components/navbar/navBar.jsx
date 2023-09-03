@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useMemo } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   IconButton,
   Box,
@@ -7,27 +7,21 @@ import {
   Stack,
   Menu,
   MenuItem,
-  Icon,
   Typography,
   Avatar,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-// import { getAllPassions } from '../../services/api'
-// import { useNavigate, Outlet } from 'react-router-dom'
-// import { TextFields } from '@mui/icons-material'
 import { DarkModeContext } from "../../context/darkModeContext";
-import { useNavigate } from "react-router-dom";
-import LogoM from "../../assets/DD.png";
+import moment from "moment";
 
 //--------------import Icons ------------
 import SearchIcon from "@mui/icons-material/SearchRounded";
 import DarkModeIcon from "@mui/icons-material/DarkModeOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import { ReactComponent as IconNotification } from "../../assets/SVG/bell.svg";
-import img1 from "../../assets/Icons/avatar1.png";
 import { useDispatch, useSelector } from "react-redux";
 import { getNotification } from "../../redux/notificationSlice";
-import { getUser, getUserById } from "../../redux/authSlice";
+import { getUserById } from "../../redux/authSlice";
 
 const Search = styled("div")(({ theme }) => ({
   width: "25%",
@@ -42,27 +36,15 @@ const Icons = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   gap: "1.5rem",
-  // [theme.breakpoints.up("sm")]: {
-  //   display: "flex",
-  // },
 }));
 
-// const UserBox = styled(Box)(({ theme }) => ({
-//     display: 'flex',
-//     alignItems: 'center',
-//     gap: '0.5rem',
-//     [theme.breakpoints.up('sm')]: {
-//         display: 'none'
-//     }
-// }))
-
 const NavBar = () => {
+  moment.locale("fr");
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user.user);
   const { toggle, darkMode } = useContext(DarkModeContext);
   const [openMenu, setOpenMenu] = useState(false);
   const [notification, setNotification] = useState([]);
-  const [allUser, setAllUser] = useState([]);
 
   useEffect(() => {
     const notifSocket = new WebSocket(
@@ -89,9 +71,6 @@ const NavBar = () => {
     );
   }, [dispatch, user.id]);
 
-  useEffect(() => {
-    dispatch(getUser()).then((data) => setAllUser(data.payload));
-  }, [dispatch]);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
 
@@ -197,7 +176,7 @@ const NavBar = () => {
                   // mt: 0.5,
                 }}
               >
-                1 min ago
+                {moment(notif.created_at).fromNow()}
               </Typography>
             </Stack>
           </MenuItem>

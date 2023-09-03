@@ -4,12 +4,15 @@ import { LoadingButton } from "@mui/lab";
 import Avatars from "./listAvatar";
 import Fonds from "./listBackground";
 import { useDispatch, useSelector } from "react-redux";
-import { addFormData } from "../../redux/authSlice";
+import { signup } from "../../redux/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const Step3 = ({ onComplete, back }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.formDataUser);
   const loading = useSelector((state) => state.auth.signupLoading);
+  const [userData, setUserData] = useState({});
 
   const [selectedAvatar, setSelectedAvatar] = useState(Avatars[0]);
 
@@ -23,13 +26,14 @@ const Step3 = ({ onComplete, back }) => {
   };
 
   const handleNext = () => {
-    dispatch(
-      addFormData({
+    setUserData(
+      Object.assign(userData, {
         avatar: selectedAvatar.nom,
         background: selectBackground.color,
       })
     );
-    onComplete();
+    setUserData(Object.assign(userData, user));
+    dispatch(signup(userData, navigate));
   };
 
   return (
@@ -123,8 +127,7 @@ const Step3 = ({ onComplete, back }) => {
                 width: "100%",
                 height: {
                   xs: 120,
-                  sm: 120,
-                  md: "auto",
+                  md: 180,
                 },
                 margin: 0,
                 overflowY: "scroll",
@@ -175,9 +178,9 @@ const Step3 = ({ onComplete, back }) => {
                 width: "100%",
                 height: {
                   xs: 120,
-                  sm: 120,
                   md: "auto",
                 },
+                maxHeight: { md: 180 },
                 margin: 0,
                 overflowY: "scroll",
                 scrollbarWidth: "none",

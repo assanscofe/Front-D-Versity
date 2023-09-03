@@ -255,6 +255,7 @@ const Home = () => {
                   </Stack>
                 </Grid>
                 <Grid
+                  item
                   container
                   xs={0}
                   md={4}

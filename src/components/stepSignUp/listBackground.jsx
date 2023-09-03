@@ -1,21 +1,28 @@
-// import { orange } from '@mui/material/colors'
-
 const Fonds = [
-    { 'id': 1, color: '#efefef' },
-    { 'id': 2, color: '#540d6e' },
-    { 'id': 3, color: '#ee4266' },
-    { 'id': 4, color: '#ffd23f' },
-    { 'id': 5, color: '#313a39' },
-    { 'id': 6, color: '#4ecdc4' },
-    { 'id': 7, color: '#ff6b6b' },
-    { 'id': 8, color: '#147587' },
-    { 'id': 9, color: '#fa7e5c' },
-    { 'id': 10, color: '#4ac0d5' },
-    { 'id': 11, color: '#bbcbd8' },
-    { 'id': 12, color: '#2a5078' },
-    { 'id': 13, color: '#c05858' },
-    { 'id': 14, color: '#d7415e' },
-    { 'id': 15, color: '#a38182' },
-]
+  { id: 1, color: "#efefef" },
+  { id: 2, color: "#540d6e" },
+  { id: 3, color: "#ee4266" },
+  { id: 4, color: "#ffd23f" },
+  { id: 5, color: "#ff6c40" },
+  { id: 6, color: "#4ecdc4" },
+  { id: 7, color: "#ff6b6b" },
+  { id: 8, color: "#00a88a" },
+  { id: 9, color: "#fa7e5c" },
+  { id: 10, color: "#dfe9a2" },
+  { id: 11, color: "#525865" },
+  { id: 12, color: "#2a5078" },
+  { id: 13, color: "#60aefe" },
+  { id: 14, color: "#d7415e" },
+  { id: 15, color: "#a38182" },
+  { id: 16, color: "#fee6a2" },
+  { id: 17, color: "#587de8" },
+  { id: 18, color: "#c31f26" },
+  { id: 19, color: "#b2d542" },
+  { id: 20, color: "#faaaf5" },
+  { id: 21, color: "#b620b3" },
+  { id: 22, color: "#333333" },
+  { id: 23, color: "#e9b6f9" },
+  { id: 24, color: "#f72e33" },
+];
 
-export default Fonds
+export default Fonds;

@@ -4,6 +4,7 @@ import authReducer from "./authSlice";
 import eventSlice from "./eventSlice";
 import notificationSlice from "./notificationSlice";
 import passionSlice from "./passionSlice";
+import followSlice from "./followSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     passion: passionSlice,
     article: articleSlice,
     notification: notificationSlice,
+    follow: followSlice,
   },
 });

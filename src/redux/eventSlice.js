@@ -1,26 +1,33 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import api from '../services/api'
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import api from "../services/api";
 
-
-export const getEvent = createAsyncThunk('event/getData', async (arg, { rejectWithValue }) => {
+export const getEvent = createAsyncThunk(
+  "event/getData",
+  async (arg, { rejectWithValue }) => {
     try {
-        const response = await api.get('/events/')
-        return response.data
+      const response = await api.get("/events/");
+      return response.data;
     } catch (error) {
-        rejectWithValue(error.response.data)
+      rejectWithValue(error.response.data);
     }
-})
+  }
+);
 
-export const getEventById = createAsyncThunk('event/getDataById', async (idEvent, { rejectWithValue }) => {
+export const getEventById = createAsyncThunk(
+  "event/getDataById",
+  async (idEvent, { rejectWithValue }) => {
     try {
-        const response = await api.get('events/' + idEvent)
-        return response.data
+      const response = await api.get("events/" + idEvent);
+      return response.data;
     } catch (error) {
-        rejectWithValue(error.response.data)
-
+      rejectWithValue(error.response.data);
     }
-})
-export const createEvent = createAsyncThunk('event/getDataById', async (eventName,
+  }
+);
+export const createEvent = createAsyncThunk(
+  "event/getDataById",
+  async (
+    eventName,
     coverPhoto,
     startDate,
     endDate,
@@ -29,26 +36,28 @@ export const createEvent = createAsyncThunk('event/getDataById', async (eventNam
     location,
     description,
     user,
-    passion, { rejectWithValue }) => {
+    passion,
+    { rejectWithValue }
+  ) => {
     try {
-        const response = await api.post('/events/', {
-            eventName,
-            coverPhoto,
-            startDate,
-            endDate,
-            startTime,
-            endTime,
-            location,
-            description,
-            user,
-            passion
-        })
-        return response.data
+      const response = await api.post("/events/", {
+        eventName,
+        coverPhoto,
+        startDate,
+        endDate,
+        startTime,
+        endTime,
+        location,
+        description,
+        user,
+        passion,
+      });
+      return response.data;
     } catch (error) {
-        rejectWithValue(error.response.data)
-
+      rejectWithValue(error.response.data);
     }
-})
+  }
+);
 
 // export const createEvent = createAsyncThunk('event/createData', async(
 //     data,
@@ -73,57 +82,55 @@ export const createEvent = createAsyncThunk('event/getDataById', async (eventNam
 // })
 
 const initialState = {
-    data: [],
-    dataById: [],
-    newData: [],
-    isSuccess: false,
-    loading: false
-}
+  data: [],
+  dataById: {},
+  newData: [],
+  isSuccess: false,
+  dataByIdSuccess: false,
+  loading: false,
+  dataByIdLoading: false,
+};
 
 const eventSlice = createSlice({
-    name: 'event',
-    initialState,
-    reducers: {
-        // getAllSuccess: (state, action) => {
-        //     state.push(action.payload)
-        // }
+  name: "event",
+  initialState,
+  reducers: {},
+  extraReducers: {
+    [getEvent.pending]: (state, { payload }) => {
+      state.loading = true;
     },
-    extraReducers: {
-        [getEvent.pending]: (state, { payload }) => {
-            state.loading = true
-        },
-        [getEvent.fulfilled]: (state, { payload }) => {
-            state.data = payload;
-            state.loading = false;
-            state.isSuccess = true;
-        },
-        [getEvent.rejected]: (state, { payload }) => {
-            state.loading = true
-        },
-        [getEventById.pending]: (state, { payload }) => {
-            state.loading = true
-        },
-        [getEventById.fulfilled]: (state, { payload }) => {
-            state.dataById = payload;
-            state.loading = false;
-            state.isSuccess = true;
-        },
-        [getEventById.rejected]: (state, { payload }) => {
-            state.loading = true
-        },
-        [createEvent.pending]: (state, { payload }) => {
-            state.loading = true
-        },
-        [createEvent.fulfilled]: (state, { payload }) => {
-            state.newData = payload;
-            state.loading = false;
-            state.isSuccess = true;
-        },
-        [createEvent.rejected]: (state, { payload }) => {
-            state.loading = true
-        }
-    }
-})
+    [getEvent.fulfilled]: (state, { payload }) => {
+      state.data = payload;
+      state.loading = false;
+      state.isSuccess = true;
+    },
+    [getEvent.rejected]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [getEventById.pending]: (state, { payload }) => {
+      state.dataByIdLoading = true;
+    },
+    [getEventById.fulfilled]: (state, { payload }) => {
+      state.dataById = payload;
+      state.dataByIdLoading = false;
+      state.dataByIdSuccess = true;
+    },
+    [getEventById.rejected]: (state, { payload }) => {
+      state.dataByIdLoading = true;
+    },
+    [createEvent.pending]: (state, { payload }) => {
+      state.loading = true;
+    },
+    [createEvent.fulfilled]: (state, { payload }) => {
+      state.newData = payload;
+      state.loading = false;
+      state.dataByIdSuccess = true;
+    },
+    [createEvent.rejected]: (state, { payload }) => {
+      state.loading = true;
+    },
+  },
+});
 
 // export const {
 //     getAllSuccess
@@ -139,4 +146,4 @@ const eventSlice = createSlice({
 //     }
 // }
 
-export default eventSlice.reducer
+export default eventSlice.reducer;

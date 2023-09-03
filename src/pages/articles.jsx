@@ -20,6 +20,7 @@ import { getArticle, getArticleById } from "../redux/articleSlice";
 import moment from "moment";
 import { likeArticle } from "../services/api";
 import { addNotification } from "../services/api";
+import { ToastContainer } from "react-toastify";
 
 const LikeButton = ({ articleId, userIdPost }) => {
   const user = useSelector((state) => state.auth.user.user);
@@ -57,7 +58,7 @@ const LikeButton = ({ articleId, userIdPost }) => {
 
   const handleClick = () => {
     const message = "a réagi à votre publication";
-    likeArticle(articleId);
+    // likeArticle(articleId);
     const action = isLiked ? "unlike" : "like";
     articleLikeSocket.send(
       JSON.stringify({
@@ -66,7 +67,7 @@ const LikeButton = ({ articleId, userIdPost }) => {
       })
     );
 
-    addNotification(message, user.id, userIdPost, false);
+    // addNotification(message, user.id, userIdPost, false);
   };
   return (
     <Stack direction="row" alignItems={"center"}>
@@ -101,39 +102,25 @@ const LikeButton = ({ articleId, userIdPost }) => {
 const Articles = () => {
   const dispatch = useDispatch();
   const { openSidebar } = useContext(SidebarContext);
+
   const [articles, setArticles] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
-  const articleSocket = useMemo(
-    () => new WebSocket(`ws://127.0.0.1:8000/ws/article/`),
-    []
-  );
-
   useEffect(() => {
-    dispatch(getArticle()).then((data) => setArticles(data.payload));
-  }, [dispatch]);
-
-  useEffect(() => {
-    articleSocket.onopen = function () {
-      console.log("article socket réussi");
-    };
-
-    articleSocket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      setArticles(data.article);
-    };
-
-    articleSocket.onclose = function () {
-      console.log("article socket fermé");
-    };
-  }, [articleSocket]);
+    dispatch(getArticle()).then((data) => {
+      setArticles(data.payload);
+    });
+  }, [openModal, dispatch]);
 
   const handleOpenClose = () => {
     setOpenModal(!openModal);
   };
 
+  // console.log(articles.sort());
+
   return (
     <>
+      <ToastContainer position="top-right" />
       <Stack
         direction={"column"}
         spacing={2}

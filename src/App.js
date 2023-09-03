@@ -31,11 +31,14 @@ import EventContent from "./components/events/eventContent";
 import Articles from "./pages/articles";
 import Test from "./pages/test";
 import Actualites from "./pages/actualites";
+import moment from "moment";
+import MessageUser from "./components/message/messageUser";
 
 function App() {
+  moment.locale("fr");
   const currentUser = useSelector((state) => state.auth.isAuthenticated);
   // const currentUser = true
-  console.log("hehe " + currentUser);
+  // console.log("hehe " + currentUser);
 
   const { darkMode } = useContext(DarkModeContext);
 
@@ -97,7 +100,7 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/profil",
+          path: "/profil/:id",
           element: <Profil />,
         },
         {
@@ -111,6 +114,12 @@ function App() {
         {
           path: "/messages",
           element: <Messages />,
+          children: [
+            {
+              path: "/messages/:id",
+              element: <MessageUser />,
+            },
+          ],
         },
         {
           path: "/passions",

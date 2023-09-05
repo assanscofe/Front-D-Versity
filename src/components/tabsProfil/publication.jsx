@@ -32,13 +32,13 @@ import { useParams } from "react-router-dom";
 
 const MyButton = styled(Button)({
   border: "1px solid #ddd",
-  borderRadius: "1.5rem",
+  borderRadius: 12,
   padding: "0.375rem 1.5rem",
   color: "#333",
 });
 const MyPaper = styled(Paper)({
   borderRadius: 15,
-  width: "85%",
+  width: "100%",
   height: "auto",
   padding: "1rem",
 });

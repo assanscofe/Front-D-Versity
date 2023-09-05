@@ -51,6 +51,7 @@ const Publication = () => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [posts, setPosts] = useState([]);
+    const [postToUpdate, setPostToUpdate] = useState(null);
 
     useEffect(() => {
         console.log("user_data", user_data.id);
@@ -77,30 +78,29 @@ const Publication = () => {
 
     }, []);
 
-    // const [posts, setPosts] = useState([]);
-
-    // useEffect(() => {
-    //      getAllPost()
-    //           .then(data => {
-    //              // Tri des passions dans l'ordre décroissant par leur identifiant
-    //             const sorted = data.sort((a, b) => b.id - a.id);
-    //             // Conversion de la chaîne 'createdAt' en objet Date
-    //             sorted.forEach(post => {
-    //                 post.createdAt = moment(post.createdAt).format('DD/MM/YYYY');
-    //             });
-    //             setPosts(sorted);
-    //          })
-    //          .catch(error => {
-    //               console.error(error);
-    //          });
-    // }, []);
-    //     // Fonction de gestion de l'événement de nouvelle passion ajoutée
     const handlePostAdded = (post) => {
             // Mettez à jour la liste des passions avec la nouvelle passion
         setPosts((prevPost) => [post, ...prevPost]);
     };
 
+    const handleOpenModal= () => {
+        setPostToUpdate(null);
+        setIsModalOpen(true);
+    };
+
+    const handleEdit = (post) => {
+        setPostToUpdate(post);
+        setIsModalOpen(true);
+    };
     
+    const updatePostInList = (updatedPost) => {
+        setPosts((prevPost) =>
+        prevPost.map((post) =>
+            post.id === updatedPost.id ? updatedPost : post
+          )
+        );
+    };
+
     return (
         <Box sx={{
             width: '100%',
@@ -150,7 +150,7 @@ const Publication = () => {
                         alignItems: 'center',
                         padding: '0 1rem'
                     }}>
-                        {isModalOpen && <MyModal setIsModalOpen={setIsModalOpen} />}
+                        {isModalOpen && <MyModal setIsModalOpen={setIsModalOpen} postToUpdate={postToUpdate} updatePostInList={updatePostInList} />}
                         <Box sx={{
                             background: '#efefef',
                             borderRadius: 6,
@@ -159,7 +159,7 @@ const Publication = () => {
                             color: '#999',
                             cursor: 'pointer',
                         }}
-                            onClick={() => setIsModalOpen(true)}
+                            onClick={() => handleOpenModal()}
                         >
                             Quoi de neuf ?
                         </Box>
@@ -202,7 +202,7 @@ const Publication = () => {
                                     </Typography>
                                 </Box>
                             </Box>
-                            <IconButton>
+                            <IconButton onClick={() => handleEdit(post)}>
                                 <IconDots style={{ width: 15, height: 15, fill: '#444' }} />
                             </IconButton>
                         </Box>

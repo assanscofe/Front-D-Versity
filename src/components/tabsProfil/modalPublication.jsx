@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { styled } from '@mui/material/styles'
 import { ReactComponent as IconPhotos } from '../../assets/SVG/picture (1).svg'
 import { ReactComponent as IconPlanning } from '../../assets/SVG/bookmark (1).svg'
-import { getAllPassions } from '../../services/api'
+import { getAllPassions, updatePost } from '../../services/api'
 import { addPost } from '../../services/api'
 import { emitPostAdded } from '../addPassion/event';
 
@@ -35,7 +35,7 @@ const MyButton = styled(Button)({
   color: '#333'
 })
 
-export default function MyModal({ setIsModalOpen }) {
+export default function MyModal({ setIsModalOpen, postToUpdate, updatePostInList, }) {
   // const history = useNavigate();
   const user_data = useSelector((state) => state.auth.user.user)
   const [description, setDescription] = useState('');
@@ -58,6 +58,14 @@ export default function MyModal({ setIsModalOpen }) {
     return;
 
   }, []);
+
+  useEffect(() => {
+    if (postToUpdate) {
+       setDescription(postToUpdate.postDescription);
+       setSelectedFiles(postToUpdate.postImage);
+      // setPassions(postToUpdate.passion);
+    }
+  }, [postToUpdate])
 
   const handleCloseModal = () => {
     console.log('hey')
@@ -100,22 +108,39 @@ export default function MyModal({ setIsModalOpen }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // if (postToUpdate) {
+    //   updatePost(postToUpdate.id, description, selectedFiles[0], user_data.id, selectedOption, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //     },
+    //   })
+    //     .then((data) => {
+    //       updatePostInList(data);
+    //       setIsModalOpen(false);
+    //       toast.success('La publication a été mise à jour avec succès');
+    //     })
+    //     .catch((error) => {
+    //       toast.error('Une erreur s\'est produite lors de la mise à jour de la publication');
+    //       console.error(error);
+    //     });
+    // }     
+    // else {
+      addPost( description, selectedFiles[0], user_data.id, selectedOption, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+        }) .then((data) => {
+          console.log('eto data',data);
+          emitPostAdded(data);
+          setIsModalOpen(false);
+          toast.success('Publiée avec succès');
+        })
+        .catch((error) => {
+          toast.error('Une erreur s\'est produite');
+          console.error(error);
+        });
+   // }
 
-    console.log('reto', selectedFiles[0] + description + selectedOption)
-    addPost( description, selectedFiles[0], user_data.id, selectedOption, {
-      headers: {
-          'Content-Type': 'multipart/form-data',
-      },
-      }) .then((data) => {
-        console.log('eto data',data);
-        emitPostAdded(data);
-        setIsModalOpen(false);
-        toast.success('Publiée avec succès');
-      })
-      .catch((error) => {
-        toast.error('Une erreur s\'est produite');
-        console.error(error);
-      });
      
   };
   
@@ -138,9 +163,9 @@ export default function MyModal({ setIsModalOpen }) {
                 <Fade in={true}>
                     <Box sx={styleModal}>
                         <form onSubmit={handleSubmit} style={styleForm}>
-                            <Typography id="transition-modal-title" variant="h6" component="h2">
-                              Nouvelle Publication
-                            </Typography>
+                        <Typography id="transition-modal-title" variant="h6" component="h2">
+                            {postToUpdate ? 'Modifier la publication' : 'Nouvelle publication'}
+                        </Typography>
                             <div>
                             <label htmlFor="selectOption">Passion concernée:</label>
                             <select id="selectOption" value={selectedOption} onChange={handleOptionChange}
@@ -155,11 +180,23 @@ export default function MyModal({ setIsModalOpen }) {
                                       width: '200px',
                                     }}
                               >
-                              {passions.map((passion) => (
+                             {passions.map((passion) => (
                                 <option key={passion.id} value={passion.id}>
                                   {passion.passionName}
                                 </option>
-                              ))}
+                              ))} 
+
+                              {/* {Array.isArray(passions) ? (
+                                  passions.map((passion) => (
+                                    <option key={passion.id} value={passion.id}>
+                                      {passion.passionName}
+                                    </option>
+                                  ))
+                                ) : (
+                                  <option value={postToUpdate.passion.id}>
+                                    {postToUpdate.passion.passionName}
+                                  </option>
+                                )} */}
                             </select>                      
                           </div>                            
                             <TextField

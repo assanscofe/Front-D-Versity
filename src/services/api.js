@@ -42,6 +42,17 @@ export const getAllPost = () => {
   });
 };
 
+export const updatePost = (idPost, postDescription, postImage, user, passion) => {
+  return api.put('/posts/' + idPost, {
+      postDescription, 
+      postImage, 
+      user,
+      passion
+  }).then(response => {
+      return response.data
+  })
+}
+
 export const addPassion = (passionName, passionDescription, passionImage,creator) => {
     return api.post('/passions/', {
         passionName,

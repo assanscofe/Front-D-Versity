@@ -21,6 +21,7 @@ import NavBar from "./components/navbar/navBar";
 import LeftBar from "./components/navbar/leftBar";
 import Home from "./pages/home";
 import Passions from "./pages/passions";
+import Games from "./pages/games";
 import Profil from "./pages/profil";
 import Settings from "./pages/settings";
 import Friends from "./pages/friends";
@@ -144,6 +145,10 @@ function App() {
         {
           path: "/articles",
           element: <Articles />,
+        },
+        {
+          path: "/games",
+          element: <Games />,
         },
         // {
         //   path: "/articles/:id",

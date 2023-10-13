@@ -4,7 +4,7 @@ import App from "./App";
 import { DarkModeContextProvider } from "./context/darkModeContext";
 import { SidebarContextProvider } from "./context/sidebarContext";
 import { Provider } from "react-redux";
-import { store } from "./redux/Store";
+import { store } from "./redux/store";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 

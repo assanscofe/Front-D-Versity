@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Stack,
   Tooltip,
@@ -35,7 +35,7 @@ import { ReactComponent as IconMenu } from "../../assets/SVG/menu-burger.svg";
 
 import { SidebarContext } from "../../context/sidebarContext";
 
-import TransitionsModal from '../addPassion/addPassion';
+import TransitionsModal from "../addPassion/addPassion";
 
 const StyleButton = styled("button")(({ theme }) => ({
   width: "100%",
@@ -418,7 +418,7 @@ const LeftBar = () => {
                     color: "#2469d8",
                   },
                 }}
-                onClick={() => navigate("/messages")}
+                onClick={() => navigate("/games")}
               >
                 <Tooltip
                   title="Jeux"
@@ -434,7 +434,7 @@ const LeftBar = () => {
                       height: "50px",
                       fill: "#2469d8",
                     }}
-                    onClick={() => navigate("/profil/" + user_data.id)}
+                    onClick={() => navigate("/games")}
                   >
                     <IconGames style={{ width: "100%", height: "100%" }} />
                   </IconButton>
@@ -524,7 +524,9 @@ const LeftBar = () => {
                     leaveDelay={200}
                     sx={{ bgcolor: "#540d6e", color: "#fff" }}
                   >
-                    {isModalOpen && <TransitionsModal setIsModalOpen={setIsModalOpen} />}
+                    {isModalOpen && (
+                      <TransitionsModal setIsModalOpen={setIsModalOpen} />
+                    )}
                     <StyleButton
                       sx={{
                         background: "#540d6e",
@@ -532,7 +534,8 @@ const LeftBar = () => {
                           xs: "block",
                           md: openSidebar ? "none" : "block",
                         },
-                      }} onClick={() => setIsModalOpen(true)}
+                      }}
+                      onClick={() => setIsModalOpen(true)}
                     >
                       <IconPassions style={{ width: "100%", height: "100%" }} />
                     </StyleButton>

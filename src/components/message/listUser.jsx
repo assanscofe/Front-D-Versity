@@ -17,8 +17,8 @@ import {
   Typography,
 } from "@mui/material";
 import { DarkModeContext } from "../../context/darkModeContext";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../redux/authSlice";
+import { useSelector } from "react-redux";
+import { getAllMessages, getUserById } from "../../services/api";
 
 const Search = styled("div")(({ theme }) => ({
   width: "100%",
@@ -35,14 +35,82 @@ const AvatarUser = styled(Avatar)({
   padding: 3,
 });
 
+const DataUserById = ({ id }) => {
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    getUserById(parseInt(id)).then((data) => setUserData(data));
+  }, [id]);
+
+  return (
+    <>
+      <ListItemButton onClick={() => navigate("/messages/" + userData.id)}>
+        <ListItem
+          disablePadding
+          sx={{
+            width: "100%",
+            px: 2,
+          }}
+        >
+          <ListItemIcon>
+            <ListItemAvatar>
+              <AvatarUser
+                src={userData.avatar}
+                alt="avatar"
+                sx={{ bgcolor: userData.background }}
+              />
+            </ListItemAvatar>
+          </ListItemIcon>
+          <ListItemText
+            primary={userData.username}
+            secondary={userData.is_online ? "en ligne" : "3heurs"}
+          />
+        </ListItem>
+      </ListItemButton>
+      <Divider />
+    </>
+  );
+};
+
 const ListUser = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user.user);
   const { darkMode } = useContext(DarkModeContext);
 
   const [allUser, setAllUser] = useState([]);
   const [count, setCount] = useState(0);
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    getAllMessages().then((data) => {
+      setMessages(
+        data
+          .filter((elt) => elt.user === user.id || elt.recipient === user.id)
+          .sort((a, b) => b.id - a.id)
+      );
+    });
+  }, [user, count]);
+
+  useEffect(() => {
+    setAllUser([
+      ...new Set(
+        messages.map((elt) => {
+          if (elt.user === user.id) {
+            return elt.recipient;
+          } else {
+            return elt.user;
+          }
+        })
+      ),
+    ]);
+  }, [user, messages]);
+
+  useEffect(() => {
+    if (allUser.length !== 0) {
+      navigate("/messages/" + allUser[0]);
+    }
+  }, [allUser, navigate]);
 
   const chat_notify = useMemo(
     () => new WebSocket(`ws://127.0.0.1:8000/ws/chatNotification/${user.id}/`),
@@ -64,13 +132,13 @@ const ListUser = () => {
     };
   }, [chat_notify]);
 
-  useEffect(() => {
-    dispatch(getUser()).then((data) => {
-      setAllUser(
-        data.payload.filter((elt) => elt.id !== user.id && elt.id !== 1)
-      );
-    });
-  }, [dispatch, user]);
+  // useEffect(() => {
+  //   dispatch(getUser()).then((data) => {
+  //     setAllUser(
+  //       data.payload.filter((elt) => elt.id !== user.id && elt.id !== 1)
+  //     );
+  //   });
+  // }, [dispatch, user]);
 
   return (
     <Stack
@@ -104,32 +172,7 @@ const ListUser = () => {
       <Box sx={{}}>
         <List>
           {allUser.map((elt, index) => (
-            <>
-              <ListItemButton
-                key={index}
-                onClick={() => navigate("/messages/" + elt.id)}
-              >
-                <ListItem
-                  disablePadding
-                  sx={{
-                    width: "100%",
-                    px: 2,
-                  }}
-                >
-                  <ListItemIcon>
-                    <ListItemAvatar>
-                      <AvatarUser
-                        src={elt.avatar}
-                        alt="avatar"
-                        sx={{ bgcolor: elt.background }}
-                      />
-                    </ListItemAvatar>
-                  </ListItemIcon>
-                  <ListItemText primary={elt.username} secondary="3hours ago" />
-                </ListItem>
-              </ListItemButton>
-              <Divider />
-            </>
+            <DataUserById id={elt} key={index} />
           ))}
         </List>
       </Box>

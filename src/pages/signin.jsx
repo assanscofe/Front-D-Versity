@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { styled } from "@mui/material/styles";
 import {
   Paper,
@@ -16,6 +16,8 @@ import {
 import { LoadingButton } from "@mui/lab";
 import { useNavigate } from "react-router-dom";
 
+import { DarkModeContext } from "../context/darkModeContext";
+
 //--------import Redux-------
 import { login } from "../redux/authSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,7 +34,6 @@ const StyledContent = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  backgroundColor: "#f0f7fc",
   flexDirection: "column",
   gap: 2,
 }));
@@ -40,6 +41,7 @@ const StyledContent = styled("div")(({ theme }) => ({
 const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { darkMode } = useContext(DarkModeContext);
   const loading = useSelector((state) => state.auth.isLoading);
   const success = useSelector((state) => state.auth.signupSuccess);
   const error = useSelector((state) => state.auth.error);
@@ -61,7 +63,11 @@ const SignIn = () => {
   };
 
   return (
-    <StyledContent>
+    <StyledContent
+      style={{
+        background: darkMode ? "#252931" : "#daf0ff",
+      }}
+    >
       {success ? (
         <Alert
           severity="success"
@@ -124,7 +130,6 @@ const SignIn = () => {
           },
           boxShadow: "0px 5px 5px #96d7d155",
           padding: "1.5rem",
-          backgroundColor: "#ffffff",
         }}
       >
         <Stack direction={"column"} spacing={3} sx={{ width: "100%" }}>
@@ -158,7 +163,7 @@ const SignIn = () => {
               variant="outlined"
               sx={{
                 textTransform: "none",
-                backgroundColor: "#f0f7fc",
+                backgroundColor: darkMode ? "#252931" : "#f0f7fc",
               }}
               startIcon={<img src={GoogleIcon} alt="Logo" width={"20px"} />}
               size={"small"}
@@ -255,7 +260,7 @@ const SignIn = () => {
                     sx={{
                       textAlign: "center",
                       fontSize: "0.8rem",
-                      color: "#404040",
+                      color: darkMode ? "#fff" : "#404040",
                       fontWeight: 700,
                       textDecoration: "none",
                     }}

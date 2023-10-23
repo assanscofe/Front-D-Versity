@@ -182,7 +182,7 @@ const MessageUser = () => {
       })
     );
     setMessage("");
-    setShowEmoji(!showEmoji);
+    setShowEmoji(false);
   };
 
   return (
@@ -261,7 +261,7 @@ const MessageUser = () => {
                   direction={"column"}
                   sx={{
                     maxWidth: "75%",
-                    bgcolor: "#fff",
+                    bgcolor: darkMode ? "#333" : "#fff",
                     px: 2,
                     py: 1,
                     borderRadius: "1rem 1rem 0 1rem",

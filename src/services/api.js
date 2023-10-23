@@ -42,27 +42,42 @@ export const getAllPost = () => {
   });
 };
 
-export const updatePost = (idPost, postDescription, postImage, user, passion) => {
-  return api.put('/posts/' + idPost, {
-      postDescription, 
-      postImage, 
+export const updatePost = (
+  idPost,
+  postDescription,
+  postImage,
+  user,
+  passion
+) => {
+  return api
+    .put("/posts/" + idPost, {
+      postDescription,
+      postImage,
       user,
-      passion
-  }).then(response => {
-      return response.data
-  })
-}
-
-export const addPassion = (passionName, passionDescription, passionImage,creator) => {
-    return api.post('/passions/', {
-        passionName,
-        passionDescription,
-        passionImage,
-        creator,
-    }).then(response => {
-        return response.data
+      passion,
     })
-}
+    .then((response) => {
+      return response.data;
+    });
+};
+
+export const addPassion = (
+  passionName,
+  passionDescription,
+  passionImage,
+  creator
+) => {
+  return api
+    .post("/passions/", {
+      passionName,
+      passionDescription,
+      passionImage,
+      creator,
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
 
 export const getAllPassions = () => {
   return api.get("/passions/").then((response) => {
@@ -82,16 +97,24 @@ export const getPassionName = (idPassion) => {
   });
 };
 
-export const updatePassion = (idPassion, passionName, passionDescription, passionImage, creator) => {
-    return api.put('/passions/' + idPassion, {
-        passionName, 
-        passionDescription, 
-        passionImage,
-        creator
-    }).then(response => {
-        return response.data
+export const updatePassion = (
+  idPassion,
+  passionName,
+  passionDescription,
+  passionImage,
+  creator
+) => {
+  return api
+    .put("/passions/" + idPassion, {
+      passionName,
+      passionDescription,
+      passionImage,
+      creator,
     })
-}
+    .then((response) => {
+      return response.data;
+    });
+};
 
 export const deletePassion = (idPassion) => {
   return api.delete("/passions/" + idPassion).then((response) => {
@@ -163,6 +186,15 @@ export const getUser = () => {
   return api.get("/users/").then((response) => {
     return response.data;
   });
+};
+export const getUserById = async (id) => {
+  try {
+    return await api.get("/users/" + id).then((response) => {
+      return response.data;
+    });
+  } catch (error) {
+    console.log("Erreur lors de la récuperation des données");
+  }
 };
 
 export const likeArticle = async (id) => {
@@ -239,6 +271,16 @@ export const getMessageById = async (id1, id2) => {
     });
   } catch (error) {
     console.log("Erreur lors de la récuperation des données ");
+  }
+};
+
+export const getAllMessages = async () => {
+  try {
+    return await api.get("/messages/").then((response) => {
+      return response.data;
+    });
+  } catch (error) {
+    console.log("Erreur lors de la récuperation des données");
   }
 };
 

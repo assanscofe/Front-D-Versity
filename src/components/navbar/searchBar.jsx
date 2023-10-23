@@ -71,6 +71,7 @@ const SearchBar = () => {
           bgcolor: "background.paper",
           borderRadius: 4,
           padding: 2,
+          boxShadow: "5px 5px 10px #33333355",
           display:
             searchTxt === "" ||
             (userSearch.length === 0 && passionSearch.length === 0)

@@ -24,6 +24,7 @@ const formSteps = [
 
 const SignUp = () => {
   localStorage.removeItem("access_token");
+
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {

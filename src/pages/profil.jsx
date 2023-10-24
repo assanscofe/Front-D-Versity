@@ -8,12 +8,14 @@ import {
   Avatar,
   Tab,
   Divider,
+  IconButton
 } from "@mui/material";
 import { TabPanel, TabList, TabContext } from "@mui/lab";
 
 import Publication from "../components/tabsProfil/publication";
 import MyPassions from "../components/tabsProfil/myPassions";
 import AddIcon from "@mui/icons-material/Add";
+import IconMessage from '../assets/SVG/messages.svg'
 import CheckIcon from "@mui/icons-material/Check";
 import { useDispatch, useSelector } from "react-redux";
 import { SidebarContext } from "../context/sidebarContext";
@@ -23,11 +25,13 @@ import {
   getFollowByUser,
 } from "../redux/followSlice";
 import { getUserById } from "../redux/authSlice";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { recommandatationUser } from "../services/api";
 // import { ReactComponent as IconPublication } from "../assets/SVG/book-open-cover (1).svg";
 // import { ReactComponent as IconEdit } from "../assets/SVG/following (1).svg";
 
 const Profil = () => {
+  const navigate = useNavigate()
   const user = useParams();
   const dispatch = useDispatch();
   const user_data = useSelector((state) => state.auth.dataById);
@@ -35,6 +39,7 @@ const Profil = () => {
   const followingUser = useSelector((state) => state.follow.dataById);
   const { openSidebar } = useContext(SidebarContext);
   const [value, setValue] = useState("1");
+  const [listRecommandation, setListRecommandation] = useState([])
   const [isFollowing, setIsFollowing] = useState(
     followingUser
       ? followingUser.followers.some(
@@ -46,6 +51,12 @@ const Profil = () => {
   // useEffect(() => {
   //   setIsFollowing();
   // }, [user, followingUser]);
+
+  useEffect(()=>{
+    recommandatationUser(idUser).then((data)=>{
+      setListRecommandation(data)
+    })
+  },[idUser])
 
   useEffect(() => {
     dispatch(getFollowByUser(user.id)).then((data) => {
@@ -96,7 +107,7 @@ const Profil = () => {
           }}
         >
           <Grid container sx={{ width: "100%", height: "calc(100% - 5vh)" }}>
-            <Grid item xs={12} md={openSidebar ? 3.5 : 2.5} xl={2.5}>
+            <Grid item xs={12} md={openSidebar ? 3.5 : 2.8} xl={2.5}>
               <Stack
                 direction={"column"}
                 alignItems={"center"}
@@ -193,15 +204,27 @@ const Profil = () => {
                     Modifier mon profil
                   </Typography>
                 ) : (
-                  <Button
-                    onClick={handleToggleFollow}
-                    variant={isFollowing ? "outlined" : "contained"}
-                    sx={{ borderRadius: 5, width: 100 }}
-                    size="small"
-                    endIcon={isFollowing ? <CheckIcon /> : <AddIcon />}
-                  >
-                    {isFollowing ? "Suivi(e)" : "Suivre"}
-                  </Button>
+                  <Stack direction={'row'} spacing={2}>
+                    <Button
+                      onClick={handleToggleFollow}
+                      variant={isFollowing ? "outlined" : "contained"}
+                      sx={{ borderRadius: 5, width: 100 }}
+                      size="small"
+                      endIcon={isFollowing ? <CheckIcon /> : <AddIcon />}
+                    >
+                      {isFollowing ? "Suivi(e)" : "Suivre"}
+                    </Button>
+                    <IconButton sx={{
+                      width:40,
+                      height:40,
+                      borderRadius:2,
+                      overflow:'hidden',
+                      border:'1px solid #2469d8'
+                    }} onClick={()=>navigate('/messages/'+user.id)}>
+                      <img src={IconMessage} alt="message" width={'100%'} height={'100%'} />
+                    </IconButton>
+                  </Stack>
+                  
                 )}
               </Stack>
             </Grid>
@@ -243,15 +266,45 @@ const Profil = () => {
                 </TabPanel>
               </Stack>
             </Grid>
-            <Grid item xs={0} md={openSidebar ? 0 : 3} xl={2.5}>
+            <Grid item xs={0} md={openSidebar ? 0 : 2.7} xl={2.5}>
               <Stack
                 direction="column"
+                alignItems={'center'}
                 sx={{
                   bgcolor: "background.paper",
                   height: 500,
                   borderRadius: 5,
+                  py:'1rem'
                 }}
-              ></Stack>
+              >
+                <Typography variant='h6'>jhgjk:</Typography>
+                <Stack direction={'column'}>
+                  {listRecommandation.map((elt,index)=>(
+                    <>
+                    <Stack direction={'row'} key={index} spacing={2} sx={{
+                      width:'100%',
+                      padding:'1rem'
+                    }} onClick={()=>navigate('/profil/'+elt.id)}> 
+                      <Box sx={{
+                        width:45,
+                        height:45,
+                        overflow:'hidden',
+                        borderRadius:2,
+                        background: elt.background
+                      }}>
+                        <img src={elt.avatar} alt={elt.username} width={'100%'} height={'100%'}/>
+                      </Box>
+                      <Stack direction={'column'}>
+                        <Typography>{elt.username}</Typography>
+                        <Typography>{elt.email}</Typography>
+                      </Stack>
+                    </Stack>
+                    <Divider />
+                    </>
+                    
+                  ))}
+                </Stack>
+              </Stack>
             </Grid>
           </Grid>
         </Box>

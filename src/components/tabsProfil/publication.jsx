@@ -54,7 +54,10 @@ const MyBox = styled(Box)({
 
 const Publication = () => {
   const id_profil = useParams();
-
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const toggleFormVisibility = () => {
+    setIsFormVisible(!isFormVisible);
+  };
   const user_data = useSelector((state) => state.auth.user.user);
   // const { openSidebar } = useContext(SidebarContext);
 
@@ -116,7 +119,7 @@ const Publication = () => {
   //   // Mettez à jour la liste des passions avec la nouvelle passion
   //   setPosts((prevPost) => [post, ...prevPost]);
   // };
-  // console.log(posts);
+  console.log(posts);
 
   return (
     <>
@@ -235,8 +238,9 @@ const Publication = () => {
           ""
         )}
         {posts.map((post) => (
-          <MyPaper key={post.id}>
-            <Stack direction={"row"} justifyContent="space-between">
+          parseInt(id_profil.id) === post.user ? (
+            <MyPaper key={post.id}>
+              <Stack direction={"row"} justifyContent="space-between">
               <Box
                 sx={{
                   display: "flex",
@@ -316,12 +320,32 @@ const Publication = () => {
                 </IconButton>
                 <Typography>25</Typography>
               </MyBox>
-              <MyBox>
+              <div>
+                <div onClick={toggleFormVisibility}>
+                  <MyBox>
+                    <IconButton>
+                      <IconComment style={{ width: 15, height: 15 }} />
+                    </IconButton>
+                    <Typography></Typography>
+                  </MyBox>
+                </div>
+
+                {isFormVisible && (
+                  <form>
+                    <label>
+                      Comment:
+                      <textarea></textarea>
+                    </label>
+                    <button type="submit">Submit</button>
+                  </form>
+                )}
+              </div>
+              {/* <MyBox>
                 <IconButton>
                   <IconComment style={{ width: 15, height: 15 }} />
                 </IconButton>
                 <Typography>2</Typography>
-              </MyBox>
+              </MyBox> */}
               <MyBox>
                 <IconButton>
                   <IconShare style={{ width: 15, height: 15 }} />
@@ -329,7 +353,9 @@ const Publication = () => {
               </MyBox>
             </Box>
           </MyPaper>
-        ))}
+          ) : '' 
+        )
+        )}
       </Stack>
     </>
   );

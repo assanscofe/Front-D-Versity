@@ -13,7 +13,8 @@ import GoogleIcon from "../../assets/icon google.png";
 import Lol from "../../assets/8056324.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { addFormData } from "../../redux/authSlice";
-import { getUser } from "../../redux/authSlice";
+// import { getUser } from "../../redux/authSlice";
+import { getUser } from "../../services/api";
 
 const StyledTextField = styled(TextField)(({ theme }) => ({
   flexGrow: 1,
@@ -26,7 +27,9 @@ const ErrorTypography = styled(Typography)(({ theme }) => ({
 
 const Step1 = ({ onComplete }) => {
   const dispatch = useDispatch();
-  const allUser = useSelector((state) => state.auth.dataAllUser);
+  // const allUser = useSelector((state) => state.auth.dataAllUser);
+
+  const [allUser,setAllUser] = useState([])
   const [data, setData] = useState({
     username: "",
     first_name: "",
@@ -40,8 +43,10 @@ const Step1 = ({ onComplete }) => {
   const [errorPassword, setErrorPassword] = useState(false);
 
   useEffect(() => {
-    dispatch(getUser());
-  }, [dispatch]);
+    getUser().then((data)=> setAllUser(data));
+  }, []);
+
+  console.log(allUser)
 
   const handleNext = () => {
     let existUsername = allUser.find((user) => data.username === user.username);

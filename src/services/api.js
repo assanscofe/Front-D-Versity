@@ -182,10 +182,15 @@ export const addArticle = (
     });
 };
 
-export const getUser = () => {
-  return api.get("/users/").then((response) => {
-    return response.data;
-  });
+export const getUser = async () => {
+  try{
+    return await api.get("/users/").then((response) => {
+      return response.data;
+    })
+  }catch{
+    console.log('erreur')
+  }
+  
 };
 export const getUserById = async (id) => {
   try {
@@ -293,3 +298,13 @@ export const search = async (query) => {
     console.log("Erreur lors de la récuperation des données ");
   }
 };
+
+export const recommandatationUser = async (id)=>{
+  try{
+    return await api.get('/utilisateurs/'+id).then((response)=>{
+      return response.data;
+    })
+  }catch{
+    console.log('Erreurs lors de la récupération des données')
+  }
+}

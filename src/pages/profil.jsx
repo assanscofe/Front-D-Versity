@@ -277,7 +277,7 @@ const Profil = () => {
                   py:'1rem'
                 }}
               >
-                <Typography variant='h6'>jhgjk:</Typography>
+                <Typography variant='h6'>Suggestions</Typography>
                 <Stack direction={'column'}>
                   {listRecommandation.map((elt,index)=>(
                     <>

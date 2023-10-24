@@ -27,10 +27,19 @@ import img4 from "../assets/683409.jpg";
 import img5 from "../assets/pexels-eric-anada-1001990.jpg";
 import img6 from "../assets/432486.jpg";
 import img7 from "../assets/pexels-dzenina-lukac-1005012.jpg";
+import img8 from "../assets/natation.jpg";
+import img9 from "../assets/TVD.jpg";
+import img10 from "../assets/taylor.jpg";
+import img11 from "../assets/MK.jpeg";
+import img12 from "../assets/drama.jpg";
 // import tt from "../assets/tt.png";
 import imgSlider2 from "../assets/1135879.png";
 import imgSlider3 from "../assets/1146218.png";
 
+import imgSlider4 from "../assets/cuisine.jpg";
+import imgSlider5 from "../assets/jeu.png";
+import imgSlider6 from "../assets/otaku.jpg";
+import imgSlider7 from "../assets/litterature.jpg";
 const StyleButton = styled(Button)(({ theme }) => ({
   padding: "0",
   overflow: "hidden",
@@ -60,7 +69,7 @@ const StyleButton = styled(Button)(({ theme }) => ({
 const imgSlider = [
   {
     id: 1,
-    img: imgSlider3,
+    img: imgSlider5,
     titre: "Jeux Vidéo",
     membres: "2.268",
     Description:
@@ -68,19 +77,27 @@ const imgSlider = [
   },
   {
     id: 2,
-    img: imgSlider2,
-    titre: "L'artisanat technologique",
+    img: imgSlider4,
+    titre: "Cuisine",
     membres: "100",
     Description:
-      "Si vous êtes passionné par la fusion de l'artisanat traditionnel et de la technologie moderne, notre communauté d'artisanat technologique est faite pour vous. Explorez l'intersection entre l'artisanat, l'électronique et la programmation, partagez vos créations DIY(Fais- le toi - même) et découvrez de nouvelles façons de donner vie à des objets uniques et fonctionnels.",
+    "Si vous avez une passion pour la cuisine et que vous aimez expérimenter de délicieuses recettes, notre communauté culinaire est l'endroit idéal pour vous. Découvrez l'art de la cuisine, partagez vos créations culinaires, et explorez de nouvelles façons de préparer des plats savoureux. Rejoignez-nous pour célébrer la diversité des saveurs et des techniques culinaires.",
   },
   {
     id: 3,
-    img: ChainsawMan,
+    img: imgSlider6,
     titre: "Univers Otaku",
     membres: "3.453",
     Description:
       "Découvrez la richesse de la culture japonaise à travers les anime, qu'il s'agisse des références culturelles, de l'esthétique unique ou de la musique entraînante.Rejoignez - nous pour célébrer ensemble cette forme d'art animée qui continue de captiver et d'inspirer des millions de fans à travers le monde.",
+  },
+  {
+    id: 4,
+    img: imgSlider7,
+    titre: "Littérature",
+    membres: "275",
+    Description:
+    "Si vous êtes passionné par la littérature et que les mots ont le pouvoir de vous transporter vers des mondes imaginaires, notre communauté littéraire est faite pour vous. Explorez l'univers infini des livres, partagez vos réflexions sur vos lectures, et découvrez de nouvelles façons de vous plonger dans des histoires captivantes. Rejoignez notre communauté dédiée à la magie des mots et à l'art de l'écriture.",
   },
 ];
 
@@ -99,33 +116,33 @@ const recommandations = [
   },
   {
     id: 3,
-    pochette: ChainsawMan,
-    titre: "Chainsaw Man",
-    type: "Animé",
+    pochette: img8,
+    titre: "Natation",
+    type: "Sport",
   },
   {
     id: 4,
-    pochette: ChainsawMan,
-    titre: "Chainsaw Man",
-    type: "Animé",
+    pochette: img9,
+    titre: "The Vampire Diaries",
+    type: "Series",
   },
   {
     id: 5,
-    pochette: ChainsawMan,
-    titre: "Chainsaw Man",
-    type: "Animé",
+    pochette: img10,
+    titre: "Taylor Swift",
+    type: "Artist",
   },
   {
     id: 6,
-    pochette: ChainsawMan,
-    titre: "Chainsaw Man",
-    type: "Animé",
+    pochette: img11,
+    titre: "Mario Kart 8",
+    type: "Jeu vidéo",
   },
   {
     id: 7,
-    pochette: ChainsawMan,
-    titre: "Chainsaw Man",
-    type: "Animé",
+    pochette: img12,
+    titre: "K-drama",
+    type: "drama",
   },
 ];
 

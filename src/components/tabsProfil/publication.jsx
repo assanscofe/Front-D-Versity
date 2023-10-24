@@ -318,7 +318,7 @@ const Publication = () => {
                     style={{ width: 15, height: 15, fill: "#d7415e" }}
                   />
                 </IconButton>
-                <Typography>25</Typography>
+                <Typography></Typography>
               </MyBox>
               <div>
                 <div onClick={toggleFormVisibility}>
@@ -331,14 +331,14 @@ const Publication = () => {
                 </div>
 
                 {isFormVisible && (
-                  <form>
-                    <label>
-                      Comment:
-                      <textarea></textarea>
+                  <form style={{ backgroundColor: '#f0f0f0', padding: '10px', borderRadius: '4px', marginTop: '10px' }}>
+                    <label style={{ color: '#444', fontSize: '14px' }}>
+                      Commentaire:
+                      <textarea style={{ width: '100%', minHeight: '100px', padding: '5px', borderRadius: '4px', borderColor: '#ccc' }}></textarea>
                     </label>
-                    <button type="submit">Submit</button>
+                    <button style={{ backgroundColor: '#007bff', color: '#fff', padding: '5px 10px', borderRadius: '4px', border: 'none', cursor: 'pointer' }} type="submit">Envoyer</button>
                   </form>
-                )}
+               )}
               </div>
               {/* <MyBox>
                 <IconButton>
